@@ -1,7 +1,7 @@
 ---
 name: "\U0001F4DD Feature Request"
 about: Suggest an idea for this project
-title: ''
+title: 'Some title'
 labels: feat
 assignees: kiforks
 
