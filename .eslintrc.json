@@ -1,0 +1,89 @@
+{
+	"root": true,
+	"ignorePatterns": ["!**/*"],
+	"plugins": ["@nx"],
+	"overrides": [
+		{
+			"files": ["*.json"],
+			"parser": "jsonc-eslint-parser",
+			"rules": {
+				"@nx/dependency-checks": [
+					"error",
+					{
+						"ignoredDependencies": [
+							"@angular/cdk",
+							"lodash",
+							"lodash-es",
+							"rxjs",
+							"@kiforks/utilities",
+							"@kiforks/core",
+							"@kiforks/ui",
+							"subsink",
+							"@ngneat/spectator"
+						]
+					}
+				]
+			}
+		},
+		{
+			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+			"rules": {
+				"@nx/enforce-module-boundaries": [
+					"error",
+					{
+						"enforceBuildableLibDependency": true,
+						"checkNestedExternalImports": true,
+						"depConstraints": [
+							{
+								"sourceTag": "*",
+								"onlyDependOnLibsWithTags": ["*"]
+							},
+							{
+								"sourceTag": "scope:utilities",
+								"onlyDependOnLibsWithTags": ["scope:utilities", "scope:core"]
+							},
+							{
+								"sourceTag": "scope:core",
+								"onlyDependOnLibsWithTags": ["scope:core", "scope:utilities"]
+							},
+							{
+								"sourceTag": "scope:ui",
+								"onlyDependOnLibsWithTags": ["scope:ui", "scope:utilities", "scope:core"]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"files": ["*.ts", "*.tsx"],
+			"extends": ["plugin:@nx/typescript"]
+		},
+		{
+			"files": ["*.js", "*.jsx"],
+			"extends": ["plugin:@nx/javascript"]
+		},
+		{
+			"files": ["*.ts"],
+			"parserOptions": {
+				"ecmaVersion": 2020,
+				"sourceType": "module",
+				"project": ["tsconfig.base.json"],
+				"createDefaultProgram": true
+			},
+			"extends": ["plugin:@nx/angular", "kifor/angular-typescript", "kifor/typescript"],
+			"rules": {
+				"@typescript-eslint/lines-between-class-members": "off"
+			}
+		},
+		{
+			"files": ["*.html"],
+			"extends": ["plugin:@nx/angular-template", "kifor/angular-template"]
+		},
+		{
+			"files": ["*.spec.ts", "*.host.ts", "*.po.ts"],
+			"env": { "jest/globals": true },
+			"extends": ["kifor/tests", "kifor/tests-jest"]
+		}
+	]
+}

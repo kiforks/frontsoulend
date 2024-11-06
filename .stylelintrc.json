@@ -1,0 +1,6 @@
+{
+	"extends": "kifor-stylelint-config",
+	"rules": {
+		"scss/at-import-partial-extension": null
+	}
+}
