@@ -23,4 +23,4 @@ Provide a brief description of the bug and the solution implemented. Focus on wh
 Include screenshots or GIFs showing the issue before and after the fix, if applicable.
 
 ## Additional Notes
-Add any additional context or information about the bug fix, such as refactoring efforts or related code changes (optional).
+Add any additional context or information about the bug fix, such as refactoring efforts or related code changes (optional)
