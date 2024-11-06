@@ -10,7 +10,7 @@ Brief description of the changes introduced by this merge request (no more than 
 - [ ] Documentation updated (if necessary)
 - [ ] Changes do not introduce any known security vulnerabilities
 
-## Screenshots]()
+## Screenshots
 Attach relevant screenshots or GIFs showcasing the changes (optional).
 
 ## Additional Notes
