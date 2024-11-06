@@ -1,26 +1,20 @@
 ---
-name: "\U0001F4DD Feature Request"
+name: Feature Request
 about: Suggest an idea for this project
-title: 'Some title'
-labels: feat
-assignees: kiforks
+title: "[FEATURE] Brief description of the feature"
+labels: enhancement
+assignees: ''
 
 ---
 
-## Description
-Brief description of the changes introduced by this merge request. (no more than 150 chars)
+**Feature Description**
+A clear and concise description of the feature you would like to be added.
 
-## Related Tickets & Documents
-- Related Issue [link from Jira]
-- Closes tasks or bugs [link from Jira]
+**Motivation**
+Explain why this feature would be useful and how it improves the project.
 
-## Checklist
-- [ ] All tests pass locally - self QA by dev
-- [ ] Documentation updated (if necessary)
-- [ ] Changes do not introduce any known security vulnerabilities
+**Alternatives**
+Describe any alternative solutions or features you've considered and why they might not be ideal.
 
-## Screenshots
-Attach relevant screenshots or GIFs showcasing the changes (optional).
-
-## Additional Notes
-Any additional information or context about the changes made in this merge request. E.g. refactored someone’s code  (optional)
+**Additional context**
+Add any other context, screenshots, or ideas that might be helpful.
