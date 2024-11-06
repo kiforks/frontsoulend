@@ -14,4 +14,4 @@ Brief description of the changes introduced by this merge request (no more than 
 Attach relevant screenshots or GIFs showcasing the changes (optional).
 
 ## Additional Notes
-Any additional information or context about the changes made in this merge request. E.g. refactored someone’s code  (optional)
+Any additional information or context about the changes made in this merge request. E.g. refactored someone’s code  (optional).
