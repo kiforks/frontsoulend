@@ -1,0 +1,67 @@
+{
+	"root": true,
+	"ignorePatterns": ["!**/*"],
+	"plugins": ["@nx"],
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"extends": ["plugin:@nx/typescript"]
+		},
+		{
+			"files": ["*.js", "*.jsx"],
+			"extends": ["plugin:@nx/javascript"]
+		},
+		{
+			"files": ["*.json"],
+			"parser": "jsonc-eslint-parser",
+			"rules": {
+				"@nx/dependency-checks": [
+					"error",
+					{
+						"ignoredDependencies": [
+							"@angular/cdk",
+							"lodash",
+							"lodash-es",
+							"rxjs",
+							"@kiforks/utilities",
+							"@kiforks/core",
+							"@kiforks/ui",
+							"subsink",
+							"@ngneat/spectator"
+						]
+					}
+				]
+			}
+		},
+		{
+			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+			"rules": {
+				"@nx/enforce-module-boundaries": [
+					"error",
+					{
+						"enforceBuildableLibDependency": true,
+						"checkNestedExternalImports": true,
+						"depConstraints": [
+							{
+								"sourceTag": "*",
+								"onlyDependOnLibsWithTags": ["*"]
+							},
+							{
+								"sourceTag": "scope:utilities",
+								"onlyDependOnLibsWithTags": ["scope:utilities", "scope:core"]
+							},
+							{
+								"sourceTag": "scope:core",
+								"onlyDependOnLibsWithTags": ["scope:core", "scope:utilities"]
+							},
+							{
+								"sourceTag": "scope:ui",
+								"onlyDependOnLibsWithTags": ["scope:ui", "scope:utilities", "scope:core"]
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}
