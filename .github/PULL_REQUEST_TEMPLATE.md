@@ -1,5 +1,5 @@
 ## Description
-Brief description of the changes introduced by this merge request. (no more than 150 chars)
+Brief description of the changes introduced by this merge request (no more than 150 chars)
 
 ## Related Tickets & Documents
 - Related Issue [link from Jira]
