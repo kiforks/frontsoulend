@@ -8,6 +8,7 @@ on:
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+  RUN_ON_PR_AND_SCHEDULE: ${{ (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') }}
 
 permissions:
   actions: read
@@ -22,9 +23,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # General
   changes:
     name: 'Changes'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG}}
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
@@ -75,30 +77,75 @@ jobs:
         run: |
           echo "For manual and schedule"
 
-  #  main:
-  #    name: 'Nx Cloud - Main Job'
-  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG}}
-  #    timeout-minutes: 30
-  #    needs: [changes]
-  #    if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
-  #    steps:
-  #      - uses: actions/checkout@v4
-  #        with:
-  #          fetch-depth: 0
-  #      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-  #      - uses: actions/setup-node@v4
-  #        with:
-  #          node-version: 20
-  #          cache: 'npm'
-  #      - run: npm ci --legacy-peer-deps
-  #      - uses: nrwl/nx-set-shas@v4
-  #      - run: npx nx affected -t stylelint
+  # Frontend
+  frontend-tests:
+    name: 'Frontend tests'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ env.RUN_ON_PR_AND_SCHEDULE }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run frontend tests
+        run: npm run test --ci
+  frontend-build:
+    name: 'Frontend build'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ env.RUN_ON_PR_AND_SCHEDULE }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Frontend build
+        run: npm run build:production
+
+  # Linters
+  format:
+    name: 'Formating'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ env.RUN_ON_PR_AND_SCHEDULE }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run formating
+        run: npm run format
   eslint:
     name: 'ESLint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
+    if: ${{ env.RUN_ON_PR_AND_SCHEDULE }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -113,3 +160,23 @@ jobs:
         uses: nrwl/nx-set-shas@v4
       - name: Run ESLint
         run: npm run eslint
+  stylelint:
+    name: 'Stylelint'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ env.RUN_ON_PR_AND_SCHEDULE }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run Stylelint
+        run: npm run stylelint
