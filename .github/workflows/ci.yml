@@ -63,7 +63,7 @@ jobs:
         if: github.event_name == 'pull_request'
         id: general
         run: |
-          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] |"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
             echo "general=false"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
