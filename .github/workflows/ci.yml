@@ -16,6 +16,32 @@ permissions:
   contents: read
 
 jobs:
+#  main:
+#    name: 'Run E2E Tests'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      # This enables task distribution via Nx Cloud
+#      # Run this command as early as possible, before dependencies are installed
+#      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
+#      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+#
+#      # Cache node_modules
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#
+#      - run: npm ci --legacy-peer-deps
+#      - uses: nrwl/nx-set-shas@v4
+#
+#      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+#      # - run: npx nx-cloud record -- echo Hello World
+#      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+#      - run: npx nx affected -t e2e-ci --base=origin/main --head=HEAD
   main:
     name: Nx Cloud - Main Job
     runs-on: ubuntu-latest
@@ -40,3 +66,10 @@ jobs:
       - run: npx nx-cloud record -- npx nx affected --target=test --parallel=3 --ci --code-coverage
       - run: npx nx-cloud record -- npx nx affected --target=build --parallel=3
       - run: npx nx-cloud record -- npx nx affected --target=e2e-ci --parallel=1
+
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.13.0
+    with:
+      number-of-agents: 3
+
