@@ -6,7 +6,6 @@ on:
       - main
   pull_request:
     branches: [main]
-  workflow_dispatch:
 
 
 env:
@@ -54,12 +53,11 @@ jobs:
       parallel-commands: |
         npx nx-cloud record -- npx nx format:check
       parallel-commands-on-agents: |
-        npx nx affected --target=format:check --parallel=3
         npx nx affected --target=stylelint --parallel=3
         npx nx affected --target=lint --parallel=3
         npx nx affected --target=test --parallel=3 --ci --code-coverage
         npx nx affected --target=build --parallel=3
-        npx nx affected --target=e2e --parallel=1
+        npx nx affected --target=e2e-ci --parallel=1
 
   agents:
     name: Nx Cloud - Agents
