@@ -32,7 +32,7 @@ jobs:
       - name: Determine RUN_ON_PR_AND_SCHEDULE
         id: set
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" && "${{ github.event.action }}" != "closed" ]] || [[ "${{ github.event_name }}" == "schedule" ]] || [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
             echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
