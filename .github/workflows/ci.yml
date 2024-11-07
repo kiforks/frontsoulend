@@ -86,7 +86,6 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-
   # Frontend
   frontend-tests:
     name: 'Frontend tests'
