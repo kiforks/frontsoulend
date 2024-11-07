@@ -109,7 +109,7 @@ jobs:
           cache: 'npm'
       - run: npm install
       - uses: nrwl/nx-set-shas@v4
-      - run: npx nx format:check
+      - run: npx nx affected -t format:check --base=origin/main --head=HEAD
 
   test:
     name: 'Run Unit Tests'
