@@ -93,7 +93,7 @@ jobs:
 
   main:
     name: 'CI'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
     if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
