@@ -1,11 +1,10 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
-    branches: [main]
+      - '!dependabot/**'
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
@@ -14,67 +13,67 @@ permissions:
   actions: read
   contents: read
 
-defaults:
-  run:
-    shell: bash
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+#defaults:
+#  run:
+#    shell: bash
+#
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: true
 
 jobs:
-  changes:
-    name: 'Changes'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG}}
-    outputs:
-      frontend: ${{ steps.filter.outputs.frontend }}
-      e2e: ${{ steps.filter.outputs.e2e }}
-      general: ${{ steps.general.outputs.changed }}
-    steps:
-      - name: Check for file changes
-        if: github.event_name == 'pull_request'
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          list-files: json
-          filters: |
-            all_ci: &all_ci
-              - '.github/workflows/ci.yml'
-            frontend: &frontend
-              - *all_ci
-              - 'apps/frontend/**/package.json'
-              - 'apps/frontend/**/package-lock.lock'
-              - 'apps/frontend/**/*.js'
-              - 'apps/frontend/**/*.ts'
-              - 'apps/frontend/**/*.html'
-              - 'apps/frontend/**/*.css'
-              - 'apps/frontend/**/*.scss'
-              - 'apps/frontend/**/*.json'
-            e2e: &e2e
-              - *all_ci
-              - 'apps/qa/**/package.json'
-              - 'apps/qa/**/package-lock.lock'
-              - 'apps/qa/**/*.ts'
-              - 'apps/qa/**/*.json'
-            changed:
-              - *all_ci
-              - *frontend
-              - *e2e
-      - name: Check if general files have changed
-        if: github.event_name == 'pull_request'
-        id: general
-        run: |
-          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
-            echo "general=false"
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "general=true"
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-      - name: For manual and schedule
-        if: (github.event_name == 'pull_request' && github.event.action == 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') || (github.event_name == 'workflow_call')
-        run: |
-          echo "For manual and schedule"
+#  changes:
+#    name: 'Changes'
+#    runs-on: ${{ vars.PIPELINE_TESTS_TAG}}
+#    outputs:
+#      frontend: ${{ steps.filter.outputs.frontend }}
+#      e2e: ${{ steps.filter.outputs.e2e }}
+#      general: ${{ steps.general.outputs.changed }}
+#    steps:
+#      - name: Check for file changes
+#        if: github.event_name == 'pull_request'
+#        uses: dorny/paths-filter@v2
+#        id: filter
+#        with:
+#          list-files: json
+#          filters: |
+#            all_ci: &all_ci
+#              - '.github/workflows/ci.yml'
+#            frontend: &frontend
+#              - *all_ci
+#              - 'apps/frontend/**/package.json'
+#              - 'apps/frontend/**/package-lock.lock'
+#              - 'apps/frontend/**/*.js'
+#              - 'apps/frontend/**/*.ts'
+#              - 'apps/frontend/**/*.html'
+#              - 'apps/frontend/**/*.css'
+#              - 'apps/frontend/**/*.scss'
+#              - 'apps/frontend/**/*.json'
+#            e2e: &e2e
+#              - *all_ci
+#              - 'apps/qa/**/package.json'
+#              - 'apps/qa/**/package-lock.lock'
+#              - 'apps/qa/**/*.ts'
+#              - 'apps/qa/**/*.json'
+#            changed:
+#              - *all_ci
+#              - *frontend
+#              - *e2e
+#      - name: Check if general files have changed
+#        if: github.event_name == 'pull_request'
+#        id: general
+#        run: |
+#          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+#            echo "general=false"
+#            echo "changed=false" >> $GITHUB_OUTPUT
+#          else
+#            echo "general=true"
+#            echo "changed=true" >> $GITHUB_OUTPUT
+#          fi
+#      - name: For manual and schedule
+#        if: (github.event_name == 'pull_request' && github.event.action == 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') || (github.event_name == 'workflow_call')
+#        run: |
+#          echo "For manual and schedule"
 
 #  main:
 #    name: 'Nx Cloud - Main Job'
@@ -96,10 +95,10 @@ jobs:
 #      - run: npx nx affected -t stylelint
   eslint:
     name: 'ESLint'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG}}
-    timeout-minutes: 30
-    needs: [ changes ]
-    if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+#    timeout-minutes: 30
+#    needs: [ changes ]
+#    if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
     steps:
       - uses: actions/checkout@v4
         with:
