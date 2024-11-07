@@ -133,5 +133,6 @@
 		"@ngneat/spectator:spectator-service": {
 			"flat": false
 		}
-	}
+	},
+	"nxCloudId": "672be036b76a0e014484fa2b"
 }

@@ -1,11 +1,10 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
-    branches: [main]
+      - '!dependabot/**'
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
@@ -14,30 +13,181 @@ permissions:
   actions: read
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  main:
-    name: 'CI'
+  # General
+  condition:
+    name: 'Condition'
     runs-on: ubuntu-latest
+    outputs:
+      run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
+    steps:
+      - name: Determine RUN_ON_PR_AND_SCHEDULE
+        id: set
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
+          else
+            echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
+          fi
+
+  changes:
+    name: 'Changes'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    needs: condition
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      e2e: ${{ steps.filter.outputs.e2e }}
+      general: ${{ steps.general.outputs.changed }}
+    steps:
+      - name: Check for file changes
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: json
+          filters: |
+            all_ci: &all_ci
+              - '.github/workflows/ci.yml'
+            frontend: &frontend
+              - *all_ci
+              - 'apps/frontend/**/package.json'
+              - 'apps/frontend/**/package-lock.lock'
+              - 'apps/frontend/**/*.js'
+              - 'apps/frontend/**/*.ts'
+              - 'apps/frontend/**/*.html'
+              - 'apps/frontend/**/*.css'
+              - 'apps/frontend/**/*.scss'
+              - 'apps/frontend/**/*.json'
+            e2e: &e2e
+              - *all_ci
+              - 'apps/qa/**/package.json'
+              - 'apps/qa/**/package-lock.lock'
+              - 'apps/qa/**/*.ts'
+              - 'apps/qa/**/*.json'
+            changed:
+              - *all_ci
+              - *frontend
+              - *e2e
+      - name: Check if general files have changed
+        if: github.event_name == 'pull_request'
+        id: general
+        run: |
+          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+            echo "general=false"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "general=true"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+  # Linters
+  format:
+    name: 'Format'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-
-      # Cache node_modules
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run formatting
+        run: npm run format
+  eslint:
+    name: 'ESLint'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run ESLint
+        run: npm run eslint
+  stylelint:
+    name: 'Stylelint'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run Stylelint
+        run: npm run stylelint
 
-      - run: npm ci --legacy-peer-deps
-      - uses: nrwl/nx-set-shas@v4
-
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: npx nx affected -t lint test build e2e-ci --base=origin/main --head=HEAD
+  # Frontend
+  frontend-tests:
+    name: 'Frontend tests'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes, format, stylelint, eslint]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run frontend tests
+        run: npm run test:ci
+  frontend-build:
+    name: 'Frontend build'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes, format, stylelint, eslint]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Frontend build
+        run: npm run build:production
