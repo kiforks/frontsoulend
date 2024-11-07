@@ -93,4 +93,4 @@ jobs:
           cache: 'npm'
       - run: npm ci --legacy-peer-deps
       - uses: nrwl/nx-set-shas@v4
-      - run: npx nx affected -t stylelint lint test --ci --code-coverage --base=origin/main --head=HEAD --configuration=production --parallel=3
+      - run: npx nx affected -t stylelint lint test --ci --code-coverage --base=origin/main --head=HEAD --configuration=production
