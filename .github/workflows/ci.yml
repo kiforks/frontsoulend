@@ -42,7 +42,7 @@ jobs:
             frontend: &frontend
               - *all_ci
               - 'apps/frontend/**/package.json'
-              - 'apps/frontend/**/yarn.lock'
+              - 'apps/frontend/**/package-lock.lock'
               - 'apps/frontend/**/*.js'
               - 'apps/frontend/**/*.ts'
               - 'apps/frontend/**/*.html'
@@ -52,7 +52,7 @@ jobs:
             e2e: &e2e
               - *all_ci
               - 'apps/qa/**/package.json'
-              - 'apps/qa/**/yarn.lock'
+              - 'apps/qa/**/package-lock.lock'
               - 'apps/qa/**/*.ts'
               - 'apps/qa/**/*.json'
             changed:
