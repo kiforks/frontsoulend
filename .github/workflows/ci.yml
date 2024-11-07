@@ -14,10 +14,89 @@ permissions:
   actions: read
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  changes:
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+      e2e: ${{ steps.filter.outputs.e2e }}
+      docs: ${{ steps.filter.outputs.docs }}
+      general: ${{ steps.general.outputs.changed }}
+    steps:
+      - name: Check for file changes 🚗
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: json
+          filters: |
+            all_ci: &all_ci
+              - '.github/workflows/ci.yml
+            backend: &backend
+              - *all_ci
+              - 'apps/backend/composer.json'
+              - 'apps/backend/composer.lock'
+              - 'apps/backend/**/*.php'
+              - 'apps/backend/**/*.sql'
+              - 'apps/backend/*.xml'
+              - 'apps/backend/*.yml'
+              - 'apps/backend/*.neon'
+            frontend: &frontend
+              - *all_ci
+              - 'apps/frontend/**/package.json'
+              - 'apps/frontend/**/yarn.lock'
+              - 'apps/frontend/**/*.js'
+              - 'apps/frontend/**/*.ts'
+              - 'apps/frontend/**/*.html'
+              - 'apps/frontend/**/*.css'
+              - 'apps/frontend/**/*.scss'
+              - 'apps/frontend/**/*.json'
+            e2e: &e2e
+              - *all_ci
+              - 'apps/qa/**/package.json'
+              - 'apps/qa/**/yarn.lock'
+              - 'apps/qa/**/*.ts'
+              - 'apps/qa/**/*.json'
+            docs: &docs
+              - *all_ci
+              - 'apps/docs/**/*'
+            changed:
+              - *all_ci
+              - *backend
+              - *frontend
+              - *e2e
+              - *docs
+      - name: Check if general files have changed
+        if: github.event_name == 'pull_request'
+        id: general
+        run: |
+          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+            echo "general=false"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "general=true"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+      - name: For manual and schedule
+        if: (github.event_name == 'pull_request' && github.event.action == 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') || (github.event_name == 'workflow_call')
+        run: |
+          echo "For manual and schedule"
+
   main:
     name: 'CI'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [changes]
+    if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
     steps:
       - uses: actions/checkout@v4
         with:
