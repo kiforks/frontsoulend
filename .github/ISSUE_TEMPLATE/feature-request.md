@@ -1,10 +1,9 @@
 ---
 name: Feature Request
 about: Suggest an idea for this project
-title: "[FEATURE] Brief description of the feature"
+title: '[FEATURE] Brief description of the feature'
 labels: enhancement
 assignees: ''
-
 ---
 
 **Feature Description**
@@ -17,4 +16,4 @@ Explain why this feature would be useful and how it improves the project.
 Describe any alternative solutions or features you've considered and why they might not be ideal.
 
 **Additional context**
-Add any other context, screenshots, or ideas that might be helpful.
+Add any other context, screenshots, or ideas that might be helpful
