@@ -22,10 +22,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Set the Condition
+  set-condition:
+    name: 'Set Condition'
+    runs-on: ubuntu-latest
+    outputs:
+      run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
+    steps:
+      - name: Determine RUN_ON_PR_AND_SCHEDULE
+        id: set
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" && "${{ github.event.action }}" != "closed" ]] || [[ "${{ github.event_name }}" == "schedule" ]] || [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
+          else
+            echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
+
   # General
   changes:
     name: 'Changes'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    needs: set-condition
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
@@ -71,10 +87,6 @@ jobs:
             echo "general=true"
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
-      - name: For manual and schedule
-        if: (github.event_name == 'pull_request' && github.event.action == 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') || (github.event_name == 'workflow_call')
-        run: |
-          echo "For manual and schedule"
 
   # Frontend
   frontend-tests:
@@ -82,7 +94,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') }}
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -97,12 +109,13 @@ jobs:
         uses: nrwl/nx-set-shas@v4
       - name: Run frontend tests
         run: npm run test --ci
+
   frontend-build:
     name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') }}
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -120,11 +133,11 @@ jobs:
 
   # Linters
   format:
-    name: 'Formating'
+    name: 'Formatting'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') }}
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -137,14 +150,15 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Run formating
+      - name: Run formatting
         run: npm run format
+
   eslint:
     name: 'ESLint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') }}
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -159,12 +173,13 @@ jobs:
         uses: nrwl/nx-set-shas@v4
       - name: Run ESLint
         run: npm run eslint
+
   stylelint:
     name: 'Stylelint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') }}
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
