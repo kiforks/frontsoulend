@@ -17,6 +17,32 @@ permissions:
   contents: read
 
 jobs:
+  main:
+    name: 'CI'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # This enables task distribution via Nx Cloud
+      # Run this command as early as possible, before dependencies are installed
+      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
+      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+
+      # Cache node_modules
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci --legacy-peer-deps
+      - uses: nrwl/nx-set-shas@v4
+
+      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+      # - run: npx nx-cloud record -- echo Hello World
+      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+      - run: npx nx affected -t lint test build e2e-ci --base=origin/main --head=HEAD
 #  main:
 #    name: Nx Cloud - Main Job
 #    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.13.0
@@ -66,77 +92,77 @@ jobs:
 #      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
 #      - run: npx nx affected -t e2e-ci --base=origin/main --head=HEAD
 
-  eslint:
-    name: 'Lint with ESLint'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - uses: nrwl/nx-set-shas@v4
-      - run: npx nx affected -t lint --base=origin/main --head=HEAD
-
-  stylelint:
-    name: 'Lint with Stylelint'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - uses: nrwl/nx-set-shas@v4
-      - run: npx nx affected -t stylelint --base=origin/main --head=HEAD
-
-  format:
-    name: 'Check Formatting'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - uses: nrwl/nx-set-shas@v4
-      - run: npx nx affected -t format:check --base=origin/main --head=HEAD
-
-  test:
-    name: 'Run Unit Tests'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - uses: nrwl/nx-set-shas@v4
-      - run: npx nx affected -t test --base=origin/main --head=HEAD
-
-  build:
-    name: 'Build Applications'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - uses: nrwl/nx-set-shas@v4
-      - run: npx nx affected -t build --base=origin/main --head=HEAD --configuration=production
+#  eslint:
+#    name: 'Lint with ESLint'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t lint --base=origin/main --head=HEAD
+#
+#  stylelint:
+#    name: 'Lint with Stylelint'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t stylelint --base=origin/main --head=HEAD
+#
+#  format:
+#    name: 'Check Formatting'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t format:check --base=origin/main --head=HEAD
+#
+#  test:
+#    name: 'Run Unit Tests'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t test --base=origin/main --head=HEAD
+#
+#  build:
+#    name: 'Build Applications'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t build --base=origin/main --head=HEAD --configuration=production
