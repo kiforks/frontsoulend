@@ -7,7 +7,7 @@ on:
       - '!dependabot/**'
 
 env:
-  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+  NX_CI_ACCESS_TOKEN: ${{ secrets.NX_CI_ACCESS_TOKEN }}
 
 permissions:
   actions: read
@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   # General
-  set-condition:
+  set_condition:
     name: 'Set Condition'
     runs-on: ubuntu-latest
     outputs:
@@ -36,10 +36,10 @@ jobs:
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
             echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
-  changes:
-    name: 'Changes'
+  check_changes:
+    name: 'Check Changes'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    needs: set-condition
+    needs: set_condition
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
@@ -78,7 +78,7 @@ jobs:
         if: github.event_name == 'pull_request'
         id: general
         run: |
-          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\)/d' | wc -l ) -eq 0 ]; then
             echo "general=false"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
@@ -87,12 +87,12 @@ jobs:
           fi
 
   # Frontend
-  frontend-tests:
-    name: 'Frontend tests'
+  frontend_tests:
+    name: 'Frontend Tests'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    needs: [check_changes]
+    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -105,14 +105,14 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Run frontend tests
+      - name: Run Frontend Tests
         run: npm run test --ci
-  frontend-build:
-    name: 'Frontend build'
+  frontend_build:
+    name: 'Frontend Build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    needs: [check_changes]
+    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -125,7 +125,7 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Frontend build
+      - name: Frontend Build
         run: npm run build:production
 
   # Linters
@@ -133,8 +133,8 @@ jobs:
     name: 'Formatting'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    needs: [check_changes]
+    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -147,14 +147,14 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Run formatting
+      - name: Run Formatting
         run: npm run format
   eslint:
     name: 'ESLint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    needs: [check_changes]
+    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -173,8 +173,8 @@ jobs:
     name: 'Stylelint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    needs: [check_changes]
+    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
