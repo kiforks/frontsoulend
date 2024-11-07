@@ -88,48 +88,6 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-  # Frontend
-  frontend-tests:
-    name: 'Frontend tests'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run frontend tests
-        run: npm run test:ci
-  frontend-build:
-    name: 'Frontend build'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Frontend build
-        run: npm run build:production
-
   # Linters
   format:
     name: 'Format'
@@ -191,3 +149,45 @@ jobs:
         uses: nrwl/nx-set-shas@v4
       - name: Run Stylelint
         run: npm run stylelint
+
+  # Frontend
+  frontend-tests:
+    name: 'Frontend tests'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes, format, stylelint, eslint]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Run frontend tests
+        run: npm run test:ci
+  frontend-build:
+    name: 'Frontend build'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes, format, stylelint, eslint]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - name: Set SHAs for NX
+        uses: nrwl/nx-set-shas@v4
+      - name: Frontend build
+        run: npm run build:production
