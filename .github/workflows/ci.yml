@@ -36,6 +36,7 @@ jobs:
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
             echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
+          fi
 
   changes:
     name: 'Changes'
