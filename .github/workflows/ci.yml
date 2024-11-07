@@ -112,5 +112,5 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Run tests
+      - name: Run ESLint
         run: npm run eslint
