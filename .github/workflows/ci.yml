@@ -23,47 +23,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup:
-    name: Setup Environment
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG || 'ubuntu-latest' }}
-    outputs:
-      nx_cache_hit: ${{ steps.cache-nx.outputs.cache-hit }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/cache@v3
-        id: cache-node
-        with:
-          path: |
-            ~/.npm
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Cache Nx workspace files
-        id: cache-nx
-        uses: actions/cache@v3
-        with:
-          path: .nx/cache
-          key: ${{ runner.os }}-nx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-nx-
-
   changes:
-    name: Changes Filter
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG || 'ubuntu-latest' }}
-    needs: setup
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
@@ -98,65 +59,55 @@ jobs:
               - *all_ci
               - *frontend
               - *e2e
+      - name: Check if general files have changed
+        if: github.event_name == 'pull_request'
+        id: general
+        run: |
+          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] |"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+            echo "general=false"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "general=true"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+      - name: For manual and schedule
+        if: (github.event_name == 'pull_request' && github.event.action == 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch') || (github.event_name == 'workflow_call')
+        run: |
+          echo "For manual and schedule"
 
-  stylelint:
-    name: Stylelint
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG || 'ubuntu-latest' }}
-    needs: [setup, changes]
-    if: needs.changes.outputs.frontend == 'true'
-    steps:
-      - name: Restore Node and Nx Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.npm
-            node_modules
-            .nx/cache
-          key: ${{ runner.os }}-nx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-nx-
-
-      - name: Run stylelint
-        run: npx nx affected -t stylelint
-
-  lint:
-    name: Lint
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG || 'ubuntu-latest' }}
-    needs: [setup, changes]
-    if: needs.changes.outputs.frontend == 'true'
-    steps:
-      - name: Restore Node and Nx Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.npm
-            node_modules
-            .nx/cache
-          key: ${{ runner.os }}-nx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-nx-
-
-      - name: Run lint
-        run: npx nx affected -t lint
-
-  main:
-    name: CI
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG || 'ubuntu-latest' }}
+  eslint:
+    name: 'CI'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [stylelint, lint]
+    needs: [changes]
     if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
     steps:
-      - name: Restore Node and Nx Cache
-        uses: actions/cache@v3
+      - uses: actions/checkout@v4
         with:
-          path: |
-            ~/.npm
-            node_modules
-            .nx/cache
-          key: ${{ runner.os }}-nx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-nx-
-
-      - name: Nx Cloud CI Run
-        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+          fetch-depth: 0
+      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
       - uses: nrwl/nx-set-shas@v4
+      - run: npx nx affected -t lint
+  stylelint:
+    name: 'CI'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    timeout-minutes: 30
+    needs: [changes]
+    if: (needs.changes.outputs.general == 'true' && github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - uses: nrwl/nx-set-shas@v4
+      - run: npx nx affected -t stylelint
