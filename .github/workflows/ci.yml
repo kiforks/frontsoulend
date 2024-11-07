@@ -23,8 +23,8 @@ concurrency:
 
 jobs:
   # General
-  set-condition:
-    name: 'Set Condition'
+  condition:
+    name: 'Condition'
     runs-on: ubuntu-latest
     outputs:
       run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
@@ -41,7 +41,7 @@ jobs:
   changes:
     name: 'Changes'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    needs: set-condition
+    needs: condition
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
@@ -94,7 +94,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -114,7 +114,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -132,11 +132,11 @@ jobs:
 
   # Linters
   format:
-    name: 'Formatting'
+    name: 'Format'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -156,7 +156,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -176,7 +176,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
