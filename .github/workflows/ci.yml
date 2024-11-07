@@ -36,8 +36,10 @@ jobs:
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
             echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
+          fi
 
-  # General
+
+# General
   changes:
     name: 'Changes'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
