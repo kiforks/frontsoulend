@@ -1,11 +1,3 @@
----
-name: Pull Request
-about: Use this template for pull requests
-title: '[DEV-1]: Brief description'
-labels:
-assignees: ''
----
-
 ## Description
 
 Brief description of the changes introduced by this merge request (no more than 150 chars)
