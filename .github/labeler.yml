@@ -1,0 +1,24 @@
+backend:
+  - 'backend/**/*'
+
+devops:
+  - 'devops/**/*'
+
+docker:
+  - 'docker-compose.*.yml'
+  - 'devops/docker/**/*'
+
+frontend:
+  - 'frontend/**/*'
+
+qa:
+  - 'qa/**/*'
+
+workflow:
+  - '.github/**/*'
+
+docs:
+  - '**/*.md'
+
+root:
+  - '*'
