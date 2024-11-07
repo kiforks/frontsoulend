@@ -36,10 +36,10 @@ jobs:
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
             echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
-  check_changes:
-    name: 'Check Changes'
+  changes:
+    name: 'Changes'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    needs: set_condition
+    needs: set-condition
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
@@ -78,7 +78,7 @@ jobs:
         if: github.event_name == 'pull_request'
         id: general
         run: |
-          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\)/d' | wc -l ) -eq 0 ]; then
+          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
             echo "general=false"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
@@ -87,12 +87,12 @@ jobs:
           fi
 
   # Frontend
-  frontend_tests:
-    name: 'Frontend Tests'
+  frontend-tests:
+    name: 'Frontend tests'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [check_changes]
-    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
+    needs: [changes]
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -105,14 +105,14 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Run Frontend Tests
+      - name: Run frontend tests
         run: npm run test --ci
-  frontend_build:
-    name: 'Frontend Build'
+  frontend-build:
+    name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [check_changes]
-    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
+    needs: [changes]
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -125,16 +125,16 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Frontend Build
+      - name: Frontend is building...
         run: npm run build:production
 
   # Linters
   format:
-    name: 'Formatting'
+    name: 'Format'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [check_changes]
-    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
+    needs: [changes]
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -147,14 +147,14 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-      - name: Run Formatting
+      - name: Check format
         run: npm run format
   eslint:
     name: 'ESLint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [check_changes]
-    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
+    needs: [changes]
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -173,8 +173,8 @@ jobs:
     name: 'Stylelint'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [check_changes]
-    if: ${{ needs.set_condition.outputs.run_on_pr_and_schedule == 'true' && needs.check_changes.outputs.general == 'true' }}
+    needs: [changes]
+    if: ${{ needs.set-condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
