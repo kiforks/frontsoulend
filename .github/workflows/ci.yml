@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   # General
-  set_condition:
+  set-condition:
     name: 'Set Condition'
     runs-on: ubuntu-latest
     outputs:
