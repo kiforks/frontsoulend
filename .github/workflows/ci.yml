@@ -5,8 +5,7 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 env:
   NX_CI_ACCESS_TOKEN: ${{ secrets.NX_CI_ACCESS_TOKEN }}
@@ -16,56 +15,47 @@ permissions:
   contents: read
 
 jobs:
-#  main:
-#    name: 'Run E2E Tests'
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#
-#      # This enables task distribution via Nx Cloud
-#      # Run this command as early as possible, before dependencies are installed
-#      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-#      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-#
-#      # Cache node_modules
-#      - uses: actions/setup-node@v4
-#        with:
-#          node-version: 20
-#          cache: 'npm'
-#
-#      - run: npm ci --legacy-peer-deps
-#      - uses: nrwl/nx-set-shas@v4
-#
-#      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-#      # - run: npx nx-cloud record -- echo Hello World
-#      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-#      - run: npx nx affected -t e2e-ci --base=origin/main --head=HEAD
+  #  main:
+  #    name: 'Run E2E Tests'
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #        with:
+  #          fetch-depth: 0
+  #
+  #      # This enables task distribution via Nx Cloud
+  #      # Run this command as early as possible, before dependencies are installed
+  #      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
+  #      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+  #
+  #      # Cache node_modules
+  #      - uses: actions/setup-node@v4
+  #        with:
+  #          node-version: 20
+  #          cache: 'npm'
+  #
+  #      - run: npm ci --legacy-peer-deps
+  #      - uses: nrwl/nx-set-shas@v4
+  #
+  #      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+  #      # - run: npx nx-cloud record -- echo Hello World
+  #      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+  #      - run: npx nx affected -t e2e-ci --base=origin/main --head=HEAD
   main:
     name: Nx Cloud - Main Job
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      # Start Nx Cloud distributed execution
-      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
-
-      # Cache node_modules
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm ci --legacy-peer-deps
-
-      # Prepend with nx-cloud record for Nx Cloud tracking
-      - run: npx nx-cloud record -- npx nx affected --target=stylelint --parallel=3
-      - run: npx nx-cloud record -- npx nx affected --target=lint --parallel=3
-      - run: npx nx-cloud record -- npx nx affected --target=test --parallel=3 --ci --code-coverage
-      - run: npx nx-cloud record -- npx nx affected --target=build --parallel=3
-      - run: npx nx-cloud record -- npx nx affected --target=e2e-ci --parallel=1
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.13.0
+    with:
+      main-branch-name: main
+      number-of-agents: 3
+      init-commands: |
+        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+      parallel-commands: |
+        npx nx-cloud record -- npx nx format:check
+      parallel-commands-on-agents: |
+        npx nx affected --target=lint --parallel=3
+        npx nx affected --target=test --parallel=3 --ci --code-coverage
+        npx nx affected --target=build --parallel=3
+        npx nx affected --target=e2e --parallel=1
 
   agents:
     name: Nx Cloud - Agents
@@ -73,3 +63,77 @@ jobs:
     with:
       number-of-agents: 3
 
+#  eslint:
+#    name: 'Lint with ESLint'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t lint --base=origin/main --head=HEAD
+#
+#  stylelint:
+#    name: 'Lint with Stylelint'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t stylelint --base=origin/main --head=HEAD
+#
+#  format:
+#    name: 'Check Formatting'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx format:check
+#
+#  test:
+#    name: 'Run Unit Tests'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t test --base=origin/main --head=HEAD
+#
+#  build:
+#    name: 'Build Applications'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: npx nx affected -t build --base=origin/main --head=HEAD --configuration=production
