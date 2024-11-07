@@ -24,7 +24,7 @@ jobs:
       main-branch-name: main
       number-of-agents: 3
       init-commands: |
-        npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+        npx nx-cloud start-ci-run --stop-agents-after="e2e-ci"
       parallel-commands: |
         npx nx-cloud record -- npx nx format:check
       parallel-commands-on-agents: |
