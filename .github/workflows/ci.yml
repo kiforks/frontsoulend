@@ -108,7 +108,7 @@ jobs:
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
       - name: Run frontend tests
-        run: npm run test --ci
+        run: npm run test:ci
   frontend-build:
     name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}

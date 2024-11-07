@@ -2,7 +2,7 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
 import { AppComponent } from './app.component';
 
-describe('AppCompo', () => {
+describe('AppComponent', () => {
 	let spectator: Spectator<AppComponent>;
 
 	const createComponent = createComponentFactory({
