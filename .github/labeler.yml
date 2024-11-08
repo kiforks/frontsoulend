@@ -1,24 +1,32 @@
 backend:
-  - 'apps/backend/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'apps/backend/**/*'
 
 devops:
-  - 'devops/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'devops/**/*'
 
 docker:
-  - 'docker-compose.*.yml'
-  - 'devops/docker/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'docker-compose.*.yml'
+      - any-glob-to-any-file: 'devops/docker/**/*'
 
 frontend:
-  - 'apps/frontend/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'apps/frontend/**/*'
 
 qa:
-  - 'apps/qa/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'apps/qa/**/*'
 
 workflow:
-  - '.github/**/*'
+  - changed-files:
+      - any-glob-to-any-file: '.github/**/*'
 
 docs:
-  - '**/*.md'
+  - changed-files:
+      - any-glob-to-any-file: '**/*.md'
 
 root:
-  - '*'
+  - changed-files:
+      - any-glob-to-any-file: '*'
