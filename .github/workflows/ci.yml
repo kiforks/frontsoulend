@@ -23,9 +23,22 @@ concurrency:
 
 jobs:
   # General
+  label:
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run Labeler
+        uses: actions/labeler@v4
+        with:
+          repo-token: ${{ secrets.GH_ACCESS_TOKEN }}
   condition:
     name: 'Condition'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     outputs:
       run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
     steps:
