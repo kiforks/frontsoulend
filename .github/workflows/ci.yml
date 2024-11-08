@@ -23,19 +23,13 @@ concurrency:
 
 jobs:
   # General
-  label:
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  labeler:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Run Labeler
-        uses: actions/labeler@v4
-        with:
-          repo-token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - uses: actions/labeler@v5
   condition:
     name: 'Condition'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
