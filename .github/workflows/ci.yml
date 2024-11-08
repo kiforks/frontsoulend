@@ -29,7 +29,10 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@v5
+      - name: Automatic label creation for PR
+        uses: actions/labeler@v5
+        with:
+            sync-labels: true
   condition:
     name: 'Condition'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
