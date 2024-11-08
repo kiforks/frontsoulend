@@ -32,7 +32,7 @@ jobs:
       - name: Automatic label creation for PR
         uses: actions/labeler@v5
         with:
-            sync-labels: true
+          sync-labels: true
   condition:
     name: 'Condition'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
