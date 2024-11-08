@@ -1,5 +1,5 @@
 backend:
-  - 'backend/**/*'
+  - 'apps/backend/**/*'
 
 devops:
   - 'devops/**/*'
@@ -9,10 +9,10 @@ docker:
   - 'devops/docker/**/*'
 
 frontend:
-  - 'frontend/**/*'
+  - 'apps/frontend/**/*'
 
 qa:
-  - 'qa/**/*'
+  - 'apps/qa/**/*'
 
 workflow:
   - '.github/**/*'
