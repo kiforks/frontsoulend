@@ -23,9 +23,19 @@ concurrency:
 
 jobs:
   # General
+  labeler:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Automatic label creation for PR
+        uses: actions/labeler@v5
+        with:
+          sync-labels: true
   condition:
     name: 'Condition'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     outputs:
       run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
     steps:

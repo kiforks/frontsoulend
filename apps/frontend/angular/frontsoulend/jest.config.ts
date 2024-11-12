@@ -1,8 +1,10 @@
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import config from '../jest.config';
+
 export default {
 	displayName: 'frontsoulend',
-	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-	coverageDirectory: '../../../coverage/apps/frontend/frontsoulend',
+	coverageDirectory: '../../../../coverage/apps/frontend/angular/frontsoulend',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',
@@ -13,9 +15,5 @@ export default {
 		],
 	},
 	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
-	snapshotSerializers: [
-		'jest-preset-angular/build/serializers/no-ng-attributes',
-		'jest-preset-angular/build/serializers/ng-snapshot',
-		'jest-preset-angular/build/serializers/html-comment',
-	],
+	...config,
 };
