@@ -4,7 +4,7 @@
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
 # Define the regular expression for branch name pattern
-branch_regex="^DEV-[0-9]{1,}/[a-zA-Z0-9\-]{1,}$"
+branch_regex="^(DEV|GEN)-[0-9]+/[a-zA-Z0-9\-]*[a-zA-Z0-9]$"
 
 # Check if the branch name exceeds 25 characters
 if [ ${#branch_name} -gt 25 ]; then
@@ -15,7 +15,7 @@ fi
 # Check the branch name format
 if ! echo "$branch_name" | grep -Eq "$branch_regex"; then
   echo "❌ Invalid branch name: ${branch_name}."
-  echo "The branch name should follow the format: 'DEV-123/some-branch-name'."
+  echo "The branch name should follow the format: 'DEV-123/some-branch-name' or 'GEN-123/some-branch-name'."
   exit 1
 fi
 
