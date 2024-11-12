@@ -1,6 +1,6 @@
 {
 	"$schema": "./node_modules/nx/schemas/nx-schema.json",
-	"defaultProject": "frontsoulend",
+	"defaultProject": "platform",
 	"defaultBase": "main",
 	"namedInputs": {
 		"default": ["{projectRoot}/**/*", "sharedGlobals"],

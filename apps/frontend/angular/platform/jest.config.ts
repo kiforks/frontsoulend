@@ -2,9 +2,9 @@
 import config from '../jest.config';
 
 export default {
-	displayName: 'frontsoulend',
+	displayName: 'platform',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-	coverageDirectory: '../../../../coverage/apps/frontend/angular/frontsoulend',
+	coverageDirectory: '../../../../coverage/apps/frontend/angular/platform',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',

@@ -1,28 +1,28 @@
 {
-	"name": "frontsoulend",
+	"name": "platform",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "application",
 	"prefix": "app",
-	"sourceRoot": "apps/frontend/angular/frontsoulend/src",
+	"sourceRoot": "apps/frontend/angular/platform/src",
 	"tags": [],
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:application",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/apps/frontend/angular/frontsoulend",
-				"index": "apps/frontend/angular/frontsoulend/src/index.html",
-				"browser": "apps/frontend/angular/frontsoulend/src/main.ts",
+				"outputPath": "dist/apps/frontend/angular/platform",
+				"index": "apps/frontend/angular/platform/src/index.html",
+				"browser": "apps/frontend/angular/platform/src/main.ts",
 				"polyfills": ["zone.js"],
-				"tsConfig": "apps/frontend/angular/frontsoulend/tsconfig.app.json",
+				"tsConfig": "apps/frontend/angular/platform/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
 					{
 						"glob": "**/*",
-						"input": "apps/frontend/angular/frontsoulend/public"
+						"input": "apps/frontend/angular/platform/public"
 					}
 				],
-				"styles": ["apps/frontend/angular/frontsoulend/src/styles.scss"],
+				"styles": ["apps/frontend/angular/platform/src/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
@@ -53,10 +53,10 @@
 			"executor": "@angular-devkit/build-angular:dev-server",
 			"configurations": {
 				"production": {
-					"buildTarget": "frontsoulend:build:production"
+					"buildTarget": "platform:build:production"
 				},
 				"development": {
-					"buildTarget": "frontsoulend:build:development"
+					"buildTarget": "platform:build:development"
 				}
 			},
 			"defaultConfiguration": "development"
@@ -64,7 +64,7 @@
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"buildTarget": "frontsoulend:build"
+				"buildTarget": "platform:build"
 			}
 		},
 		"lint": {
@@ -74,21 +74,21 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "apps/frontend/angular/frontsoulend/jest.config.ts"
+				"jestConfig": "apps/frontend/angular/platform/jest.config.ts"
 			}
 		},
 		"stylelint": {
 			"executor": "nx-stylelint:lint",
 			"options": {
-				"lintFilePatterns": ["./apps/frontend/angular/frontsoulend/src/**/*.scss"]
+				"lintFilePatterns": ["./apps/frontend/angular/platform/src/**/*.scss"]
 			}
 		},
 		"serve-static": {
 			"executor": "@nx/web:file-server",
 			"options": {
-				"buildTarget": "frontsoulend:build",
+				"buildTarget": "platform:build",
 				"port": 4200,
-				"staticFilePath": "dist/apps/frontend/angular/frontsoulend/browser",
+				"staticFilePath": "dist/apps/frontend/angular/platform/browser",
 				"spa": true
 			}
 		}
