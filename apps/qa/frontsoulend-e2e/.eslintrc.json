@@ -1,0 +1,33 @@
+{
+	"root": true,
+	"ignorePatterns": ["!**/*"],
+	"plugins": ["@nx"],
+	"extends": ["../../../.eslintrc.base.json"],
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"extends": ["plugin:@nx/typescript"]
+		},
+		{
+			"files": ["*.js", "*.jsx"],
+			"extends": ["plugin:@nx/javascript"]
+		},
+		{
+			"files": ["*.ts"],
+			"parserOptions": {
+				"ecmaVersion": 2020,
+				"sourceType": "module",
+				"project": ["tsconfig.base.json"],
+				"createDefaultProgram": true
+			},
+			"extends": ["kifor/typescript"],
+			"rules": {
+				"@typescript-eslint/lines-between-class-members": "off"
+			}
+		},
+		{
+			"files": ["*.spec.ts", "*.host.ts", "*.po.ts"],
+			"extends": ["kifor/tests"]
+		}
+	]
+}
