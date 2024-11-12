@@ -3,26 +3,26 @@
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "application",
 	"prefix": "app",
-	"sourceRoot": "apps/frontend/frontsoulend/angular/src",
+	"sourceRoot": "apps/frontend/angular/frontsoulend/src",
 	"tags": [],
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:application",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/apps/frontend/frontsoulend/angular",
-				"index": "apps/frontend/frontsoulend/angular/src/index.html",
-				"browser": "apps/frontend/frontsoulend/angular/src/main.ts",
+				"outputPath": "dist/apps/frontend/angular/frontsoulend",
+				"index": "apps/frontend/angular/frontsoulend/src/index.html",
+				"browser": "apps/frontend/angular/frontsoulend/src/main.ts",
 				"polyfills": ["zone.js"],
-				"tsConfig": "apps/frontend/frontsoulend/angular/tsconfig.app.json",
+				"tsConfig": "apps/frontend/angular/frontsoulend/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
 					{
 						"glob": "**/*",
-						"input": "apps/frontend/frontsoulend/angular/public"
+						"input": "apps/frontend/angular/frontsoulend/public"
 					}
 				],
-				"styles": ["apps/frontend/frontsoulend/angular/src/styles.scss"],
+				"styles": ["apps/frontend/angular/frontsoulend/src/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
@@ -74,13 +74,13 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "apps/frontend/frontsoulend/angular/jest.config.ts"
+				"jestConfig": "apps/frontend/angular/frontsoulend/jest.config.ts"
 			}
 		},
 		"stylelint": {
 			"executor": "nx-stylelint:lint",
 			"options": {
-				"lintFilePatterns": ["./apps/frontend/frontsoulend/angular/src/**/*.scss"]
+				"lintFilePatterns": ["./apps/frontend/angular/frontsoulend/src/**/*.scss"]
 			}
 		},
 		"serve-static": {
@@ -88,7 +88,7 @@
 			"options": {
 				"buildTarget": "frontsoulend:build",
 				"port": 4200,
-				"staticFilePath": "dist/apps/frontend/frontsoulend/angular/browser",
+				"staticFilePath": "dist/apps/frontend/angular/frontsoulend/browser",
 				"spa": true
 			}
 		}
