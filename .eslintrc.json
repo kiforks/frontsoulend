@@ -18,17 +18,7 @@
 				"@nx/dependency-checks": [
 					"error",
 					{
-						"ignoredDependencies": [
-							"@angular/cdk",
-							"lodash",
-							"lodash-es",
-							"rxjs",
-							"@kiforks/utilities",
-							"@kiforks/core",
-							"@kiforks/ui",
-							"subsink",
-							"@ngneat/spectator"
-						]
+						"ignoredFiles": ["{projectRoot}/eslint.config.{js,cjs,mjs}"]
 					}
 				]
 			}
