@@ -45,6 +45,11 @@
 		},
 		"e2e-ci--**/*": {
 			"dependsOn": ["^build"]
+		},
+		"@nx/angular:package": {
+			"cache": true,
+			"dependsOn": ["^build"],
+			"inputs": ["production", "^production"]
 		}
 	},
 	"plugins": [
@@ -73,6 +78,17 @@
 			"linter": "eslint",
 			"style": "scss",
 			"unitTestRunner": "jest"
+		},
+		"@nx/angular:library": {
+			"linter": "eslint",
+			"unitTestRunner": "jest",
+			"publishable": true,
+			"prefix": "fs",
+			"tags": "scope:lib",
+			"importPath": "@frontsoulend",
+			"changeDetection": "OnPush",
+			"style": "scss",
+			"skipTests": true
 		},
 		"@schematics/angular:component": {
 			"style": "scss",
@@ -131,6 +147,51 @@
 			"flat": false
 		},
 		"@ngneat/spectator:spectator-service": {
+			"flat": false
+		},
+		"@nx/angular:component": {
+			"style": "scss",
+			"changeDetection": "OnPush",
+			"prefix": "app",
+			"skipTests": true,
+			"skipImport": true,
+			"standalone": true
+		},
+		"@nx/angular:directive": {
+			"prefix": "app",
+			"skipTests": true,
+			"standalone": true,
+			"skipImport": true,
+			"flat": false
+		},
+		"@nx/angular:pipe": {
+			"standalone": true,
+			"skipTests": true,
+			"skipImport": true,
+			"flat": false
+		},
+		"@nx/angular:service": {
+			"skipTests": true,
+			"flat": false
+		},
+		"@nx/angular:guard": {
+			"skipTests": true,
+			"flat": false
+		},
+		"@nx/angular:interceptor": {
+			"skipTests": true,
+			"flat": false
+		},
+		"@nx/angular:interface": {
+			"prefix": "app",
+			"type": "interface"
+		},
+		"@nx/angular:enum": {
+			"type": "enum"
+		},
+		"@nx/angular:module": {
+			"style": "scss",
+			"skipImport": true,
 			"flat": false
 		}
 	},
