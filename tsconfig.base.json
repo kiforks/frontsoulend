@@ -3,7 +3,6 @@
 	"compilerOptions": {
 		"rootDir": ".",
 		"sourceMap": true,
-		"declaration": false,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
@@ -28,7 +27,13 @@
 		"resolveJsonModule": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"typeRoots": ["node_modules/@types"]
+		"typeRoots": ["node_modules/@types"],
+		"paths": {
+			"@frontsoulend": ["libs/angular/ui/src/index.ts"]
+		},
+		"declaration": true,
+		"declarationMap": true,
+		"inlineSources": true
 	},
 	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"]
 }
