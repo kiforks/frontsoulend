@@ -14,7 +14,32 @@
 			},
 			"extends": ["plugin:@nx/angular", "kifor/angular-typescript", "kifor/typescript"],
 			"rules": {
-				"@typescript-eslint/lines-between-class-members": "off"
+				"@typescript-eslint/lines-between-class-members": "off",
+				"@typescript-eslint/naming-convention": [
+					"error",
+					{
+						"selector": ["variable", "classProperty"],
+						"modifiers": ["public", "readonly", "static"],
+						"format": ["UPPER_CASE"]
+					},
+					{ "selector": ["enumMember"], "format": ["UPPER_CASE"] }
+				],
+				"no-restricted-imports": [
+					"error",
+					{
+						"paths": [
+							{
+								"name": "@angular/common",
+								"importNames": ["NgIf", "NgFor", "NgSwitch", "NgSwitchCase", "NgSwitchDefault"],
+								"message": "Please use new control flow @if, @for, @switch"
+							},
+							{
+								"name": "rxjs/operators",
+								"message": "Use 'rxjs' instead."
+							}
+						]
+					}
+				]
 			}
 		},
 		{
