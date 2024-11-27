@@ -76,7 +76,7 @@ export class ConditionKeywordDirective<C extends object = object> {
 	 * This allows specifying an alternative template to render
 	 * if the primary condition is not satisfied.
 	 */
-	public elseTemplateRef = input<Nullable<TemplateRef<unknown>>>(null, {
+	public else = input<Nullable<TemplateRef<unknown>>>(null, {
 		alias: 'appConditionKeywordElse',
 	});
 
@@ -94,7 +94,7 @@ export class ConditionKeywordDirective<C extends object = object> {
 	private render(): void {
 		const context = this.element?.context || {};
 		const condition = (this.element.condition() || this.or()) && this.and();
-		const elseTemplateRef = this.elseTemplateRef();
+		const elseTemplateRef = this.else();
 
 		untracked(() => {
 			this.viewContainerRef.clear();
