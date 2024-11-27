@@ -1,0 +1,8 @@
+{
+	"name": "@frontsoulend/utilities",
+	"version": "0.0.1",
+	"dependencies": {},
+	"type": "module",
+	"types": "./src/index.d.ts",
+	"main": "./index.js"
+}
