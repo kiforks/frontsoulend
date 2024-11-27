@@ -4,7 +4,7 @@
 	"projectType": "application",
 	"prefix": "app",
 	"sourceRoot": "apps/frontend/angular/platform/src",
-	"tags": [],
+	"tags": ["scope:app"],
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:application",
@@ -27,6 +27,12 @@
 			},
 			"configurations": {
 				"production": {
+					"fileReplacements": [
+						{
+							"replace": "apps/frontend/angular/platform/environments/environment.ts",
+							"with": "apps/frontend/angular/platform/environments/environment.prod.ts"
+						}
+					],
 					"budgets": [
 						{
 							"type": "initial",
