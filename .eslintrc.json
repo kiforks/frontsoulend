@@ -37,6 +37,10 @@
 								"onlyDependOnLibsWithTags": ["*"]
 							},
 							{
+								"sourceTag": "scope:app",
+								"onlyDependOnLibsWithTags": ["scope:lib"]
+							},
+							{
 								"sourceTag": "scope:utilities",
 								"onlyDependOnLibsWithTags": ["scope:utilities", "scope:core"]
 							},
@@ -45,8 +49,8 @@
 								"onlyDependOnLibsWithTags": ["scope:core", "scope:utilities"]
 							},
 							{
-								"sourceTag": "scope:ui",
-								"onlyDependOnLibsWithTags": ["scope:ui", "scope:utilities", "scope:core"]
+								"sourceTag": "scope:ng-ui",
+								"onlyDependOnLibsWithTags": ["scope:ng-ui", "scope:utilities", "scope:core"]
 							}
 						]
 					}
