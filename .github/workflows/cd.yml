@@ -1,0 +1,127 @@
+name: CD
+
+on:
+  pull_request:
+    branches:
+      - main
+      - '!dependabot/**'
+    types:
+      - closed
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+  NPM_ACCESS_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+
+permissions:
+  actions: read
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  publish_libraries:
+    name: 'Publish Libraries'
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install
+        run: npm install
+
+      - name: Detect Changes
+        id: detect_changes
+        run: |
+          find_changed_libs() {
+            local base_dir=$1
+            local changed_libs=""
+            for dir in "$base_dir"/*; do
+              if [ -d "$dir" ]; then
+                if [ -f "$dir/package.json" ]; then
+                  # Check if version was changed and increased in package.json at the first level
+                  if git diff HEAD~1 -- "$dir/package.json" | grep -q '"version"'; then
+                    local old_version=$(git show HEAD~1:"$dir/package.json" | jq -r '.version')
+                    local new_version=$(jq -r '.version' "$dir/package.json")
+
+                    # Compare old_version and new_version
+                    if [ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" = "$old_version" ] && [ "$old_version" != "$new_version" ]; then
+                      changed_libs="$changed_libs $dir"
+                    fi
+                  fi
+                else
+                  # Check second level if no package.json found at the first level
+                  for sub_dir in "$dir"/*; do
+                    if [ -f "$sub_dir/package.json" ]; then
+                      if git diff HEAD~1 -- "$sub_dir/package.json" | grep -q '"version"'; then
+                        local old_version=$(git show HEAD~1:"$sub_dir/package.json" | jq -r '.version')
+                        local new_version=$(jq -r '.version' "$sub_dir/package.json")
+
+                        if [ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" = "$old_version" ] && [ "$old_version" != "$new_version" ]; then
+                          changed_libs="$changed_libs $sub_dir"
+                        fi
+                      fi
+                    else
+                      # Check third level if no package.json found at the second level
+                      for nested_dir in "$sub_dir"/*; do
+                        if [ -f "$nested_dir/package.json" ]; then
+                          if git diff HEAD~1 -- "$nested_dir/package.json" | grep -q '"version"'; then
+                            local old_version=$(git show HEAD~1:"$nested_dir/package.json" | jq -r '.version')
+                            local new_version=$(jq -r '.version' "$nested_dir/package.json")
+
+                            if [ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" = "$old_version" ] && [ "$old_version" != "$new_version" ]; then
+                              changed_libs="$changed_libs $nested_dir"
+                            fi
+                          fi
+                        fi
+                      done
+                    fi
+                  done
+                fi
+              fi
+            done
+            # Remove leading whitespace and save to $GITHUB_ENV
+            echo "CHANGED_LIBS=$(echo $changed_libs | xargs)" >> $GITHUB_ENV
+          }
+
+          find_changed_libs "libs"
+          if [ -z "$CHANGED_LIBS" ]; then
+            echo "No version changes detected or version not increased. Skipping job."
+            exit 0
+          fi
+          echo "Changed libraries: $CHANGED_LIBS"
+
+      - name: Build
+        if: env.CHANGED_LIBS != ''
+        run: |
+          npx nx affected -t build --exclude='*,!tag:scope:lib' --base=origin/main --head=HEAD --configuration=production
+
+      - name: Publish
+        if: env.CHANGED_LIBS != ''
+        run: |
+          for dir in $CHANGED_LIBS; do
+            echo "Publishing library in $dir"
+            # Construct the correct dist path to preserve folder structure, including the 'libs' folder
+            RELATIVE_PATH=${dir#libs/}
+            cd dist/libs/$RELATIVE_PATH
+            npm publish --access=public || exit 1
+            cd -
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}

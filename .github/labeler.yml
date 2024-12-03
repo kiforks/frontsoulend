@@ -6,6 +6,10 @@ devops:
   - changed-files:
       - any-glob-to-any-file: 'devops/**/*'
 
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**/*'
+
 docker:
   - changed-files:
       - any-glob-to-any-file: 'docker-compose.*.yml'
@@ -18,10 +22,6 @@ frontend:
 qa:
   - changed-files:
       - any-glob-to-any-file: 'apps/qa/**/*'
-
-workflow:
-  - changed-files:
-      - any-glob-to-any-file: '.github/**/*'
 
 docs:
   - changed-files:

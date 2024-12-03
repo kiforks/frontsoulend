@@ -1,0 +1,12 @@
+{
+	"extends": "../../../../tsconfig.angular.json",
+	"compilerOptions": {
+		"paths": {
+			"@app/*": ["./src/app/*"],
+			"@env/*": ["./src/environments/*"],
+			"@kiforks/core": ["libs/core/src/index.ts"],
+			"@kiforks/utilities": ["libs/utilities/src/index.ts"],
+			"@kiforks/ng-ui": ["libs/angular/ui/src/index.ts"]
+		}
+	}
+}
