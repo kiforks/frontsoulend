@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Bind } from '@frontsoulend/utilities';
+import { Bind } from '@kiforks/utilities';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 
 import { MediaHelper } from '../../helpers';

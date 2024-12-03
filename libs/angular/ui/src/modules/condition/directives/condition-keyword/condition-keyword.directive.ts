@@ -1,5 +1,5 @@
 import { Directive, effect, inject, input, TemplateRef, untracked, ViewContainerRef } from '@angular/core';
-import { Nullable } from '@frontsoulend/core';
+import { Nullable } from '@kiforks/core';
 
 import { ConditionKeyword } from '../../models';
 

@@ -1,5 +1,5 @@
 import { InputSignal, WritableSignal } from '@angular/core';
-import { Breakpoint } from '@frontsoulend/core';
+import { Breakpoint } from '@kiforks/core';
 import { Observable } from 'rxjs';
 
 /*
