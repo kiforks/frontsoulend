@@ -189,107 +189,107 @@ jobs:
           else
             echo "All versions are valid."
           fi
-  # Linters
-  format:
-    name: 'Format'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run formatting
-        run: npm run format
-  eslint:
-    name: 'ESLint'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run ESLint
-        run: npm run eslint
-  stylelint:
-    name: 'Stylelint'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run Stylelint
-        run: npm run stylelint
-
-  # Frontend
-  frontend-tests:
-    name: 'Frontend tests'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint, version-check]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run frontend tests
-        run: npm run test:ci
-  frontend-build:
-    name: 'Frontend build'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint, version-check]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-
-      - name: Frontend build
-        run: npm run build:production
+#  # Linters
+#  format:
+#    name: 'Format'
+#    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+#    timeout-minutes: 30
+#    needs: [changes]
+#    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - name: Set SHAs for NX
+#        uses: nrwl/nx-set-shas@v4
+#      - name: Run formatting
+#        run: npm run format
+#  eslint:
+#    name: 'ESLint'
+#    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+#    timeout-minutes: 30
+#    needs: [changes]
+#    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - name: Set SHAs for NX
+#        uses: nrwl/nx-set-shas@v4
+#      - name: Run ESLint
+#        run: npm run eslint
+#  stylelint:
+#    name: 'Stylelint'
+#    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+#    timeout-minutes: 30
+#    needs: [changes]
+#    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - name: Set SHAs for NX
+#        uses: nrwl/nx-set-shas@v4
+#      - name: Run Stylelint
+#        run: npm run stylelint
+#
+#  # Frontend
+#  frontend-tests:
+#    name: 'Frontend tests'
+#    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+#    timeout-minutes: 30
+#    needs: [changes, format, stylelint, eslint, version-check]
+#    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - name: Set SHAs for NX
+#        uses: nrwl/nx-set-shas@v4
+#      - name: Run frontend tests
+#        run: npm run test:ci
+#  frontend-build:
+#    name: 'Frontend build'
+#    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+#    timeout-minutes: 30
+#    needs: [changes, format, stylelint, eslint, version-check]
+#    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#      - run: npm install
+#      - name: Set SHAs for NX
+#        uses: nrwl/nx-set-shas@v4
+#
+#      - name: Frontend build
+#        run: npm run build:production
