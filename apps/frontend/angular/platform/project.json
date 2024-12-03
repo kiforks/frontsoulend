@@ -7,12 +7,12 @@
 	"tags": ["scope:app"],
 	"targets": {
 		"build": {
-			"executor": "@angular-devkit/build-angular:application",
+			"executor": "@nx/angular:browser-esbuild",
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/apps/frontend/angular/platform",
 				"index": "apps/frontend/angular/platform/src/index.html",
-				"browser": "apps/frontend/angular/platform/src/main.ts",
+				"main": "apps/frontend/angular/platform/src/main.ts",
 				"polyfills": ["zone.js"],
 				"tsConfig": "apps/frontend/angular/platform/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
@@ -56,7 +56,7 @@
 			"defaultConfiguration": "production"
 		},
 		"serve": {
-			"executor": "@angular-devkit/build-angular:dev-server",
+			"executor": "@nx/angular:dev-server",
 			"configurations": {
 				"production": {
 					"buildTarget": "platform:build:production"
