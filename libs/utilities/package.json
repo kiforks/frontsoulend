@@ -1,6 +1,6 @@
 {
 	"name": "@kiforks/utilities",
-	"version": "0.0.31",
+	"version": "0.0.32",
 	"dependencies": {},
 	"type": "module",
 	"types": "./src/index.d.ts",
