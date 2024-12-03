@@ -4,15 +4,15 @@
 	"projectType": "application",
 	"prefix": "app",
 	"sourceRoot": "apps/frontend/angular/platform/src",
-	"tags": [],
+	"tags": ["scope:app"],
 	"targets": {
 		"build": {
-			"executor": "@angular-devkit/build-angular:application",
+			"executor": "@nx/angular:browser-esbuild",
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/apps/frontend/angular/platform",
 				"index": "apps/frontend/angular/platform/src/index.html",
-				"browser": "apps/frontend/angular/platform/src/main.ts",
+				"main": "apps/frontend/angular/platform/src/main.ts",
 				"polyfills": ["zone.js"],
 				"tsConfig": "apps/frontend/angular/platform/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
@@ -27,6 +27,12 @@
 			},
 			"configurations": {
 				"production": {
+					"fileReplacements": [
+						{
+							"replace": "apps/frontend/angular/platform/environments/environment.ts",
+							"with": "apps/frontend/angular/platform/environments/environment.prod.ts"
+						}
+					],
 					"budgets": [
 						{
 							"type": "initial",
@@ -50,7 +56,7 @@
 			"defaultConfiguration": "production"
 		},
 		"serve": {
-			"executor": "@angular-devkit/build-angular:dev-server",
+			"executor": "@nx/angular:dev-server",
 			"configurations": {
 				"production": {
 					"buildTarget": "platform:build:production"

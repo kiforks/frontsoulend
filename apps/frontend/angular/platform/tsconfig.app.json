@@ -1,12 +1,8 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
-		"types": [],
-		"paths": {
-			"@app/*": ["./src/app/*"],
-			"@env/*": ["./src/environments/*"]
-		}
+		"types": []
 	},
 	"files": ["src/main.ts"],
 	"include": ["src/**/*.d.ts"],
