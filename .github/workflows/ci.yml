@@ -5,9 +5,17 @@ on:
     branches:
       - main
       - '!dependabot/**'
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - converted_to_draft
+      - closed
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+  NPM_ACCESS_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
 
 permissions:
   actions: read
@@ -18,7 +26,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -33,19 +41,28 @@ jobs:
         uses: actions/labeler@v5
         with:
           sync-labels: true
+
   condition:
     name: 'Condition'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     outputs:
       run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
+      is_draft: ${{ steps.set.outputs.is_draft }}
     steps:
-      - name: Determine RUN_ON_PR_AND_SCHEDULE
+      - name: Determine RUN_ON_PR_AND_SCHEDULE and DRAFT status
         id: set
         run: |
           if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
             echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
+          fi
+
+          if [[ "${{ github.event.pull_request.draft }}" == "true" ]]; then
+            echo "is_draft=true" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "is_draft=false" >> $GITHUB_OUTPUT
           fi
 
   changes:
@@ -56,9 +73,9 @@ jobs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
       general: ${{ steps.general.outputs.changed }}
+    if: ${{ needs.condition.outputs.is_draft == 'false' }}
     steps:
       - name: Check for file changes
-        if: github.event_name == 'pull_request'
         uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -104,7 +121,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -124,7 +141,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -144,7 +161,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -166,7 +183,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes, format, stylelint, eslint]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -186,7 +203,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes, format, stylelint, eslint]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
