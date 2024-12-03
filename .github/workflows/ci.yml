@@ -47,10 +47,18 @@ jobs:
     outputs:
       run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
       is_draft: ${{ steps.set.outputs.is_draft }}
+      is_closed: ${{ steps.set.outputs.is_closed }}
     steps:
-      - name: Determine RUN_ON_PR_AND_SCHEDULE and DRAFT status
+      - name: Determine RUN_ON_PR_AND_SCHEDULE, DRAFT, and CLOSED status
         id: set
         run: |
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" == "closed" ]]; then
+            echo "is_closed=true" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "is_closed=false" >> $GITHUB_OUTPUT
+          fi
+
           if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
@@ -72,7 +80,7 @@ jobs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
       general: ${{ steps.general.outputs.changed }}
-    if: ${{ needs.condition.outputs.is_draft == 'false' }}
+    if: ${{ needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' }}
     steps:
       - name: Check for file changes
         uses: dorny/paths-filter@v2
@@ -120,7 +128,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -140,7 +148,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -160,7 +168,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -182,7 +190,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes, format, stylelint, eslint]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -202,7 +210,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes, format, stylelint, eslint]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:

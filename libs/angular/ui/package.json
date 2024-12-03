@@ -3,7 +3,7 @@
 	"version": "0.0.3",
 	"peerDependencies": {
 		"@kiforks/core": "0.0.3",
-		"@kiforks/utilities": "0.0.3",
+		"@kiforks/utilities": "0.0.31",
 		"@angular/core": "~18.2.0",
 		"rxjs": "~7.8.0",
 		"@angular/router": "~18.2.0",
