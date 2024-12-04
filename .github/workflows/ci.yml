@@ -11,7 +11,6 @@ on:
       - synchronize
       - ready_for_review
       - converted_to_draft
-      - closed
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
@@ -48,10 +47,18 @@ jobs:
     outputs:
       run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
       is_draft: ${{ steps.set.outputs.is_draft }}
+      is_closed: ${{ steps.set.outputs.is_closed }}
     steps:
-      - name: Determine RUN_ON_PR_AND_SCHEDULE and DRAFT status
+      - name: Determine RUN_ON_PR_AND_SCHEDULE, DRAFT, and CLOSED status
         id: set
         run: |
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" == "closed" ]]; then
+            echo "is_closed=true" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "is_closed=false" >> $GITHUB_OUTPUT
+          fi
+
           if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
           else
@@ -73,7 +80,7 @@ jobs:
       frontend: ${{ steps.filter.outputs.frontend }}
       e2e: ${{ steps.filter.outputs.e2e }}
       general: ${{ steps.general.outputs.changed }}
-    if: ${{ needs.condition.outputs.is_draft == 'false' }}
+    if: ${{ needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' }}
     steps:
       - name: Check for file changes
         uses: dorny/paths-filter@v2
@@ -115,13 +122,80 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+  version-check:
+    name: 'Version Check'
+    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+    needs: [condition]
+    if: ${{ needs.condition.outputs.is_draft == 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Check Package Versions
+        run: |
+          compare_versions() {
+            local old_version=$1
+            local new_version=$2
+
+            if [[ "$old_version" == "$new_version" ]]; then
+              echo "same"
+            elif [[ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" == "$old_version" ]]; then
+              echo "increased"
+            else
+              echo "decreased"
+            fi
+          }
+
+          FAILED=false
+
+          # Перевірити package.json у корені та в libs (до 4-го рівня)
+          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json libs/**/package.json)
+
+          echo "Checking versions for changed package.json files..."
+          for file in $CHANGED_FILES; do
+            echo "Checking file: $file"
+
+            OLD_VERSION=$(git show HEAD~1:$file | jq -r '.version')
+            NEW_VERSION=$(jq -r '.version' $file)
+
+            echo "Old version: $OLD_VERSION, New version: $NEW_VERSION"
+
+            if [[ -z "$OLD_VERSION" || -z "$NEW_VERSION" ]]; then
+              echo "Warning: Could not determine version for $file"
+              continue
+            fi
+
+            RESULT=$(compare_versions "$OLD_VERSION" "$NEW_VERSION")
+
+            if [[ "$RESULT" == "decreased" ]]; then
+              echo "Error: Version decreased for $file (Old: $OLD_VERSION, New: $NEW_VERSION)"
+              FAILED=true
+            elif [[ "$RESULT" == "same" ]]; then
+              echo "Info: Version remained the same for $file (Version: $NEW_VERSION)"
+            elif [[ "$RESULT" == "increased" ]]; then
+              echo "Info: Version increased for $file (Old: $OLD_VERSION, New: $NEW_VERSION)"
+            fi
+          done
+
+          if $FAILED; then
+            echo "One or more versions have decreased. Failing the job."
+            exit 1
+          else
+            echo "All versions are valid."
+          fi
   # Linters
   format:
     name: 'Format'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -141,7 +215,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -161,7 +235,7 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -182,8 +256,8 @@ jobs:
     name: 'Frontend tests'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    needs: [changes, format, stylelint, eslint, version-check]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -202,8 +276,8 @@ jobs:
     name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.changes.outputs.general == 'true' }}
+    needs: [changes, format, stylelint, eslint, version-check]
+    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -216,5 +290,6 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
+
       - name: Frontend build
         run: npm run build:production

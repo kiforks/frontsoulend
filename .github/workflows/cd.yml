@@ -110,7 +110,7 @@ jobs:
       - name: Build
         if: env.CHANGED_LIBS != ''
         run: |
-          npx nx affected -t build --exclude='*,!tag:scope:lib' --base=origin/main --head=HEAD --configuration=production
+          npx nx affected -t build --exclude='*,!tag:scope:lib' --base=HEAD~1 --head=HEAD --configuration=production
 
       - name: Publish
         if: env.CHANGED_LIBS != ''
