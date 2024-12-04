@@ -23,7 +23,8 @@
 		"test:ci": "nx affected --target=test --base=origin/main --code-coverage --ci",
 		"prerelease": "nx affected --target=lint,stylelint,test --code-coverage --base=origin/main && npm run format",
 		"build": "nx affected -t build --base=origin/main --configuration=development",
-		"build:production": "nx affected -t build --base=origin/main --configuration=production"
+		"build:production": "nx affected -t build --base=origin/main --configuration=production",
+		"build:ci:deploy-libs": "npx nx affected -t build --exclude='*,!tag:scope:lib' --base=HEAD~1 --head=HEAD --configuration=production"
 	},
 	"private": true,
 	"dependencies": {
