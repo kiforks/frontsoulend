@@ -80,7 +80,7 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"jest-environment-node": "^29.7.0",
 		"jest-preset-angular": "~14.4.2",
-		"kifor-prettier-config": "^1.0.7",
+		"kifor-prettier-config": "^1.1.0",
 		"kifor-stylelint-config": "^2.0.0",
 		"lint-staged": "^15.2.10",
 		"ng-packagr": "~18.2.0",
