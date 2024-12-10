@@ -28,6 +28,7 @@
 		"build:ci:deploy-libs": "npx nx affected -t build --exclude='*,!tag:scope:lib' --base=HEAD~1 --head=HEAD --configuration=production"
 	},
 	"private": true,
+	"type": "module",
 	"dependencies": {
 		"@angular/animations": "~18.2.0",
 		"@angular/common": "~18.2.0",
@@ -80,8 +81,8 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"jest-environment-node": "^29.7.0",
 		"jest-preset-angular": "~14.4.2",
-		"kifor-prettier-config": "^1.1.0",
-		"kifor-stylelint-config": "^2.0.0",
+		"@kiforks/prettier-config": "^1.0.0",
+		"@kiforks/stylelint-config": "^1.0.0",
 		"lint-staged": "^15.2.10",
 		"ng-packagr": "~18.2.0",
 		"nx": "20.1.4",
