@@ -154,7 +154,6 @@ jobs:
 
           FAILED=false
 
-          # Перевірити package.json у корені та в libs (до 4-го рівня)
           CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json libs/**/package.json)
 
           echo "Checking versions for changed package.json files..."
