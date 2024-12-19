@@ -103,14 +103,12 @@
 			"skipImport": true
 		},
 		"@schematics/angular:directive": {
-			"standalone": true,
 			"prefix": "app",
 			"skipTests": true,
 			"skipImport": true,
 			"flat": false
 		},
 		"@schematics/angular:pipe": {
-			"standalone": true,
 			"skipTests": true,
 			"skipImport": true,
 			"flat": false
@@ -141,13 +139,11 @@
 			"skipImport": true
 		},
 		"@ngneat/spectator:spectator-directive": {
-			"standalone": true,
 			"prefix": "app",
 			"skipImport": true,
 			"flat": false
 		},
 		"@ngneat/spectator:spectator-pipe": {
-			"standalone": true,
 			"skipImport": true,
 			"flat": false
 		},
@@ -159,18 +155,15 @@
 			"changeDetection": "OnPush",
 			"prefix": "app",
 			"skipTests": true,
-			"skipImport": true,
-			"standalone": true
+			"skipImport": true
 		},
 		"@nx/angular:directive": {
 			"prefix": "app",
 			"skipTests": true,
-			"standalone": true,
 			"skipImport": true,
 			"flat": false
 		},
 		"@nx/angular:pipe": {
-			"standalone": true,
 			"skipTests": true,
 			"skipImport": true,
 			"flat": false
