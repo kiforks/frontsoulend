@@ -209,7 +209,7 @@ jobs:
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
       - name: Run formatting
-        run: npm run lint
+        run: npm run eslint
 
   # Frontend
   frontend-tests:
