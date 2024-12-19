@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-	standalone: true,
 	selector: 'app-root',
-	templateUrl: './app.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [RouterOutlet],
+	standalone: true,
+	templateUrl: './app.component.html',
 })
 export class AppComponent {}
