@@ -62,7 +62,8 @@
 					"buildTarget": "platform:build:production"
 				},
 				"development": {
-					"buildTarget": "platform:build:development"
+					"buildTarget": "platform:build:development",
+					"hmr": true
 				}
 			},
 			"defaultConfiguration": "development"

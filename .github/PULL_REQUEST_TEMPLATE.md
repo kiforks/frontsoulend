@@ -1,22 +1,24 @@
 ## Description
 
-Brief description of the changes introduced by this merge request (no more than 150 chars)
-
-## Related Tickets & Documents
-
-- Related Issue [link from Jira]
-- Closes tasks or bugs [link from Jira]
+Briefly describe the changes introduced by this merge request (e.g., updated Stylelint rules, dependency upgrades, bug fixes). Limit to 150 chars.
 
 ## Checklist
 
-- [ ] All tests pass locally - self QA by dev
-- [ ] Documentation updated (if necessary)
-- [ ] Changes do not introduce any known security vulnerabilities
+- [ ] **Clear and concise description** of the changes.
+- [ ] **Changelog updated** (if the changes affect users).
+- [ ] **Code review completed** for readability and maintainability.
+- [ ] **Impact assessment** done to identify potential side effects.
+- [ ] **Documentation updated** if the changes alter usage or behavior.
 
-## Screenshots
+## Related Issues/Tickets (Optional)
 
-Attach relevant screenshots or GIFs showcasing the changes (optional).
+- Related Issue/Proposal: [Link]
+- Closes: [Link to GitHub Issue or Jira Ticket]
 
-## Additional Notes
+## Screenshots/Outputs (Optional)
 
-Any additional information or context about the changes made in this merge request. E.g. refactored someone’s code (optional).
+Add relevant screenshots, code snippets, or terminal outputs to demonstrate changes (if applicable).
+
+## Additional Notes (Optional)
+
+Provide context, reasoning, or any additional details regarding the changes. For technical updates (e.g., package upgrades), specify the reason for the change.

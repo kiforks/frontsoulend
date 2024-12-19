@@ -17,11 +17,12 @@
  * Source:
  * @see https://github.com/NoHomey/bind-decorator
  */
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type, func-style
 export function Bind<T extends Function>(
 	_target: unknown,
 	propertyKey: string,
 	descriptor: TypedPropertyDescriptor<T>
+	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ): TypedPropertyDescriptor<T> | void {
 	if (!descriptor || typeof descriptor.value !== 'function') {
 		throw new TypeError(`Only methods can be decorated with @bind. <${propertyKey}> is not a method!`);

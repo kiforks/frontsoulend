@@ -6,7 +6,7 @@
 		"default": ["{projectRoot}/**/*", "sharedGlobals"],
 		"production": [
 			"default",
-			"!{projectRoot}/.eslintrc.json",
+			"!{projectRoot}/eslint.config.js",
 			"!{projectRoot}/.stylelint.json",
 			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
 			"!{projectRoot}/tsconfig.spec.json",
@@ -24,7 +24,7 @@
 		},
 		"@nx/eslint:lint": {
 			"cache": true,
-			"inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/.eslintignore"]
+			"inputs": ["default", "{workspaceRoot}/eslint.config.js"]
 		},
 		"@nx/jest:jest": {
 			"cache": true,
@@ -103,14 +103,12 @@
 			"skipImport": true
 		},
 		"@schematics/angular:directive": {
-			"standalone": true,
 			"prefix": "app",
 			"skipTests": true,
 			"skipImport": true,
 			"flat": false
 		},
 		"@schematics/angular:pipe": {
-			"standalone": true,
 			"skipTests": true,
 			"skipImport": true,
 			"flat": false
@@ -141,13 +139,11 @@
 			"skipImport": true
 		},
 		"@ngneat/spectator:spectator-directive": {
-			"standalone": true,
 			"prefix": "app",
 			"skipImport": true,
 			"flat": false
 		},
 		"@ngneat/spectator:spectator-pipe": {
-			"standalone": true,
 			"skipImport": true,
 			"flat": false
 		},
@@ -159,18 +155,15 @@
 			"changeDetection": "OnPush",
 			"prefix": "app",
 			"skipTests": true,
-			"skipImport": true,
-			"standalone": true
+			"skipImport": true
 		},
 		"@nx/angular:directive": {
 			"prefix": "app",
 			"skipTests": true,
-			"standalone": true,
 			"skipImport": true,
 			"flat": false
 		},
 		"@nx/angular:pipe": {
-			"standalone": true,
 			"skipTests": true,
 			"skipImport": true,
 			"flat": false

@@ -1,8 +1,8 @@
 import { MediaBreakpoint, MediaBreakpoints } from '../models';
 
 export abstract class MediaConfig {
-	public static readonly BREAKPOINT_COLLECTION: MediaBreakpoint[] = ['sm', 'md', 'lg', 'xl', 'xxl'];
-	public static readonly DEVICE_BREAKPOINT: MediaBreakpoint = 'md';
+	public static readonly BreakpointCollection: MediaBreakpoint[] = ['sm', 'md', 'lg', 'xl', 'xxl'];
+	public static readonly DeviceBreakpoint: MediaBreakpoint = 'md';
 
 	/*
 	 * Browsers don’t currently support range context queries, so we work around the
@@ -10,7 +10,7 @@ export abstract class MediaConfig {
 	 * (which can occur under certain conditions on high-dpi devices, for instance)
 	 * by using values with higher precision.
 	 */
-	public static readonly MAX_SCREEN_RANGE = 0.02;
+	public static readonly MaxScreenRange = 0.02;
 	/**
 	 * Breakpoints were taken from:
 	 * @see libs/ui/scss/utilities/media/variables/_breakpoints.scss

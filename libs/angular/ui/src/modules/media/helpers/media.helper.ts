@@ -5,7 +5,7 @@ export abstract class MediaHelper {
 	 * Returns a media-min query string for maximum width
 	 */
 	public static getMaxWidth(breakpoint: number): string {
-		const value = breakpoint - MediaConfig.MAX_SCREEN_RANGE;
+		const value = breakpoint - MediaConfig.MaxScreenRange;
 
 		return `(max-width: ${value}px)`;
 	}

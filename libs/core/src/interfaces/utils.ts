@@ -1,13 +1,30 @@
 export type Nullable<T> = T | null | undefined;
-export type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
 export type NonUndefined<T> = T extends undefined ? never : T;
 
 /**
- * The utility function Opaque<K, T> simply defines a new type that,
- * aside from a variable’s value, also stores a (unique) key.
+ * The utility function Enumerate<N> generates a union of numbers from 0 to N-1.
  *
- * This then allows TypeScript to differentiate between different types,
- * even though all still store plain K type and do not change the compiler’s output.
+ * @example
+ * type OneToFive = Enumerate<5>; // 0 | 1 | 2 | 3 | 4
+ *
+ * @see https://stackoverflow.com/questions/39494689/is-it-possible-to-restrict-number-to-a-certain-range/70307091#70307091
+ */
+export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
+	? Acc[number]
+	: Enumerate<N, [...Acc, Acc['length']]>;
+
+/**
+ * The utility function IntRange<F, T> defines a new type
+ * that is a range of int numbers from F to T.
+ *
+ * @example
+ * type MonthNumber = IntRange<1, 13>; // 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+ */
+export type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
+
+/**
+ * The utility function Opaque<K, T> defines a new type that,
+ * aside from a variable’s value, also stores a (unique) key.
  *
  * @example
  * const trackLogin = (currentDate: DateISOString, sessionId: Uuid) => { someCode(); }
@@ -18,19 +35,6 @@ export type NonUndefined<T> = T extends undefined ? never : T;
  * trackLogin(sessionUuid, currentDate); // TypeScript will now understand this function call and show an error
  */
 export type Opaque<K, T> = T & { __TYPE__: K };
-
-/**
- * The utility function IntRange<F, T> simply defines a new type
- * that is a range of int numbers from F to T
- *
- * @example
- * type MonthNumber = IntRange<1, 13>; // 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
- *
- * @see https://stackoverflow.com/questions/39494689/is-it-possible-to-restrict-number-to-a-certain-range/70307091#70307091
- */
-export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
-	? Acc[number]
-	: Enumerate<N, [...Acc, Acc['length']]>;
 
 /**
  * Replaces a property in an object type with a new property of a different name.
@@ -46,7 +50,7 @@ export type Enumerate<N extends number, Acc extends number[] = []> = Acc['length
  * type ModifiedExample = Replace<Example, 'name', 'fullName'>;
  * // Result: { fullName: string; age: number; }
  */
-export type Replace<T, K1 extends keyof T, K2 extends string> = Omit<T, K1> & { [key in K2]: T[K1] };
+export type Replace<T, K1 extends keyof T, K2 extends string> = Omit<T, K1> & Record<K2, T[K1]>;
 
 /**
  * Represents a partially optional version of an object type where each property is recursively marked as optional.
@@ -57,7 +61,6 @@ export type Replace<T, K1 extends keyof T, K2 extends string> = Omit<T, K1> & { 
  *   nested: {
  *     value: number;
  *   };
- * }
  *
  * type PartialExample = DeepPartial<Example>;
  * // Result: { name?: string; nested?: { value?: number | null | undefined; } | null | undefined; } | null | undefined
