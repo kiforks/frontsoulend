@@ -216,7 +216,7 @@ jobs:
     name: 'Frontend tests'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint, version-check]
+    needs: [changes, lint, version-check]
     if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -236,7 +236,7 @@ jobs:
     name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint, version-check]
+    needs: [changes, format, version-check]
     if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
