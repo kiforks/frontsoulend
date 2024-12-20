@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
+
 import { Bind } from '@kiforks/utilities';
+
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 
 import { MediaHelper } from '../../helpers';
-
 import { MediaBetweenBreakpoints, MediaBreakpoint, MediaConfigData } from '../../models';
 
 import { MediaConfig } from '../../configs';
@@ -15,7 +16,7 @@ export class MediaService {
 	private readonly breakpointObserver = inject(BreakpointObserver);
 	private readonly config: MediaConfigData = {
 		breakpoints: MediaConfig.BREAKPOINTS,
-		deviceBreakpoint: MediaConfig.DEVICE_BREAKPOINT,
+		deviceBreakpoint: MediaConfig.DeviceBreakpoint,
 		...inject(MEDIA_CONFIG, { optional: true }),
 	};
 
@@ -76,8 +77,8 @@ export class MediaService {
 			return this.getBreakpointValue('xxl', 'min');
 		}
 
-		const nextBreakpointIndex = MediaConfig.BREAKPOINT_COLLECTION.indexOf(breakpoint) + 1;
-		const nextBreakpoint = MediaConfig.BREAKPOINT_COLLECTION[nextBreakpointIndex];
+		const nextBreakpointIndex = MediaConfig.BreakpointCollection.indexOf(breakpoint) + 1;
+		const nextBreakpoint = MediaConfig.BreakpointCollection[nextBreakpointIndex];
 		const breakpointMax = this.config.breakpoints[nextBreakpoint];
 		const breakpointMin = this.config.breakpoints[breakpoint];
 
