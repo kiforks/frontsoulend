@@ -154,7 +154,6 @@ jobs:
 
           FAILED=false
 
-          # Перевірити package.json у корені та в libs (до 4-го рівня)
           CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json libs/**/package.json)
 
           echo "Checking versions for changed package.json files..."
@@ -190,8 +189,8 @@ jobs:
             echo "All versions are valid."
           fi
   # Linters
-  format:
-    name: 'Format'
+  lint:
+    name: 'Run linters'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
@@ -209,54 +208,14 @@ jobs:
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
       - name: Run formatting
-        run: npm run format
-  eslint:
-    name: 'ESLint'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run ESLint
-        run: npm run eslint
-  stylelint:
-    name: 'Stylelint'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run Stylelint
-        run: npm run stylelint
+        run: npm run lint
 
   # Frontend
   frontend-tests:
     name: 'Frontend tests'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint, version-check]
+    needs: [changes, lint, version-check]
     if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -276,7 +235,7 @@ jobs:
     name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
-    needs: [changes, format, stylelint, eslint, version-check]
+    needs: [changes, lint, version-check]
     if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4

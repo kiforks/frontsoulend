@@ -1,4 +1,5 @@
 import { Directive, effect, inject, input, TemplateRef, untracked, ViewContainerRef } from '@angular/core';
+
 import { Nullable } from '@kiforks/core';
 
 import { ConditionKeyword } from '../../models';
@@ -60,7 +61,7 @@ export class ConditionKeywordDirective<C extends object = object> {
 	 * If set to `true`, it allows the directive to render the template
 	 * if either the primary condition or this condition is satisfied.
 	 */
-	public or = input<boolean>(false, {
+	public readonly or = input<boolean>(false, {
 		alias: 'appConditionKeywordOr',
 	});
 
@@ -68,7 +69,7 @@ export class ConditionKeywordDirective<C extends object = object> {
 	 * If set to `true`, it requires both the primary condition
 	 * and this condition to be satisfied for the directive to render the template.
 	 */
-	public and = input<boolean>(true, {
+	public readonly and = input<boolean>(true, {
 		alias: 'appConditionKeywordAnd',
 	});
 
@@ -76,7 +77,7 @@ export class ConditionKeywordDirective<C extends object = object> {
 	 * This allows specifying an alternative template to render
 	 * if the primary condition is not satisfied.
 	 */
-	public else = input<Nullable<TemplateRef<unknown>>>(null, {
+	public readonly else = input<Nullable<TemplateRef<unknown>>>(null, {
 		alias: 'appConditionKeywordElse',
 	});
 
