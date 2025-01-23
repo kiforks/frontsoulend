@@ -1,8 +1,28 @@
 import baseConfig from './eslint.config.base.js';
 
+import * as JSONParser from 'jsonc-eslint-parser';
+
 /** @type { import("eslint").Linter.Config[] } */
 export default [
 	...baseConfig,
+	{
+		files: ['**/*.json'],
+		languageOptions: {
+			parser: JSONParser,
+		},
+		rules: {
+			'@nx/dependency-checks': [
+				'error',
+				{
+					buildTargets: ['build'],
+					checkMissingDependencies: true,
+					checkObsoleteDependencies: true,
+					checkVersionMismatches: true,
+					ignoredDependencies: [],
+				},
+			],
+		},
+	},
 	{
 		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
 		rules: {
