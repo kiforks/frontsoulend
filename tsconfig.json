@@ -32,10 +32,16 @@
 		"declarationMap": true,
 		"inlineSources": true,
 		"paths": {
+			"@linters": ["libs/utilities/src/index.ts"],
 			"@kiforks/core": ["libs/core/src/index.ts"],
 			"@kiforks/ng-ui": ["libs/angular/ui/src/index.ts"],
 			"@kiforks/utilities": ["libs/utilities/src/index.ts"]
 		}
 	},
-	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"]
+	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"],
+	"ts-node": {
+		"compilerOptions": {
+			"module": "commonjs"
+		}
+	}
 }
