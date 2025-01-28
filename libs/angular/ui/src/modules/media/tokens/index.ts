@@ -1,1 +1,1 @@
-export { MEDIA_ELEMENT } from './media.token';
+export { MEDIA_ELEMENT, MEDIA_DEVICE, MEDIA_CONFIG } from './media.token';

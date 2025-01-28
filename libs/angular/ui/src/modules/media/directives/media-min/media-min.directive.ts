@@ -1,13 +1,11 @@
 import { Directive, inject, input, signal } from '@angular/core';
 
 import { MediaService } from '../../services';
-
-import { MediaBaseDirective } from '../media-base/media-base.directive';
-
 import { MediaBreakpoint, MediaElement } from '../../models';
 
 import { CONDITION_KEYWORD, ConditionKeyword, ConditionKeywordDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';
+import { MediaBaseDirective } from '../media-base';
 
 /**
  * The `MediaMinDirective` is designed to handle `min-width` media queries.

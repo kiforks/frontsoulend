@@ -1,12 +1,10 @@
 import { Directive, inject } from '@angular/core';
 
 import { MediaService } from '../../services';
-
-import { MediaDeviceDirective } from '../media-device/media-device.directive';
-
 import { MediaDevice } from '../../models';
 
-import { MEDIA_DEVICE } from '../../tokens/media.token';
+import { MEDIA_DEVICE } from '../../tokens';
+import { MediaDeviceDirective } from '../media-device';
 
 /**
  * The `MediaMobileDirective` is designed to handle media queries for mobile devices.
