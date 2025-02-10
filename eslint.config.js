@@ -63,6 +63,8 @@ export default [
 						'subsink',
 						'@ngneat/spectator',
 						'jest-preset-angular',
+						'@faker-js/faker',
+						'ng-mocks',
 					],
 				},
 			],
