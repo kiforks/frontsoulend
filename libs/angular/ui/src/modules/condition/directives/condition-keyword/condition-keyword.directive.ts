@@ -94,7 +94,7 @@ export class ConditionKeywordDirective<C extends object = object> {
 	 */
 	private render(): void {
 		const context = this.element?.context || {};
-		const condition = (this.element.condition() || this.or()) && this.and();
+		const condition = (this.element.condition() && this.and()) || this.or();
 		const elseTemplateRef = this.else();
 
 		untracked(() => {
