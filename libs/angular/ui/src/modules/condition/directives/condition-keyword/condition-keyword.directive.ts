@@ -1,56 +1,70 @@
-import { Directive, effect, inject, input, TemplateRef, untracked, ViewContainerRef } from '@angular/core';
+import { Directive, effect, inject, input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { Nullable } from '@kiforks/core';
 
-import { ConditionKeyword } from '../../models';
+import { ConditionKeyword } from '../../interfaces';
 
 import { CONDITION_KEYWORD } from '../../tokens';
 
 /**
- * The `ConditionKeywordDirective` is designed to be used as a `hostDirective` to provide complex conditional rendering logic.
- * It evaluates logical conditions (`and`, `or`, `else`) and controls the rendering of templates accordingly.
+ * `ConditionKeywordDirective` – a directive for conditional rendering of elements.
+ * It controls template visibility based on logical operators (`and`, `or`, `else`).
+ * Can be used as a `hostDirective` to extend functionality of other directives.
  *
- * This directive is intended to be used within other directives to augment their functionality with conditional logic.
+ * ## Example Usage:
  *
- * Example usage in combination with another directive:
+ * ### **Standalone Usage**
+ * ```html
+ * <div *appConditionKeyword="condition; or: true; and: false; else: fallbackRef;">
+ *   ...
+ * </div>
+ *
+ * <ng-template #fallbackRef>
+ *   <p>Fallback content</p>
+ * </ng-template>
+ * ```
+ * The above template will be displayed only if `condition` is `true`, or `or` is `true`, and `and` is `true`.
+ *
+ * ### **Usage with Another Directive**
  * ```typescript
  * interface Context {
  *   $implicit: string;
  * }
  *
  * @Directive({
- *   selector: '[someDirective]',
+ *   selector: '[customDirective]',
  *   standalone: true,
- *   providers: [{ provide: CONDITION_KEYWORD, useExisting: SomeDirective }],
+ *   providers: [{ provide: CONDITION_KEYWORD, useExisting: CustomDirective }],
  *   hostDirectives: [
  *     {
  *       directive: ConditionKeywordDirective,
  *       inputs: [
- *         'appConditionKeywordAnd: someDirectiveAnd',
- *         'appConditionKeywordElse: someDirectiveElse',
- *         'appConditionKeywordOr: someDirectiveOr',
+ *         'appConditionKeywordAnd: customDirectiveAnd',
+ *         'appConditionKeywordElse: customDirectiveElse',
+ *         'appConditionKeywordOr: customDirectiveOr',
  *       ],
  *     },
  *   ],
  * })
- * export class SomeDirective implements ConditionKeyword<Context> {
- *   public readonly condition = input.required<boolean>({ alias: 'someDirective' });
- *   public readonly context: Context = { $implicit: 'some value' }; // optional
+ * export class CustomDirective implements ConditionKeyword<Context> {
+ *   public readonly condition = input.required<boolean>({ alias: 'customDirective' });
+ *   public readonly context: Context = { $implicit: 'Injected value' };
  * }
  * ```
- * Example DOM:
+ * This allows `customDirective` to inherit the conditional rendering logic.
+ *
+ * #### **Corresponding HTML Usage**
  * ```html
- * <div *someDirective="value; or true; and false; else templateRef; let contextData">
- *   This content will only be displayed if the combined condition is true
- *   {{ contextData }} - some value from the context
+ * <div *customDirective="someCondition; or: anotherCondition; and: mainCondition; else: fallbackRef; let contextValue">
+ *   Rendered when the condition is met. Context value: {{ contextValue }}
  * </div>
  *
- * <ng-template #templateRef>
- *   This content will be displayed if the combined condition is false.
+ * <ng-template #fallbackRef>
+ *   <p>This is shown when conditions are not met.</p>
  * </ng-template>
  * ```
- *
- * In this example, `ConditionKeywordDirective` provides conditional rendering logic to `SomeDirective`.
+ * In this example, the directive `customDirective` passes a contextual value (`$implicit`),
+ * which can be accessed as `contextValue` inside the template.
  */
 @Directive({
 	selector: '[appConditionKeyword]',
@@ -58,30 +72,35 @@ import { CONDITION_KEYWORD } from '../../tokens';
 })
 export class ConditionKeywordDirective<C extends object = object> {
 	/**
-	 * If set to `true`, it allows the directive to render the template
-	 * if either the primary condition or this condition is satisfied.
+	 * The primary condition that controls the visibility of the template.
+	 * If `true`, the template is displayed unless additional conditions override it.
+	 */
+	public readonly condition = input(false, { alias: 'appConditionKeyword' });
+
+	/**
+	 * Allows rendering the template if either the primary condition (`condition`)
+	 * or this `or` condition is `true`.
 	 */
 	public readonly or = input<boolean>(false, {
 		alias: 'appConditionKeywordOr',
 	});
 
 	/**
-	 * If set to `true`, it requires both the primary condition
-	 * and this condition to be satisfied for the directive to render the template.
+	 * Requires both the primary condition (`condition`) and this `and` condition to be `true`
+	 * for the template to be rendered.
 	 */
 	public readonly and = input<boolean>(true, {
 		alias: 'appConditionKeywordAnd',
 	});
 
 	/**
-	 * This allows specifying an alternative template to render
-	 * if the primary condition is not satisfied.
+	 * Specifies an alternative template to render if the primary condition is not met.
 	 */
 	public readonly else = input<Nullable<TemplateRef<unknown>>>(null, {
 		alias: 'appConditionKeywordElse',
 	});
 
-	private readonly element = inject<ConditionKeyword<C>>(CONDITION_KEYWORD);
+	private readonly element = inject<ConditionKeyword<C>>(CONDITION_KEYWORD, { optional: true });
 	private readonly viewContainerRef = inject(ViewContainerRef);
 
 	constructor(private readonly templateRef: TemplateRef<C>) {
@@ -89,30 +108,31 @@ export class ConditionKeywordDirective<C extends object = object> {
 	}
 
 	/**
-	 * This method evaluates the combined conditions (`or` and `and`), and conditionally renders
-	 * either the primary template or the alternative template specified by `elseTemplateRef`.
+	 * Evaluates conditions (`condition`, `or`, `and`) and renders the appropriate template.
+	 * - If `condition && and` or `or` is `true`, it renders the main template.
+	 * - If the conditions fail, it renders the fallback (`else`) template, if provided.
+	 * - If no conditions are met and no fallback exists, the template is cleared.
 	 */
 	private render(): void {
 		const context = this.element?.context || {};
-		const condition = (this.element.condition() && this.and()) || this.or();
+		const value = this.element?.condition() ?? this.condition();
+		const condition = (value && this.and()) || this.or();
 		const elseTemplateRef = this.else();
 
-		untracked(() => {
-			this.viewContainerRef.clear();
+		this.viewContainerRef.clear();
 
-			if (condition) {
-				this.viewContainerRef.createEmbeddedView(this.templateRef, context);
+		if (condition) {
+			this.viewContainerRef.createEmbeddedView(this.templateRef, context);
 
-				return;
-			}
+			return;
+		}
 
-			if (elseTemplateRef) {
-				this.viewContainerRef.createEmbeddedView(elseTemplateRef, context);
+		if (elseTemplateRef) {
+			this.viewContainerRef.createEmbeddedView(elseTemplateRef, context);
 
-				return;
-			}
+			return;
+		}
 
-			this.viewContainerRef.clear();
-		});
+		this.viewContainerRef.clear();
 	}
 }
