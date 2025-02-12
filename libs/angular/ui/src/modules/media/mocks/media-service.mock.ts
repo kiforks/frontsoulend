@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { Bind } from '@kiforks/utilities';
+import { Bind } from '@linters';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { MediaService } from '../../services';
+import { MediaService } from '../services';
 
 /**
  * Mock service for testing `MediaService`.
@@ -18,7 +18,7 @@ import { MediaService } from '../../services';
  * // Using the mock in a test
  * const createDirective = createDirectiveFactory({
  *   directive: TestDirective,
- *   providers: [provideMediaServiceMock(mediaServiceMock)],
+ *   providers: [MockProvider(MediaService, mediaServiceMock)],
  * });
  * ```
  */
@@ -38,6 +38,17 @@ export class MediaServiceMock
 
 	public get mediaMobile(): Observable<boolean> {
 		return this.mediaMobile$;
+	}
+
+	public setMediaAll(value: boolean): this {
+		this.setMediaMin(value);
+		this.setMediaMax(value);
+		this.setMediaOnly(value);
+		this.setMediaBetween(value);
+		this.setMediaDesktop(value);
+		this.setMediaMobile(value);
+
+		return this;
 	}
 
 	public setMediaMobile(value: boolean): this {
@@ -71,7 +82,7 @@ export class MediaServiceMock
 	}
 
 	public setMediaBetween(value: boolean): this {
-		this.mediaMax$.next(value);
+		this.mediaBetween$.next(value);
 
 		return this;
 	}
