@@ -1,7 +1,6 @@
 import { Provider } from '@angular/core';
 
 import { MediaService } from '../services';
-
 import { MediaConfigData } from '../interfaces';
 
 import { MEDIA_CONFIG } from '../tokens/media.token';

@@ -12,7 +12,7 @@ It enables dynamic bindings based on media breakpoints.
 ## Overview
 
 <Canvas>
-  <Story of={MediaDataStories.Overview} />
+	<Story of={MediaDataStories.Overview} />
 </Canvas>
 
 ## Props
@@ -25,8 +25,8 @@ Use the directive in your component template to expose media breakpoints as loca
 
 ```html
 <some-component
-  *appMediaData="let mediaMobile = mediaMobile; let mediaDesktop = mediaDesktop"
-  [icon]="(mediaMobile | async) ? 'icon-1' : 'icon-2'"
-  [isTransparent]="!!(mediaDesktop | async)"
+	*appMediaData="let mediaMobile = mediaMobile; let mediaDesktop = mediaDesktop"
+	[icon]="(mediaMobile | async) ? 'icon-1' : 'icon-2'"
+	[isTransparent]="!!(mediaDesktop | async)"
 ></some-component>
 ```

@@ -1,10 +1,11 @@
+import { MockProvider } from 'ng-mocks';
+
 import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator/jest';
 
 import { MediaService } from '../../../services';
 import { MediaDataDirective } from '../media-data.directive';
 
 import { MediaServiceMock } from '../../../mocks';
-import { MockProvider } from "ng-mocks";
 
 describe('MediaDataDirective', () => {
 	let spectator: SpectatorDirective<MediaDataDirective>;

@@ -3,7 +3,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CanActivateFn } from '@angular/router';
 
 import { MediaService } from '../services';
-
 import { MediaBreakpoint } from '../interfaces';
 
 /**

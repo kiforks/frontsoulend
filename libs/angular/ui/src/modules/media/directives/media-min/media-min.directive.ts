@@ -3,7 +3,7 @@ import { Directive, inject, input, signal } from '@angular/core';
 import { MediaService } from '../../services';
 import { MediaBreakpoint, MediaElement } from '../../interfaces';
 
-import { CONDITION_KEYWORD, Condition, ConditionDirective } from '../../../condition';
+import { Condition, CONDITION_KEYWORD, ConditionDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';
 import { MediaBaseDirective } from '../media-base';
 
@@ -44,11 +44,7 @@ import { MediaBaseDirective } from '../media-base';
 		MediaBaseDirective,
 		{
 			directive: ConditionDirective,
-			inputs: [
-				'appConditionAnd: appMediaMinAnd',
-				'appConditionElse: appMediaMinElse',
-				'appConditionOr: appMediaMinOr',
-			],
+			inputs: ['appConditionAnd: appMediaMinAnd', 'appConditionElse: appMediaMinElse', 'appConditionOr: appMediaMinOr'],
 		},
 	],
 })
