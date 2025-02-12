@@ -4,14 +4,14 @@ import { MediaService } from '../../services';
 
 import { MediaBreakpoint, MediaElement } from '../../interfaces';
 
-import { CONDITION_KEYWORD, ConditionKeyword, ConditionKeywordDirective } from '../../../condition';
+import { CONDITION_KEYWORD, Condition, ConditionDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';
 import { MediaBaseDirective } from '../media-base';
 
 /**
  * The `MediaOnlyDirective` is designed to handle media queries that target specific breakpoints (e.g., `only`).
  * It uses the `MediaBaseDirective` as a host directive to leverage its logic for media query handling.
- * Additionally, it incorporates `ConditionKeywordDirective` for conditional rendering based on logical conditions.
+ * Additionally, it incorporates `ConditionDirective` for conditional rendering based on logical conditions.
  *
  * This directive is intended for responsive design, allowing content to be displayed only at a specific screen size.
  *
@@ -44,16 +44,16 @@ import { MediaBaseDirective } from '../media-base';
 	hostDirectives: [
 		MediaBaseDirective,
 		{
-			directive: ConditionKeywordDirective,
+			directive: ConditionDirective,
 			inputs: [
-				'appConditionKeywordAnd: appMediaOnlyAnd',
-				'appConditionKeywordElse: appMediaOnlyElse',
-				'appConditionKeywordOr: appMediaOnlyOr',
+				'appConditionAnd: appMediaOnlyAnd',
+				'appConditionElse: appMediaOnlyElse',
+				'appConditionOr: appMediaOnlyOr',
 			],
 		},
 	],
 })
-export class MediaOnlyDirective implements MediaElement<MediaBreakpoint>, ConditionKeyword {
+export class MediaOnlyDirective implements MediaElement<MediaBreakpoint>, Condition {
 	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'appMediaOnly' });
 
 	public readonly condition = signal(false);

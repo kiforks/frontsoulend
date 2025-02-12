@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
-import { ConditionKeywordDirective } from '../condition-keyword.directive';
+import { ConditionDirective } from '../condition.directive';
 
-import { ConditionKeywordInputs } from '../../../storybook';
+import { ConditionInputs } from '../../../storybook';
 
-interface StoryInstance extends ConditionKeywordInputs {
+interface StoryInstance extends ConditionInputs {
 	condition: boolean;
 }
 
 type Story = StoryObj<StoryInstance>;
 
 export default {
-	component: ConditionKeywordDirective,
-	title: 'Condition/Directives/ConditionKeyword',
+	component: ConditionDirective,
+	title: 'Condition/Directives/Condition',
 	args: {
 		and: true,
 		condition: true,
@@ -44,7 +44,7 @@ export const Overview: Story = {
 	render: ({ condition, and, or, else: elseTemplate }) => ({
 		props: { condition, and, or, elseTemplate },
 		template: `
-      <div *appConditionKeyword="${condition}; or: ${or}; and: ${and}; else: fallbackRef">
+      <div *appCondition="${condition}; or: ${or}; and: ${and}; else: fallbackRef">
         The condition is met, so this content is visible.
       </div>
 

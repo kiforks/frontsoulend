@@ -2,9 +2,9 @@ import { signal } from '@angular/core';
 
 import { faker } from '@faker-js/faker';
 
-import { ConditionKeyword as ConditionKeywordInterface } from '../interfaces';
+import { Condition as ConditionInterface } from '../interfaces';
 
-export class ConditionKeyword implements ConditionKeywordInterface {
+export class Condition implements ConditionInterface {
 	public readonly condition = signal(false);
 
 	public readonly context = { $implicit: faker.company.name() };

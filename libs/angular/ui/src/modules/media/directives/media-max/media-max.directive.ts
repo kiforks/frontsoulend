@@ -4,14 +4,14 @@ import { MediaService } from '../../services';
 
 import { MediaBreakpoint, MediaElement } from '../../interfaces';
 
-import { CONDITION_KEYWORD, ConditionKeyword, ConditionKeywordDirective } from '../../../condition';
+import { CONDITION_KEYWORD, Condition, ConditionDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';
 import { MediaBaseDirective } from '../media-base';
 
 /**
  * The `MediaMaxDirective` is designed to handle `max-width` media queries.
  * It uses the `MediaBaseDirective` as a host directive to leverage its logic for media query handling.
- * Additionally, it incorporates `ConditionKeywordDirective` for conditional rendering based on logical conditions.
+ * Additionally, it incorporates `ConditionDirective` for conditional rendering based on logical conditions.
  *
  * This directive is intended for responsive design, allowing content to be displayed only up to a specific screen size.
  *
@@ -44,16 +44,16 @@ import { MediaBaseDirective } from '../media-base';
 	hostDirectives: [
 		MediaBaseDirective,
 		{
-			directive: ConditionKeywordDirective,
+			directive: ConditionDirective,
 			inputs: [
-				'appConditionKeywordAnd: appMediaMaxAnd',
-				'appConditionKeywordElse: appMediaMaxElse',
-				'appConditionKeywordOr: appMediaMaxOr',
+				'appConditionAnd: appMediaMaxAnd',
+				'appConditionElse: appMediaMaxElse',
+				'appConditionOr: appMediaMaxOr',
 			],
 		},
 	],
 })
-export class MediaMaxDirective implements MediaElement, ConditionKeyword {
+export class MediaMaxDirective implements MediaElement, Condition {
 	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'appMediaMax' });
 
 	public readonly condition = signal(false);

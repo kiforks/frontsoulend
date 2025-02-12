@@ -2,12 +2,12 @@ import { Directive, effect, inject, input, TemplateRef, ViewContainerRef } from 
 
 import { Nullable } from '@kiforks/core';
 
-import { ConditionKeyword } from '../../interfaces';
+import { Condition } from '../../interfaces';
 
 import { CONDITION_KEYWORD } from '../../tokens';
 
 /**
- * `ConditionKeywordDirective` – a directive for conditional rendering of elements.
+ * `ConditionDirective` – a directive for conditional rendering of elements.
  * It controls template visibility based on logical operators (`and`, `or`, `else`).
  * Can be used as a `hostDirective` to extend functionality of other directives.
  *
@@ -15,7 +15,7 @@ import { CONDITION_KEYWORD } from '../../tokens';
  *
  * ### **Standalone Usage**
  * ```html
- * <div *appConditionKeyword="condition; or: true; and: false; else: fallbackRef;">
+ * <div *appCondition="condition; or: true; and: false; else: fallbackRef;">
  *   ...
  * </div>
  *
@@ -37,16 +37,16 @@ import { CONDITION_KEYWORD } from '../../tokens';
  *   providers: [{ provide: CONDITION_KEYWORD, useExisting: CustomDirective }],
  *   hostDirectives: [
  *     {
- *       directive: ConditionKeywordDirective,
+ *       directive: ConditionDirective,
  *       inputs: [
- *         'appConditionKeywordAnd: customDirectiveAnd',
- *         'appConditionKeywordElse: customDirectiveElse',
- *         'appConditionKeywordOr: customDirectiveOr',
+ *         'appConditionAnd: customDirectiveAnd',
+ *         'appConditionElse: customDirectiveElse',
+ *         'appConditionOr: customDirectiveOr',
  *       ],
  *     },
  *   ],
  * })
- * export class CustomDirective implements ConditionKeyword<Context> {
+ * export class CustomDirective implements Condition<Context> {
  *   public readonly condition = input.required<boolean>({ alias: 'customDirective' });
  *   public readonly context: Context = { $implicit: 'Injected value' };
  * }
@@ -67,22 +67,22 @@ import { CONDITION_KEYWORD } from '../../tokens';
  * which can be accessed as `contextValue` inside the template.
  */
 @Directive({
-	selector: '[appConditionKeyword]',
+	selector: '[appCondition]',
 	standalone: true,
 })
-export class ConditionKeywordDirective<C extends object = object> {
+export class ConditionDirective<C extends object = object> {
 	/**
 	 * The primary condition that controls the visibility of the template.
 	 * If `true`, the template is displayed unless additional conditions override it.
 	 */
-	public readonly condition = input(false, { alias: 'appConditionKeyword' });
+	public readonly condition = input(false, { alias: 'appCondition' });
 
 	/**
 	 * Allows rendering the template if either the primary condition (`condition`)
 	 * or this `or` condition is `true`.
 	 */
 	public readonly or = input<boolean>(false, {
-		alias: 'appConditionKeywordOr',
+		alias: 'appConditionOr',
 	});
 
 	/**
@@ -90,17 +90,17 @@ export class ConditionKeywordDirective<C extends object = object> {
 	 * for the template to be rendered.
 	 */
 	public readonly and = input<boolean>(true, {
-		alias: 'appConditionKeywordAnd',
+		alias: 'appConditionAnd',
 	});
 
 	/**
 	 * Specifies an alternative template to render if the primary condition is not met.
 	 */
 	public readonly else = input<Nullable<TemplateRef<unknown>>>(null, {
-		alias: 'appConditionKeywordElse',
+		alias: 'appConditionElse',
 	});
 
-	private readonly element = inject<ConditionKeyword<C>>(CONDITION_KEYWORD, { optional: true });
+	private readonly element = inject<Condition<C>>(CONDITION_KEYWORD, { optional: true });
 	private readonly viewContainerRef = inject(ViewContainerRef);
 
 	constructor(private readonly templateRef: TemplateRef<C>) {

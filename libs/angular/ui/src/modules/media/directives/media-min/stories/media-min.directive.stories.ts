@@ -3,9 +3,9 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { MediaMinDirective } from '../media-min.directive';
 import { MediaBreakpoint } from '../../../interfaces';
 
-import { ConditionKeywordInputs } from '../../../../condition/storybook';
+import { ConditionInputs } from '../../../../condition/storybook';
 
-interface StoryInstance extends ConditionKeywordInputs, MediaMinDirective {}
+interface StoryInstance extends ConditionInputs, MediaMinDirective {}
 
 type Story = StoryObj<StoryInstance>;
 

@@ -1,1 +1,1 @@
-export { ConditionKeyword } from './condition-keyword.mock';
+export { Condition } from './condition.mock';

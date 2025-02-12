@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/angular';
 
 import { MediaMobileDirective } from '../media-mobile.directive';
 
-import { ConditionKeywordInputs } from '../../../../condition/storybook';
+import { ConditionInputs } from '../../../../condition/storybook';
 
-interface StoryInstance extends ConditionKeywordInputs, MediaMobileDirective {}
+interface StoryInstance extends ConditionInputs, MediaMobileDirective {}
 
 type Story = StoryObj<StoryInstance>;
 

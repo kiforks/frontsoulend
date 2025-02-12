@@ -1,1 +1,1 @@
-export { CONDITION_KEYWORD } from './condition-keyword.token';
+export { CONDITION_KEYWORD } from './condition.token';

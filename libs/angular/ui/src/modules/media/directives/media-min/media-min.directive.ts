@@ -3,14 +3,14 @@ import { Directive, inject, input, signal } from '@angular/core';
 import { MediaService } from '../../services';
 import { MediaBreakpoint, MediaElement } from '../../interfaces';
 
-import { CONDITION_KEYWORD, ConditionKeyword, ConditionKeywordDirective } from '../../../condition';
+import { CONDITION_KEYWORD, Condition, ConditionDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';
 import { MediaBaseDirective } from '../media-base';
 
 /**
  * The `MediaMinDirective` is designed to handle `min-width` media queries.
  * It uses the `MediaBaseDirective` as a host directive to leverage its logic for media query handling.
- * Additionally, it incorporates `ConditionKeywordDirective` for conditional rendering based on logical conditions.
+ * Additionally, it incorporates `ConditionDirective` for conditional rendering based on logical conditions.
  *
  * This directive is intended for responsive design, allowing content to be displayed only from a specific screen size and up.
  *
@@ -43,16 +43,16 @@ import { MediaBaseDirective } from '../media-base';
 	hostDirectives: [
 		MediaBaseDirective,
 		{
-			directive: ConditionKeywordDirective,
+			directive: ConditionDirective,
 			inputs: [
-				'appConditionKeywordAnd: appMediaMinAnd',
-				'appConditionKeywordElse: appMediaMinElse',
-				'appConditionKeywordOr: appMediaMinOr',
+				'appConditionAnd: appMediaMinAnd',
+				'appConditionElse: appMediaMinElse',
+				'appConditionOr: appMediaMinOr',
 			],
 		},
 	],
 })
-export class MediaMinDirective implements MediaElement, ConditionKeyword {
+export class MediaMinDirective implements MediaElement, Condition {
 	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'appMediaMin' });
 
 	public readonly condition = signal(false);

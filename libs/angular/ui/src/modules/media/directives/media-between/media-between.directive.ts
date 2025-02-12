@@ -4,14 +4,14 @@ import { MediaService } from '../../services';
 
 import { MediaBetweenBreakpoints, MediaElement } from '../../interfaces';
 
-import { CONDITION_KEYWORD, ConditionKeyword, ConditionKeywordDirective } from '../../../condition';
+import { CONDITION_KEYWORD, Condition, ConditionDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';
 import { MediaBaseDirective } from '../media-base';
 
 /**
  * The `MediaBetweenDirective` handles media queries that target a range between two breakpoints.
  * It utilizes the `MediaBaseDirective` as a host directive to leverage its core logic for media query handling.
- * Additionally, it incorporates `ConditionKeywordDirective` for conditional rendering based on logical conditions.
+ * Additionally, it incorporates `ConditionDirective` for conditional rendering based on logical conditions.
  *
  * This directive is intended for responsive design, allowing content to be displayed only within specific screen size ranges.
  *
@@ -44,16 +44,16 @@ import { MediaBaseDirective } from '../media-base';
 	hostDirectives: [
 		MediaBaseDirective,
 		{
-			directive: ConditionKeywordDirective,
+			directive: ConditionDirective,
 			inputs: [
-				'appConditionKeywordAnd: appMediaBetweenAnd',
-				'appConditionKeywordElse: appMediaBetweenElse',
-				'appConditionKeywordOr: appMediaBetweenOr',
+				'appConditionAnd: appMediaBetweenAnd',
+				'appConditionElse: appMediaBetweenElse',
+				'appConditionOr: appMediaBetweenOr',
 			],
 		},
 	],
 })
-export class MediaBetweenDirective implements MediaElement<MediaBetweenBreakpoints>, ConditionKeyword {
+export class MediaBetweenDirective implements MediaElement<MediaBetweenBreakpoints>, Condition {
 	public readonly breakpoint = input.required<MediaBetweenBreakpoints>({
 		alias: 'appMediaBetween',
 	});

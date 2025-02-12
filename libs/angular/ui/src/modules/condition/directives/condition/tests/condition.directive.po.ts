@@ -1,6 +1,6 @@
 import { SpectatorDirective } from '@ngneat/spectator/jest';
 
-export class ConditionKeywordDirectivePO {
+export class ConditionDirectivePo {
 	constructor(private readonly spectator: SpectatorDirective<unknown>) {}
 
 	public get element(): HTMLElement {

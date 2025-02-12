@@ -1,1 +1,1 @@
-export { ConditionKeywordInputs } from './models';
+export { ConditionInputs } from './models';

@@ -3,12 +3,12 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { MediaBetweenDirective } from '../media-between.directive';
 import { MediaBetweenBreakpoints, MediaElement } from '../../../interfaces';
 
-import { ConditionKeywordInputs } from '../../../../condition/storybook';
+import { ConditionInputs } from '../../../../condition/storybook';
 
 /**
  * Storybook interface that extends `MediaElement`
  */
-interface StoryInstance extends ConditionKeywordInputs, MediaElement<MediaBetweenBreakpoints> {}
+interface StoryInstance extends ConditionInputs, MediaElement<MediaBetweenBreakpoints> {}
 
 type Story = StoryObj<StoryInstance>;
 

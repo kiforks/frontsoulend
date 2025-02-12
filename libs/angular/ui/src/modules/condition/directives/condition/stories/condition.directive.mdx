@@ -1,18 +1,18 @@
 import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
 
-import * as ConditionKeywordStories from './condition-keyword.directive.stories.ts';
+import * as ConditionStories from './condition.directive.stories.ts';
 
-<Meta of={ConditionKeywordStories} />
+<Meta of={ConditionStories} />
 
-# ConditionKeyword
+# Condition
 
-The `ConditionKeywordDirective` controls template rendering based on logical conditions (`and`, `or`, `else`).
+The `ConditionDirective` controls template rendering based on logical conditions (`and`, `or`, `else`).
 It allows dynamic content visibility management by evaluating multiple conditions.
 
 ## Overview
 
 <Canvas>
-  <Story of={ConditionKeywordStories.Overview} />
+  <Story of={ConditionStories.Overview} />
 </Canvas>
 
 ## Props
@@ -24,8 +24,8 @@ It allows dynamic content visibility management by evaluating multiple condition
 Use the directive in your component template to control rendering:
 
 ```html
-<div *appConditionKeyword="condition; or: isAlternative; and: isRequired; else: fallbackRef; let contextValue">
-	This content is rendered when conditions are met. Context: {{ contextValue }}
+<div *appCondition="condition; or: isAlternative; and: isRequired; else: fallbackRef">
+	This content is rendered when conditions are met.
 </div>
 
 <ng-template #fallbackRef>
@@ -35,7 +35,7 @@ Use the directive in your component template to control rendering:
 
 ## Usage as a `hostDirective`
 
-The `ConditionKeywordDirective` can be used as a `hostDirective` to extend the behavior of other directives.
+The `ConditionDirective` can be used as a `hostDirective` to extend the behavior of other directives.
 
 ### Example
 
@@ -46,16 +46,16 @@ The `ConditionKeywordDirective` can be used as a `hostDirective` to extend the b
   providers: [{ provide: CONDITION_KEYWORD, useExisting: CustomDirective }],
   hostDirectives: [
     {
-      directive: ConditionKeywordDirective,
+      directive: ConditionDirective,
       inputs: [
-        'appConditionKeywordAnd: customDirectiveAnd',
-        'appConditionKeywordElse: customDirectiveElse',
-        'appConditionKeywordOr: customDirectiveOr',
+        'appConditionAnd: customDirectiveAnd',
+        'appConditionElse: customDirectiveElse',
+        'appConditionOr: customDirectiveOr',
       ],
     },
   ],
 })
-export class CustomDirective implements ConditionKeyword<{ $implicit: string }> {
+export class CustomDirective implements Condition<{ $implicit: string }> {
   public readonly condition = input.required<boolean>({ alias: 'customDirective' });
   public readonly context = { $implicit: 'Injected value' };
 }

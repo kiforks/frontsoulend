@@ -1,1 +1,1 @@
-export { ConditionKeyword } from './condition-keyword';
+export { Condition } from './condition';

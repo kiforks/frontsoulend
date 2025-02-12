@@ -1,3 +1,3 @@
-export { ConditionKeywordDirective } from './directives';
+export { ConditionDirective } from './directives';
 export { CONDITION_KEYWORD } from './tokens';
-export { ConditionKeyword } from './interfaces';
+export { Condition } from './interfaces';

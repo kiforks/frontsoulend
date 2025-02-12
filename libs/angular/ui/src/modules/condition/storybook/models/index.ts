@@ -1,1 +1,1 @@
-export { ConditionKeywordInputs } from './condition-keyword.interface';
+export { ConditionInputs } from './condition.interface';

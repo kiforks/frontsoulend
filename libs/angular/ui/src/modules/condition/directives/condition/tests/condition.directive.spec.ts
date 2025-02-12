@@ -4,10 +4,10 @@ import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator/je
 
 import { faker } from '@faker-js/faker';
 
-import { ConditionKeywordDirective } from '../condition-keyword.directive';
-import { ConditionKeywordDirectivePO } from './condition-keyword.directive.po';
+import { ConditionDirective } from '../condition.directive';
+import { ConditionDirectivePo } from './condition.directive.po';
 
-import { ConditionKeyword } from '../../../mocks';
+import { Condition } from '../../../mocks';
 import { CONDITION_KEYWORD } from '../../../tokens';
 
 interface HostContext {
@@ -16,11 +16,11 @@ interface HostContext {
 	or: boolean;
 }
 
-describe('ConditionKeywordDirective', () => {
-	let spectator: SpectatorDirective<ConditionKeywordDirective>;
-	let directivePo: ConditionKeywordDirectivePO;
+describe('ConditionDirective', () => {
+	let spectator: SpectatorDirective<ConditionDirective>;
+	let directivePo: ConditionDirectivePo;
 
-	const createDirective = createDirectiveFactory(ConditionKeywordDirective);
+	const createDirective = createDirectiveFactory(ConditionDirective);
 	const checkVisibility = (isShown: boolean): void => {
 		if (isShown) {
 			expect(directivePo.stub).not.toExist();
@@ -36,7 +36,7 @@ describe('ConditionKeywordDirective', () => {
 	it('should correctly toggle element visibility based on condition, or, and values', () => {
 		spectator = createDirective(
 			`
-        <div data-po="test" *appConditionKeyword="condition; or: or; and: and; else: stubRef;">
+        <div data-po="test" *appCondition="condition; or: or; and: and; else: stubRef;">
           {{ contextValue }}
         </div>
 
@@ -47,7 +47,7 @@ describe('ConditionKeywordDirective', () => {
 			{ hostProps: { or: false, and: true, condition: true } satisfies HostContext }
 		);
 
-		directivePo = new ConditionKeywordDirectivePO(spectator);
+		directivePo = new ConditionDirectivePo(spectator);
 
 		checkVisibility(true);
 
@@ -74,11 +74,11 @@ describe('ConditionKeywordDirective', () => {
 
 	it('should correctly use CONDITION_KEYWORD token for context and condition evaluation', () => {
 		const contextValue = faker.company.name();
-		const conditionKeyword = new ConditionKeyword().setContext({ $implicit: contextValue }).setCondition(true);
+		const condition = new Condition().setContext({ $implicit: contextValue }).setCondition(true);
 
 		spectator = createDirective(
 			`
-        <div data-po="test" *appConditionKeyword="true; or: or; and: and; else: stubRef; let contextValue;">
+        <div data-po="test" *appCondition="true; or: or; and: and; else: stubRef; let contextValue;">
           {{ contextValue }}
         </div>
 
@@ -88,11 +88,11 @@ describe('ConditionKeywordDirective', () => {
       `,
 			{
 				hostProps: { or: false, and: true, condition: true },
-				providers: [MockProvider(CONDITION_KEYWORD, conditionKeyword)],
+				providers: [MockProvider(CONDITION_KEYWORD, condition)],
 			}
 		);
 
-		directivePo = new ConditionKeywordDirectivePO(spectator);
+		directivePo = new ConditionDirectivePo(spectator);
 
 		expect(directivePo.element).toHaveExactTrimmedText(contextValue);
 
@@ -102,7 +102,7 @@ describe('ConditionKeywordDirective', () => {
 
 		checkVisibility(true);
 
-		conditionKeyword.setCondition(false);
+		condition.setCondition(false);
 		spectator.detectChanges();
 
 		checkVisibility(false);
@@ -115,7 +115,7 @@ describe('ConditionKeywordDirective', () => {
 
 		checkVisibility(false);
 
-		conditionKeyword.setCondition(true);
+		condition.setCondition(true);
 		spectator.detectChanges();
 
 		checkVisibility(false);
