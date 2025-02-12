@@ -1,0 +1,32 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as MediaMobileStories from './media-mobile.directive.stories.ts';
+
+<Meta of={MediaMobileStories} title="Directives/MediaMobile" />
+
+# MediaMobile
+
+The `MediaMobileDirective` applies a **mobile-specific media query** to control content visibility.
+The content will only be visible when the viewport matches a mobile device breakpoint.
+
+## Overview
+
+<Canvas>
+	<Story of={MediaMobileStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to display content **only on mobile devices**:
+
+```html
+<div *appMediaMobile>This content will only be visible on mobile devices.</div>
+
+<ng-template #elseRef>
+	<p>Fallback content when the conditions are not met.</p>
+</ng-template>
+```

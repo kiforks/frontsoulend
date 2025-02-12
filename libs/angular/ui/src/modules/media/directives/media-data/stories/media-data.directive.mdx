@@ -1,0 +1,32 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as MediaDataStories from './media-data.directive.stories.ts';
+
+<Meta of={MediaDataStories} title="Directives/MediaData" />
+
+# MediaData
+
+The `MediaDataDirective` allows you to **access media-related observables** from the `MediaService` directly in your component templates.
+It enables dynamic bindings based on media breakpoints.
+
+## Overview
+
+<Canvas>
+  <Story of={MediaDataStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to expose media breakpoints as local template variables:
+
+```html
+<some-component
+  *appMediaData="let mediaMobile = mediaMobile; let mediaDesktop = mediaDesktop"
+  [icon]="(mediaMobile | async) ? 'icon-1' : 'icon-2'"
+  [isTransparent]="!!(mediaDesktop | async)"
+></some-component>
+```

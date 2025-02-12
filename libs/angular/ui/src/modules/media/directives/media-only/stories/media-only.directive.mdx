@@ -1,0 +1,33 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as MediaOnlyStories from './media-only.directive.stories.ts';
+
+<Meta of={MediaOnlyStories} />
+
+# MediaOnly
+
+The `MediaOnlyDirective` applies a media query to control content visibility based on a **specific breakpoint**. The content will be visible **only** at the specified breakpoint and hidden at all others.
+
+## Overview
+
+<Canvas>
+	<Story of={MediaOnlyStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to display content **only** at a specific breakpoint:
+
+```html
+<div *appMediaOnly="'md'; or: value; and: value; else: value">
+	This content will only be visible at the 'md' breakpoint.
+</div>
+
+<ng-template #elseRef>
+	<p>Fallback content when the conditions are not met.</p>
+</ng-template>
+```
