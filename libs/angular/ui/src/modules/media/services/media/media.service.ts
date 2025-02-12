@@ -6,7 +6,7 @@ import { Bind } from '@kiforks/utilities';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 
 import { MediaHelper } from '../../helpers';
-import { MediaBetweenBreakpoints, MediaBreakpoint, MediaConfigData } from '../../models';
+import { MediaBetweenBreakpoints, MediaBreakpoint, MediaConfigData } from '../../interfaces';
 
 import { MediaConfig } from '../../configs';
 import { MEDIA_CONFIG } from '../../tokens';

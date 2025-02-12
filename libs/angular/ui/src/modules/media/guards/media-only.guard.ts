@@ -4,7 +4,7 @@ import { CanActivateFn } from '@angular/router';
 
 import { MediaService } from '../services';
 
-import { MediaBreakpoint } from '../models';
+import { MediaBreakpoint } from '../interfaces';
 
 /**
  * Guard to activate only on a specific media breakpoint.

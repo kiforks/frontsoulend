@@ -1,7 +1,7 @@
 import { Directive, inject, input, signal } from '@angular/core';
 
 import { MediaService } from '../../services';
-import { MediaBreakpoint, MediaElement } from '../../models';
+import { MediaBreakpoint, MediaElement } from '../../interfaces';
 
 import { CONDITION_KEYWORD, ConditionKeyword, ConditionKeywordDirective } from '../../../condition';
 import { MEDIA_ELEMENT } from '../../tokens';

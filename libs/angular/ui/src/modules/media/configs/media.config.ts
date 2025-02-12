@@ -1,4 +1,4 @@
-import { MediaBreakpoint, MediaBreakpoints } from '../models';
+import { MediaBreakpoint, MediaBreakpoints } from '../interfaces';
 
 export abstract class MediaConfig {
 	public static readonly BreakpointCollection: MediaBreakpoint[] = ['sm', 'md', 'lg', 'xl', 'xxl'];

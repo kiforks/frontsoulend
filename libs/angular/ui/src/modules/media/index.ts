@@ -6,7 +6,7 @@ export {
 	MediaBreakpoints,
 	MediaElement,
 	MediaBetweenBreakpoints,
-} from './models';
+} from './interfaces';
 export { MediaHelper } from './helpers';
 export {
 	MediaOnlyDirective,

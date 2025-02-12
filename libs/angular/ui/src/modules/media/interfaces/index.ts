@@ -5,4 +5,4 @@ export {
 	MediaBetweenBreakpoints,
 	MediaConfigData,
 	MediaElement,
-} from './media';
+} from './media.interface';

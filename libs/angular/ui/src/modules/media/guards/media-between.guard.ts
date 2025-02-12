@@ -4,7 +4,7 @@ import { CanActivateFn } from '@angular/router';
 
 import { MediaService } from '../services';
 
-import { MediaBetweenBreakpoints } from '../models';
+import { MediaBetweenBreakpoints } from '../interfaces';
 
 /**
  * Function to create a guard for checking if the screen width is between specified breakpoints.

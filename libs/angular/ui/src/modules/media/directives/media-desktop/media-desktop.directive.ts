@@ -1,7 +1,7 @@
 import { Directive, inject } from '@angular/core';
 
 import { MediaService } from '../../services';
-import { MediaDevice } from '../../models';
+import { MediaDevice } from '../../interfaces';
 
 import { MEDIA_DEVICE } from '../../tokens';
 import { MediaDeviceDirective } from '../media-device';
