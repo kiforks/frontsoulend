@@ -34,8 +34,8 @@ export default [
 			},
 		},
 	})),
-	...kiforTests,
 	kiforDisableRecommend,
+	...kiforTests,
 
 	{
 		files: ['**/*.json'],
