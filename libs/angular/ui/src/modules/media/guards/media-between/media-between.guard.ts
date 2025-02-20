@@ -2,8 +2,8 @@ import { inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CanActivateFn } from '@angular/router';
 
-import { MediaService } from '../services';
-import { MediaBetweenBreakpoints } from '../interfaces';
+import { MediaService } from '../../services';
+import { MediaBetweenBreakpoints } from '../../interfaces';
 
 /**
  * Function to create a guard for checking if the screen width is between specified breakpoints.

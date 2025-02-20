@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CanActivateFn } from '@angular/router';
 
-import { MediaService } from '../services';
+import { MediaService } from '../../services';
 
 /**
  * Guard to activate based on the mobile media breakpoint.
