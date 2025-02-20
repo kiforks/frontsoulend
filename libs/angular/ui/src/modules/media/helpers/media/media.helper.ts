@@ -1,8 +1,8 @@
-import { MediaConfig } from '../configs';
+import { MediaConfig } from '../../configs';
 
 export abstract class MediaHelper {
 	/**
-	 * Returns a media-min query string for maximum width
+	 * Returns a media-max query string for maximum width
 	 */
 	public static getMaxWidth(breakpoint: number): string {
 		const value = breakpoint - MediaConfig.MaxScreenRange;
