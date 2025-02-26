@@ -11,6 +11,7 @@ type Story = StoryObj<StoryInstance>;
 export default {
 	component: MediaMobileDirective,
 	title: 'Media/Directives/MediaMobile',
+	tags: ['directives'],
 } satisfies Meta<StoryInstance>;
 
 export const Overview: Story = {

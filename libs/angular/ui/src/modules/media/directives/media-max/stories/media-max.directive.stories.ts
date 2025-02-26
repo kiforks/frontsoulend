@@ -38,6 +38,7 @@ export default {
 			description: 'Defines the fallback template if conditions are not met.',
 		},
 	},
+	tags: ['directives'],
 } satisfies Meta<StoryInstance>;
 
 export const Overview: Story = {

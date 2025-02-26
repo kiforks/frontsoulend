@@ -11,6 +11,7 @@ type Story = StoryObj<StoryInstance>;
 export default {
 	component: MediaDesktopDirective,
 	title: 'Media/Directives/MediaDesktop',
+	tags: ['directives'],
 } satisfies Meta<StoryInstance>;
 
 export const Overview: Story = {

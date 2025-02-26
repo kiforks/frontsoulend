@@ -7,6 +7,7 @@ type Story = StoryObj<MediaDataDirective>;
 export default {
 	component: MediaDataDirective,
 	title: 'Media/Directives/MediaData',
+	tags: ['directives'],
 } satisfies Meta<MediaDataDirective>;
 
 export const Overview: Story = {
