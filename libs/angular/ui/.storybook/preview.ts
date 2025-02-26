@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 
 import { moduleMetadata, Preview } from '@storybook/angular';
 
+import { BREAKPOINTS } from './viewports';
+
 const preview: Preview = {
 	parameters: {
 		actions: { argTypesRegex: '^on[A-Z].*' },
@@ -13,6 +15,7 @@ const preview: Preview = {
 				date: /Date$/u,
 			},
 		},
+		viewport: { viewports: BREAKPOINTS },
 	},
 	decorators: [
 		moduleMetadata({
