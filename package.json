@@ -28,7 +28,7 @@
 		"build:ci:deploy-libs": "npx nx affected -t build --exclude='*,!tag:scope:lib' --base=HEAD~1 --head=HEAD --configuration=production",
 		"packages:check": "ncu",
 		"packages:update": "ncu -u",
-		"packages:install": "ncu -u && npm install"
+		"packages:update:install": "ncu -u && npm install"
 	},
 	"private": true,
 	"type": "module",
