@@ -1,1 +1,1 @@
-export { ConditionKeywordDirective } from './condition-keyword';
+export { ConditionDirective } from './condition';

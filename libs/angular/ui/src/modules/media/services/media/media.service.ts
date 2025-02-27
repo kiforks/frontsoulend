@@ -6,10 +6,10 @@ import { Bind } from '@kiforks/utilities';
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 
 import { MediaHelper } from '../../helpers';
-import { MediaBetweenBreakpoints, MediaBreakpoint, MediaConfigData } from '../../models';
+import { MediaBetweenBreakpoints, MediaBreakpoint, MediaConfigData } from '../../interfaces';
 
 import { MediaConfig } from '../../configs';
-import { MEDIA_CONFIG } from '../../tokens/media.token';
+import { MEDIA_CONFIG } from '../../tokens';
 
 @Injectable({ providedIn: 'root' })
 export class MediaService {
@@ -20,13 +20,16 @@ export class MediaService {
 		...inject(MEDIA_CONFIG, { optional: true }),
 	};
 
+	private readonly breakpoints = this.config.breakpoints;
+	private readonly deviceBreakpoint = this.config.deviceBreakpoint;
+
 	/**
 	 * Media of mobile screen maximum breakpoint width.
 	 * No query for the largest breakpoint.
 	 * Makes the content apply to the given breakpoint and narrower.
 	 */
 	public get mediaMobile(): Observable<boolean> {
-		return this.mediaMax(this.config.deviceBreakpoint);
+		return this.mediaMax(this.deviceBreakpoint);
 	}
 
 	/**
@@ -35,7 +38,7 @@ export class MediaService {
 	 * Makes the content apply to the given breakpoint and wider.
 	 */
 	public get mediaDesktop(): Observable<boolean> {
-		return this.mediaMin(this.config.deviceBreakpoint);
+		return this.mediaMin(this.deviceBreakpoint);
 	}
 
 	/**
@@ -61,8 +64,8 @@ export class MediaService {
 	 * Is matched apply between the min and max breakpoints.
 	 */
 	@Bind public mediaBetween([breakpointFrom, breakpointTo]: MediaBetweenBreakpoints): Observable<boolean> {
-		const breakpointMin = this.config.breakpoints[breakpointFrom];
-		const breakpointMax = this.config.breakpoints[breakpointTo];
+		const breakpointMin = this.breakpoints[breakpointFrom];
+		const breakpointMax = this.breakpoints[breakpointTo];
 
 		return this.getBreakpointsBetween(breakpointMin, breakpointMax);
 	}
@@ -79,14 +82,14 @@ export class MediaService {
 
 		const nextBreakpointIndex = MediaConfig.BreakpointCollection.indexOf(breakpoint) + 1;
 		const nextBreakpoint = MediaConfig.BreakpointCollection[nextBreakpointIndex];
-		const breakpointMax = this.config.breakpoints[nextBreakpoint];
-		const breakpointMin = this.config.breakpoints[breakpoint];
+		const breakpointMax = this.breakpoints[nextBreakpoint];
+		const breakpointMin = this.breakpoints[breakpoint];
 
 		return this.getBreakpointsBetween(breakpointMin, breakpointMax);
 	}
 
 	private getBreakpointValue(breakpoint: MediaBreakpoint, width: 'max' | 'min' = 'max'): Observable<boolean> {
-		const breakpointValue = this.config.breakpoints[breakpoint];
+		const breakpointValue = this.breakpoints[breakpoint];
 		const breakpointMax = MediaHelper.getMaxWidth(breakpointValue);
 		const breakpointMin = MediaHelper.getMinWidth(breakpointValue);
 

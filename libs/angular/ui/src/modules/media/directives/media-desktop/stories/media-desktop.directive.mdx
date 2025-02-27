@@ -1,0 +1,32 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as MediaDesktopStories from './media-desktop.directive.stories.ts';
+
+<Meta of={MediaDesktopStories} />
+
+# MediaDesktop
+
+The `MediaDesktopDirective` applies a **desktop-specific media query** to control content visibility.
+The content will only be visible when the viewport matches a **desktop breakpoint**.
+
+## Overview
+
+<Canvas>
+	<Story of={MediaDesktopStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to display content **only on desktop devices**:
+
+```html
+<div *appMediaDesktop>This content will only be visible on desktop devices.</div>
+
+<ng-template #elseRef>
+	<p>Fallback content when the conditions are not met.</p>
+</ng-template>
+```

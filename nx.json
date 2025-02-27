@@ -12,7 +12,10 @@
 			"!{projectRoot}/tsconfig.spec.json",
 			"!{projectRoot}/jest.config.[jt]s",
 			"!{projectRoot}/src/test-setup.[jt]s",
-			"!{projectRoot}/test-setup.[jt]s"
+			"!{projectRoot}/test-setup.[jt]s",
+			"!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+			"!{projectRoot}/.storybook/**/*",
+			"!{projectRoot}/tsconfig.storybook.json"
 		],
 		"sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
 	},
@@ -41,7 +44,7 @@
 		},
 		"nx-stylelint:lint": {
 			"cache": true,
-			"inputs": ["default", "{workspaceRoot}/.stylelint.json", "{workspaceRoot}/.stylelintignore"]
+			"inputs": ["default", "{workspaceRoot}/.stylelint.js", "{workspaceRoot}/.stylelintignore"]
 		},
 		"e2e-ci--**/*": {
 			"dependsOn": ["^build"]
@@ -55,6 +58,10 @@
 			"cache": true,
 			"dependsOn": ["^build"],
 			"inputs": ["production", "^production"]
+		},
+		"build-storybook": {
+			"cache": true,
+			"inputs": ["default", "^production", "{projectRoot}/.storybook/**/*", "{projectRoot}/tsconfig.storybook.json"]
 		}
 	},
 	"plugins": [
