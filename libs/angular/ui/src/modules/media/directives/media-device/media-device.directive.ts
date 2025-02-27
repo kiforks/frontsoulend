@@ -1,8 +1,9 @@
 import { Directive, inject, TemplateRef, ViewContainerRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { distinctUntilChanged } from 'rxjs';
 
-import { MEDIA_DEVICE } from '../../tokens/media.token';
+import { MEDIA_DEVICE } from '../../tokens';
 
 /**
  * The `MediaDeviceDirective` is designed to manage the display of elements based on media queries for devices (like mobile or desktop).

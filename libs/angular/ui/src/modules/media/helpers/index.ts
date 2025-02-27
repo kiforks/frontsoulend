@@ -1,1 +1,1 @@
-export { MediaHelper } from './media.helper';
+export { MediaHelper } from './media';

@@ -1,0 +1,74 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as ConditionStories from './condition.directive.stories.ts';
+
+<Meta of={ConditionStories} />
+
+# Condition
+
+The `ConditionDirective` controls template rendering based on logical conditions (`and`, `or`, `else`).
+It allows dynamic content visibility management by evaluating multiple conditions.
+
+## Overview
+
+<Canvas>
+	<Story of={ConditionStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to control rendering:
+
+```html
+<div *appCondition="condition; or: isAlternative; and: isRequired; else: fallbackRef">
+	This content is rendered when conditions are met.
+</div>
+
+<ng-template #fallbackRef>
+	<p>Fallback content when conditions are not satisfied.</p>
+</ng-template>
+```
+
+## Usage as a `hostDirective`
+
+The `ConditionDirective` can be used as a `hostDirective` to extend the behavior of other directives.
+
+### Example
+
+```typescript
+@Directive({
+	selector: '[customDirective]',
+	standalone: true,
+	providers: [{ provide: CONDITION_KEYWORD, useExisting: CustomDirective }],
+	hostDirectives: [
+		{
+			directive: ConditionDirective,
+			inputs: [
+				'appConditionAnd: customDirectiveAnd',
+				'appConditionElse: customDirectiveElse',
+				'appConditionOr: customDirectiveOr',
+			],
+		},
+	],
+})
+export class CustomDirective implements Condition<{ $implicit: string }> {
+	public readonly condition = input.required<boolean>({ alias: 'customDirective' });
+	public readonly context = { $implicit: 'Injected value' };
+}
+```
+
+### Corresponding HTML Usage
+
+```html
+<div *customDirective="someCondition; or: anotherCondition; and: mainCondition; else: fallbackRef; let contextValue">
+	Rendered when the condition is met. Context value: {{ contextValue }}
+</div>
+
+<ng-template #fallbackRef>
+	<p>This is shown when conditions are not met.</p>
+</ng-template>
+```

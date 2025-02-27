@@ -30,3 +30,8 @@ docs:
 root:
   - changed-files:
       - any-glob-to-any-file: '*'
+
+storybook:
+  - changed-files:
+      - any-glob-to-any-file: '**/.storybook/**/*'
+      - any-glob-to-any-file: '**/storybook/**/*'

@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { MediaConfigData, MediaDevice, MediaElement } from '../models';
+import { MediaConfigData, MediaDevice, MediaElement } from '../interfaces';
 
 /**
  * This config is not a part of package

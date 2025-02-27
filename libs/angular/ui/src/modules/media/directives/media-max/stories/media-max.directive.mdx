@@ -1,0 +1,33 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as MediaMaxStories from './media-max.directive.stories.ts';
+
+<Meta of={MediaMaxStories} />
+
+# MediaMax
+
+The `MediaMaxDirective` applies a **max-width** media query to control content visibility based on the specified breakpoint.
+
+## Overview
+
+<Canvas>
+	<Story of={MediaMaxStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to display content only up to a specific breakpoint:
+
+```html
+<div *appMediaMax="'md'; or: value; and: value; else: value">
+	This content will be visible up to the 'md' breakpoint.
+</div>
+
+<ng-template #elseRef>
+	<p>Fallback content when the conditions are not met.</p>
+</ng-template>
+```

@@ -1,0 +1,33 @@
+import { Canvas, Controls, Meta, Story } from '@storybook/blocks';
+
+import * as MediaMinStories from './media-min.directive.stories.ts';
+
+<Meta of={MediaMinStories} />
+
+# MediaMin
+
+The `MediaMinDirective` applies a **min-width** media query to control content visibility based on the specified breakpoint.
+
+## Overview
+
+<Canvas>
+	<Story of={MediaMinStories.Overview} />
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Usage
+
+Use the directive in your component template to display content only from a specific breakpoint and larger:
+
+```html
+<div *appMediaMin="'md'; or: value; and: value; else: value">
+	This content will be visible from the 'md' breakpoint onward.
+</div>
+
+<ng-template #elseRef>
+	<p>Fallback content when the conditions are not met.</p>
+</ng-template>
+```
