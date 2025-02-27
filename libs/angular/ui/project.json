@@ -44,7 +44,8 @@
 				"port": 4400,
 				"configDir": "libs/angular/ui/.storybook",
 				"browserTarget": "ng-ui:build-storybook",
-				"compodoc": false
+				"compodoc": false,
+				"experimentalZoneless": true
 			},
 			"configurations": {
 				"ci": {
@@ -59,7 +60,8 @@
 				"outputDir": "dist/storybook/ng-ui",
 				"configDir": "libs/angular/ui/.storybook",
 				"browserTarget": "ng-ui:build-storybook",
-				"compodoc": false
+				"compodoc": false,
+				"experimentalZoneless": true
 			},
 			"configurations": {
 				"ci": {
@@ -70,7 +72,8 @@
 		"test-storybook": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "test-storybook -c libs/angular/ui/.storybook --url=http://localhost:4400"
+				"command": "test-storybook -c libs/angular/ui/.storybook --url=http://localhost:4400",
+				"experimentalZoneless": true
 			}
 		},
 		"static-storybook": {
@@ -79,7 +82,8 @@
 			"options": {
 				"buildTarget": "ng-ui:build-storybook",
 				"staticFilePath": "dist/storybook/ng-ui",
-				"spa": true
+				"spa": true,
+				"experimentalZoneless": true
 			},
 			"configurations": {
 				"ci": {
