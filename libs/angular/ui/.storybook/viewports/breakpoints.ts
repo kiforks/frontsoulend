@@ -1,4 +1,4 @@
-import { Breakpoint } from '@kiforks/core';
+import { Breakpoint } from '@frontsoulend/core';
 import { Viewport } from '@storybook/addon-viewport';
 
 import { MediaConfig } from '../../src/modules/media/configs';

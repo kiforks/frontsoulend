@@ -49,7 +49,7 @@ export type HTMLString = Opaque<'HTMLString', string>;
 export type JSONString = Opaque<'JSONString', string>;
 
 /**
- * Represents a day of the month as an integer range from 1 to 31.
+ * Represents a day of the month as an integer range from 1 to 31
  *
  * @example
  * // Valid examples
