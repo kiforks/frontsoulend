@@ -64,7 +64,6 @@ for file in "${PACKAGES_TO_PUBLISH[@]}"; do
 
   cd "$dist_dir"
 
-  # Явно вказуємо --dry-run і --no-git-checks
   if npm publish --dry-run --no-git-checks --json; then
     echo "✅ Dry-run publish successful for $pkg"
   else
