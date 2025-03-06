@@ -191,7 +191,7 @@ jobs:
     name: 'Dry run publish libs'
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [changes, version-check]
+    needs: [changes]
     steps:
       - uses: actions/checkout@v4
         with:
