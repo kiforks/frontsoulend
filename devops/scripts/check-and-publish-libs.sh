@@ -56,17 +56,12 @@ fi
 
 npm install
 
-if [ -n "${CI:-}" ]; then
-  echo "🏗 Running in CI/CD environment."
-  if [ -n "${CD:-}" ]; then
-    echo "🚀 Detected CD environment, running build:deploy-libs:ci"
-    npm run build:deploy-libs:ci
-  else
-    echo "🛠 Detected CI environment, running build:deploy-libs"
-    npm run build:deploy-libs
-  fi
+if [ "$dry_run" = true ]; then
+  echo "🛠️ Building packages (CI mode)..."
+  npm run build:deploy-libs
 else
-  echo "🔧 Running locally, skipping build."
+  echo "🛠️ Building packages (CD mode)..."
+  npm run build:deploy-libs:ci
 fi
 
 echo "📌 Packages ready for publish:"
