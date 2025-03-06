@@ -14,10 +14,9 @@ import { MediaBreakpoint } from '../../interfaces';
  *   { path: 'example', component: ExampleComponent, canActivate: [mediaOnlyGuard('md')] }
  * ];
  */
-export const mediaOnlyGuard: (breakpoint: MediaBreakpoint) => CanActivateFn =
-	(breakpoint: MediaBreakpoint) => (): boolean => {
-		const mediaService = inject(MediaService);
-		const isMatched = toSignal(mediaService.mediaOnly(breakpoint));
+export const mediaOnlyGuard: (breakpoint: MediaBreakpoint) => CanActivateFn = (breakpoint: MediaBreakpoint) => () => {
+	const mediaService = inject(MediaService);
+	const isMatched = toSignal(mediaService.mediaOnly(breakpoint));
 
-		return !!isMatched();
-	};
+	return !!isMatched();
+};
