@@ -24,7 +24,7 @@ export class MediaService {
 	private readonly deviceBreakpoint = this.config.deviceBreakpoint;
 
 	/**
-	 * Media of mobile screen maximum breakpoint width.
+	 * Media of mobile screen maximum breakpoint width
 	 * No query for the largest breakpoint.
 	 * Makes the content apply to the given breakpoint and narrower.
 	 */
