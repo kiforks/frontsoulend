@@ -4,13 +4,22 @@
 max_length=100
 
 # Regular expression for valid commit message format (only checks the first line)
-commit_regex="^(feat|fix|build|chore|ci|docs|perf|refactor|revert|style|test) \[(DEV|GEN)-[0-9]{1,}\]: [A-Z][a-zA-Z0-9 ]+$"
+commit_regex="^(feat|fix|build|chore|ci|docs|perf|refactor|revert|style|test) \[(DEV|GEN)-[0-9]+\]: [A-Z][a-zA-Z0-9 ]+$"
 
 # Get the full commit message
 commit_message=$(cat "$1")
 
 # Extract the first line of the commit message for validation
 commit_message_main=$(echo "$commit_message" | head -n 1)
+
+# Get the current branch name
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+# Extract Jira task ID from branch name
+branch_ticket=$(echo "$branch_name" | grep -oE "^(DEV|GEN)-[0-9]+")
+
+# Extract Jira task ID from commit message
+commit_ticket=$(echo "$commit_message" | grep -oE "\[(DEV|GEN)-[0-9]+\]" | tr -d "[]")
 
 # Function to output specific error messages
 print_error() {
@@ -40,7 +49,7 @@ if ! echo "$commit_message" | grep -Eq "^(feat|fix|build|chore|ci|docs|perf|refa
 fi
 
 # Check the Jira task format
-if ! echo "$commit_message" | grep -Eq "\[(DEV|GEN)-[0-9]{1,}\]"; then
+if ! echo "$commit_message" | grep -Eq "\[(DEV|GEN)-[0-9]+\]"; then
   print_error
   echo "❌ Commit error: The Jira task format is incorrect. It should be in the format '[DEV-123]' or '[GEN-123]'."
   exit 1
@@ -74,4 +83,17 @@ if [ ${#commit_message_main} -gt $max_length ]; then
   exit 1
 fi
 
+# Ensure branch and commit message contain the same ticket number
+if [ -z "$branch_ticket" ]; then
+  echo "❌ Commit error: The branch name does not contain a valid Jira task ID."
+  exit 1
+fi
+
+if [ "$branch_ticket" != "$commit_ticket" ]; then
+  echo "❌ Commit error: The Jira task in the commit message ($commit_ticket) does not match the branch name ($branch_ticket)."
+  exit 1
+fi
+
 # If all checks pass, the commit message is valid
+echo "✅ Commit message is valid."
+exit 0

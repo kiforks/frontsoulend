@@ -25,7 +25,7 @@ export class MediaService {
 
 	/**
 	 * Media of mobile screen maximum breakpoint width
-	 * No query for the largest breakpoint.
+	 * No query for the largest breakpoint
 	 * Makes the content apply to the given breakpoint and narrower.
 	 */
 	public get mediaMobile(): Observable<boolean> {

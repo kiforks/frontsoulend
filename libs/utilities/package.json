@@ -1,6 +1,6 @@
 {
 	"name": "@frontsoulend/utilities",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"dependencies": {},
 	"type": "module",
 	"types": "./src/index.d.ts",
