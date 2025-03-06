@@ -40,8 +40,8 @@ jobs:
         uses: actions/labeler@v5
         with:
           sync-labels: true
-  deploy-libs:
-    name: 'Deploy libs (Dry-run)'
+  publish-libs:
+    name: 'Dry run publish libs'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
