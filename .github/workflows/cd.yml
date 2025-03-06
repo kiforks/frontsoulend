@@ -44,6 +44,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Publish libraries
-        run: ./devops/scripts/check-and-publish-libs.sh origin/main false
+        run: ./devops/scripts/check-and-publish-libs.sh HEAD~1 HEAD false
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}

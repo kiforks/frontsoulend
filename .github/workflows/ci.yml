@@ -58,7 +58,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Check publish readiness (dry-run)
-        run: ./devops/scripts/check-and-publish-libs.sh origin/main true
+        run: ./devops/scripts/check-and-publish-libs.sh origin/main HEAD true
 
   condition:
     name: 'Condition'
