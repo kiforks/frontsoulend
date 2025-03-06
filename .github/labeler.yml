@@ -38,4 +38,4 @@ storybook:
 
 libs:
   - changed-files:
-      - any-glob-to-any-file: 'apps/libs/**/*'
+      - any-glob-to-any-file: 'libs/**/*'
