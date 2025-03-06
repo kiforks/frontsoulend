@@ -14,10 +14,9 @@ import { MediaBreakpoint } from '../../interfaces';
  *   { path: 'example', component: ExampleComponent, canActivate: [mediaMaxGuard('md')] }
  * ];
  */
-export const mediaMaxGuard: (breakpoint: MediaBreakpoint) => CanActivateFn =
-	(breakpoint: MediaBreakpoint) => (): boolean => {
-		const mediaService = inject(MediaService);
-		const isMatched = toSignal(mediaService.mediaMax(breakpoint));
+export const mediaMaxGuard: (breakpoint: MediaBreakpoint) => CanActivateFn = (breakpoint: MediaBreakpoint) => () => {
+	const mediaService = inject(MediaService);
+	const isMatched = toSignal(mediaService.mediaMax(breakpoint));
 
-		return !!isMatched();
-	};
+	return !!isMatched();
+};

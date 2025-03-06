@@ -35,3 +35,7 @@ storybook:
   - changed-files:
       - any-glob-to-any-file: '**/.storybook/**/*'
       - any-glob-to-any-file: '**/storybook/**/*'
+
+libs:
+  - changed-files:
+      - any-glob-to-any-file: 'libs/**/*'

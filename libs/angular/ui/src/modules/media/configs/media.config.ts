@@ -8,7 +8,7 @@ export abstract class MediaConfig {
 	 * Browsers don’t currently support range context queries, so we work around the
 	 * limitations of min- and max- prefixes and viewports with fractional widths
 	 * (which can occur under certain conditions on high-dpi devices, for instance)
-	 * by using values with higher precision.
+	 * by using values with higher precision
 	 */
 	public static readonly MaxScreenRange = 0.02;
 	/**

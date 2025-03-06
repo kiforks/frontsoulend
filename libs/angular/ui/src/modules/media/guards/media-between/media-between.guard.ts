@@ -15,7 +15,7 @@ import { MediaBetweenBreakpoints } from '../../interfaces';
  * ];
  */
 export const mediaBetweenGuard: (breakpoints: MediaBetweenBreakpoints) => CanActivateFn =
-	(breakpoints: MediaBetweenBreakpoints) => (): boolean => {
+	(breakpoints: MediaBetweenBreakpoints) => () => {
 		const mediaService = inject(MediaService);
 		const isMatched = toSignal(mediaService.mediaBetween(breakpoints));
 

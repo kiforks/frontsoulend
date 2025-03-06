@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
-import { Bind } from '@kiforks/utilities';
+import { Bind } from '@frontsoulend/utilities';
 
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 
@@ -24,8 +24,8 @@ export class MediaService {
 	private readonly deviceBreakpoint = this.config.deviceBreakpoint;
 
 	/**
-	 * Media of mobile screen maximum breakpoint width.
-	 * No query for the largest breakpoint.
+	 * Media of mobile screen maximum breakpoint width
+	 * No query for the largest breakpoint
 	 * Makes the content apply to the given breakpoint and narrower.
 	 */
 	public get mediaMobile(): Observable<boolean> {

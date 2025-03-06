@@ -71,7 +71,6 @@ jobs:
           else
             echo "is_draft=false" >> $GITHUB_OUTPUT
           fi
-
   changes:
     name: 'Changes'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
@@ -188,6 +187,26 @@ jobs:
           else
             echo "All versions are valid."
           fi
+  publish-libs:
+    name: 'Dry run publish libs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [changes]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Check publish readiness (dry-run)
+        run: ./devops/scripts/check-and-publish-libs.sh origin/main HEAD true
   # Linters
   lint:
     name: 'Run linters'
