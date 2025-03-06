@@ -1,5 +1,5 @@
 {
 	"*.{ts,html,json,scss,js,tsx,jsx,md,mdx}": ["npm run format"],
 	"*.scss": ["npm run stylelint"],
-	"*.{ts,tsx,html,js,jsx}": ["npm run eslint"]
+	"*.{ts,tsx,html,js,jsx,json}": ["npm run eslint"]
 }
