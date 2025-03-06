@@ -55,7 +55,19 @@ if [ ${#PACKAGES_TO_PUBLISH[@]} -eq 0 ]; then
 fi
 
 npm install
-npm run build:ci:deploy-libs
+
+if [ -n "${CI:-}" ]; then
+  echo "🏗 Running in CI/CD environment."
+  if [ -n "${CD:-}" ]; then
+    echo "🚀 Detected CD environment, running build:deploy-libs:ci"
+    npm run build:deploy-libs:ci
+  else
+    echo "🛠 Detected CI environment, running build:deploy-libs"
+    npm run build:deploy-libs
+  fi
+else
+  echo "🔧 Running locally, skipping build."
+fi
 
 echo "📌 Packages ready for publish:"
 for file in "${PACKAGES_TO_PUBLISH[@]}"; do
