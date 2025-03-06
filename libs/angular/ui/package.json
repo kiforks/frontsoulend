@@ -4,8 +4,8 @@
 	"peerDependencies": {
 		"@angular/core": "~18.2.0",
 		"rxjs": "~7.8.0",
-		"@frontsoulend/core": "0.0.1",
-		"@frontsoulend/utilities": "0.0.1"
+		"@frontsoulend/core": "0.0.2",
+		"@frontsoulend/utilities": "0.0.2"
 	},
 	"sideEffects": false,
 	"type": "module"
