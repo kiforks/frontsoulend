@@ -25,7 +25,7 @@
 		"prerelease": "nx affected --target=lint,stylelint,test --base=origin/main && npm run format",
 		"build": "nx affected -t build --base=origin/main --configuration=development",
 		"build:production": "nx affected -t build --base=origin/main --configuration=production",
-		"build:ci:deploy-libs": "npx nx affected -t build --exclude='*,!tag:scope:lib' --base=HEAD~1 --head=HEAD --configuration=production",
+		"build:ci:deploy-libs": "npx nx affected -t build --exclude='*,!tag:scope:lib' --base=origin/main --configuration=production",
 		"packages:check": "ncu",
 		"packages:update": "ncu -u",
 		"packages:update:install": "ncu -u && npm install"
