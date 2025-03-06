@@ -1,10 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-base_branch=${1:-"origin/main"}
-dry_run=${2:-true}
+base_ref=${1:-"HEAD~1"}
+head_ref=${2:-"HEAD"}
+dry_run=${3:-true}
 
-mapfile -t CHANGED_FILES < <(git diff --name-only "$base_branch" -- 'libs/**/package.json')
+mapfile -t CHANGED_FILES < <(git diff --name-only "$base_ref" "$head_ref" -- 'libs/**/package.json')
 
 if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
   echo "No package.json changes detected."
@@ -18,9 +19,9 @@ for file in "${CHANGED_FILES[@]}"; do
   package_name=$(jq -r '.name' "$file")
   new_version=$(jq -r '.version' "$file")
 
-  if git ls-tree -r "$base_branch" --name-only | grep -q "^${file}$"; then
-    old_version=$(git show "$base_branch:$file" | jq -r '.version')
-    old_name=$(git show "$base_branch:$file" | jq -r '.name')
+  if git cat-file -e "$base_ref:$file" 2>/dev/null; then
+    old_version=$(git show "$base_ref:$file" | jq -r '.version')
+    old_name=$(git show "$base_ref:$file" | jq -r '.name')
 
     if [ "$package_name" != "$old_name" ]; then
       echo "📦 New package name detected: $package_name@$new_version"
@@ -43,7 +44,7 @@ for file in "${CHANGED_FILES[@]}"; do
   fi
 done
 
-if [ "$FAILED" = true ]; then
+if [ "${FAILED:-false}" = true ]; then
   echo "Version issues found, exiting."
   exit 1
 fi
@@ -62,19 +63,23 @@ for file in "${PACKAGES_TO_PUBLISH[@]}"; do
   dist_dir="dist/$(dirname "$file")"
   echo "🔍 Testing publish for $pkg..."
 
-  cd "$dist_dir"
+  if [ ! -d "$dist_dir" ]; then
+    echo "❌ Missing build directory for $pkg at $dist_dir"
+    FAILED=true
+    continue
+  fi
 
-  if npm publish --dry-run --no-git-checks --json; then
+  cd "$dist_dir"
+  if npm publish --dry-run --no-git-checks; then
     echo "✅ Dry-run publish successful for $pkg"
   else
     echo "❌ Dry-run publish FAILED for $pkg"
     FAILED=true
   fi
-
   cd - > /dev/null
 done
 
-if [ "$FAILED" = true ]; then
+if [ "${FAILED:-false}" = true ]; then
   echo "One or more dry-run publishes failed. Exiting."
   exit 1
 fi
