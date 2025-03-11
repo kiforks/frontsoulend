@@ -19,7 +19,7 @@ describe('MediaDesktopDirective', () => {
 	});
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaDesktop data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaDesktop data-po="test"></div>`);
 		directivePo = new MediaDesktopDirectivePo(spectator);
 
 		expect(directivePo.element).not.toExist();

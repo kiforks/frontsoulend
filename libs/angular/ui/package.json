@@ -4,7 +4,9 @@
 	"peerDependencies": {
 		"rxjs": "~7.8.0",
 		"@frontsoulend/utilities": "0.0.3",
-		"@frontsoulend/core": "0.0.3"
+		"@frontsoulend/core": "0.0.3",
+		"@angular/core": "19.2.1",
+		"@angular/cdk": "19.2.2"
 	},
 	"sideEffects": false,
 	"type": "module"

@@ -45,7 +45,7 @@ export const Overview: Story = {
 	render: ({ breakpoint, and, or, else: elseTemplate }) => ({
 		props: { breakpoint, and, or, elseTemplate },
 		template: `
-      <div *appMediaMin="'${breakpoint}'; or: ${or}; and: ${and}; else: elseRef">
+      <div *uiMediaMin="'${breakpoint}'; or: ${or}; and: ${and}; else: elseRef">
         This content is visible from the {{ breakpoint }} breakpoint and up.
       </div>
       

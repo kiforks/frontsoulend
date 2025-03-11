@@ -15,7 +15,7 @@ import { CONDITION_KEYWORD } from '../../tokens';
  *
  * ### **Standalone Usage**
  * ```html
- * <div *appCondition="condition; or: true; and: false; else: fallbackRef;">
+ * <div *uiCondition="condition; or: true; and: false; else: fallbackRef;">
  *   ...
  * </div>
  *
@@ -39,9 +39,9 @@ import { CONDITION_KEYWORD } from '../../tokens';
  *     {
  *       directive: ConditionDirective,
  *       inputs: [
- *         'appConditionAnd: customDirectiveAnd',
- *         'appConditionElse: customDirectiveElse',
- *         'appConditionOr: customDirectiveOr',
+ *         'uiConditionAnd: customDirectiveAnd',
+ *         'uiConditionElse: customDirectiveElse',
+ *         'uiConditionOr: customDirectiveOr',
  *       ],
  *     },
  *   ],
@@ -67,7 +67,7 @@ import { CONDITION_KEYWORD } from '../../tokens';
  * which can be accessed as `contextValue` inside the template.
  */
 @Directive({
-	selector: '[appCondition]',
+	selector: '[uiCondition]',
 	standalone: true,
 })
 export class ConditionDirective<C extends object = object> {
@@ -75,14 +75,14 @@ export class ConditionDirective<C extends object = object> {
 	 * The primary condition that controls the visibility of the template.
 	 * If `true`, the template is displayed unless additional conditions override it.
 	 */
-	public readonly condition = input(false, { alias: 'appCondition' });
+	public readonly condition = input(false, { alias: 'uiCondition' });
 
 	/**
 	 * Allows rendering the template if either the primary condition (`condition`)
 	 * or this `or` condition is `true`.
 	 */
 	public readonly or = input<boolean>(false, {
-		alias: 'appConditionOr',
+		alias: 'uiConditionOr',
 	});
 
 	/**
@@ -90,14 +90,14 @@ export class ConditionDirective<C extends object = object> {
 	 * for the template to be rendered.
 	 */
 	public readonly and = input<boolean>(true, {
-		alias: 'appConditionAnd',
+		alias: 'uiConditionAnd',
 	});
 
 	/**
 	 * Specifies an alternative template to render if the primary condition is not met.
 	 */
 	public readonly else = input<Nullable<TemplateRef<unknown>>>(null, {
-		alias: 'appConditionElse',
+		alias: 'uiConditionElse',
 	});
 
 	private readonly element = inject<Condition<C>>(CONDITION_KEYWORD, { optional: true });
@@ -108,7 +108,7 @@ export class ConditionDirective<C extends object = object> {
 	}
 
 	/**
-	 * Evaluates conditions (`condition`, `or`, `and`) and renders the appropriate template.
+	 * Evaluates conditions (`condition`, `or`, `and`) and renders the uiropriate template.
 	 * - If `condition && and` or `or` is `true`, it renders the main template.
 	 * - If the conditions fail, it renders the fallback (`else`) template, if provided.
 	 * - If no conditions are met and no fallback exists, the template is cleared.

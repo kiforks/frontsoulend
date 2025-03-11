@@ -16,14 +16,14 @@ import { MediaBaseDirective } from '../media-base';
  *
  * Example usage in the DOM:
  * ```html
- * <div *appMediaMax="'lg'">
+ * <div *uiMediaMax="'lg'">
  *   This content will only be displayed for screen sizes up to the 'lg' breakpoint.
  * </div>
  * ```
  *
  * Usage with conditions in the DOM:
  * ```html
- * <div *appMediaMax="'lg'; or true; and false; else templateRef">
+ * <div *uiMediaMax="'lg'; or true; and false; else templateRef">
  *   This content will only be displayed for screen sizes up to the 'lg' breakpoint
  *   or if the specified conditions are met.
  * </div>
@@ -34,7 +34,7 @@ import { MediaBaseDirective } from '../media-base';
  * ```
  */
 @Directive({
-	selector: '[appMediaMax]',
+	selector: '[uiMediaMax]',
 	standalone: true,
 	providers: [
 		{ provide: MEDIA_ELEMENT, useExisting: MediaMaxDirective },
@@ -44,12 +44,12 @@ import { MediaBaseDirective } from '../media-base';
 		MediaBaseDirective,
 		{
 			directive: ConditionDirective,
-			inputs: ['appConditionAnd: appMediaMaxAnd', 'appConditionElse: appMediaMaxElse', 'appConditionOr: appMediaMaxOr'],
+			inputs: ['uiConditionAnd: uiMediaMaxAnd', 'uiConditionElse: uiMediaMaxElse', 'uiConditionOr: uiMediaMaxOr'],
 		},
 	],
 })
 export class MediaMaxDirective implements MediaElement, Condition {
-	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'appMediaMax' });
+	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'uiMediaMax' });
 
 	public readonly condition = signal(false);
 

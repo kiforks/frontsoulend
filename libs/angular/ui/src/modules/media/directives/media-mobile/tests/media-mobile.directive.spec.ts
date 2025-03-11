@@ -19,7 +19,7 @@ describe('MediaMobileDirective', () => {
 	});
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaMobile data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaMobile data-po="test"></div>`);
 		directivePo = new MediaMobileDirectivePo(spectator);
 
 		expect(directivePo.element).not.toExist();

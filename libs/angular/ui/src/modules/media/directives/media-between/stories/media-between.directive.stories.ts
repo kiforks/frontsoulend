@@ -59,7 +59,7 @@ export const Overview: Story = {
 	render: ({ breakpoint, and, or, else: elseTemplate }) => ({
 		props: { breakpoint, and, or, elseTemplate },
 		template: `
-      <div *appMediaBetween="['${breakpoint.at(0)}', '${breakpoint.at(-1)}']; or: ${or}; and: ${and}; else: elseRef">
+      <div *uiMediaBetween="['${breakpoint.at(0)}', '${breakpoint.at(-1)}']; or: ${or}; and: ${and}; else: elseRef">
         This content is visible between the "{{ breakpoint.at(0) }}" and "{{ breakpoint.at(-1) }}" breakpoints.
       </div>
       

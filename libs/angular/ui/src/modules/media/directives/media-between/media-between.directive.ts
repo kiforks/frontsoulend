@@ -16,14 +16,14 @@ import { MediaBaseDirective } from '../media-base';
  *
  * Example usage in the DOM:
  * ```html
- * <div *appMediaBetween="['md', 'lg']">
+ * <div *uiMediaBetween="['md', 'lg']">
  *   This content will only be displayed for screen sizes between the 'md' and 'lg' breakpoints.
  * </div>
  * ```
  *
  * Usage with conditions in the DOM:
  * ```html
- * <div *appMediaBetween="['md', 'lg']; or true; and false; else templateRef">
+ * <div *uiMediaBetween="['md', 'lg']; or true; and false; else templateRef">
  *   This content will only be displayed for screen sizes between the 'md' and 'lg' breakpoints
  *   or if the specified conditions are met.
  * </div>
@@ -34,7 +34,7 @@ import { MediaBaseDirective } from '../media-base';
  * ```
  */
 @Directive({
-	selector: '[appMediaBetween]',
+	selector: '[uiMediaBetween]',
 	standalone: true,
 	providers: [
 		{ provide: MEDIA_ELEMENT, useExisting: MediaBetweenDirective },
@@ -45,16 +45,16 @@ import { MediaBaseDirective } from '../media-base';
 		{
 			directive: ConditionDirective,
 			inputs: [
-				'appConditionAnd: appMediaBetweenAnd',
-				'appConditionElse: appMediaBetweenElse',
-				'appConditionOr: appMediaBetweenOr',
+				'uiConditionAnd: uiMediaBetweenAnd',
+				'uiConditionElse: uiMediaBetweenElse',
+				'uiConditionOr: uiMediaBetweenOr',
 			],
 		},
 	],
 })
 export class MediaBetweenDirective implements MediaElement<MediaBetweenBreakpoints>, Condition {
 	public readonly breakpoint = input.required<MediaBetweenBreakpoints>({
-		alias: 'appMediaBetween',
+		alias: 'uiMediaBetween',
 	});
 
 	public readonly condition = signal(false);
