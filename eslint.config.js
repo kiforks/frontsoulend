@@ -51,7 +51,6 @@ export default [
 					checkObsoleteDependencies: true,
 					checkVersionMismatches: true,
 					ignoredDependencies: [
-						'@angular/cdk',
 						'@angular/router',
 						'lodash',
 						'lodash-es',
