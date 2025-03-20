@@ -15,7 +15,7 @@ import { MEDIA_CONFIG } from '../../tokens';
 export class MediaService {
 	private readonly breakpointObserver = inject(BreakpointObserver);
 	private readonly config: MediaConfigData = {
-		breakpoints: MediaConfig.BREAKPOINTS,
+		breakpoints: MediaConfig.Breakpoints,
 		deviceBreakpoint: MediaConfig.DeviceBreakpoint,
 		...inject(MEDIA_CONFIG, { optional: true }),
 	};

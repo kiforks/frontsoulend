@@ -15,7 +15,7 @@ export abstract class MediaConfig {
 	 * Breakpoints were taken from:
 	 * @see libs/ui/scss/utilities/media/variables/_breakpoints.scss
 	 * */
-	public static readonly BREAKPOINTS: MediaBreakpoints = {
+	public static readonly Breakpoints: MediaBreakpoints = {
 		/**
 		 * Small breakpoint (≥576px).
 		 */
