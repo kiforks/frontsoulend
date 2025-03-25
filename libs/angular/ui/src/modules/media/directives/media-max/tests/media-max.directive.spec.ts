@@ -31,7 +31,7 @@ describe('MediaMaxDirective', () => {
 	};
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaMax="'xs'" data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaMax="'xs'" data-po="test"></div>`);
 		directivePo = new MediaMaxDirectivePo(spectator);
 
 		expect(directivePo.element).not.toExist();
@@ -51,7 +51,7 @@ describe('MediaMaxDirective', () => {
 		spectator = createDirective(
 			`
 	      <div
-	        *appMediaMax="'xs'; and: and; or: or; else: elementRef;"
+	        *uiMediaMax="'xs'; and: and; or: or; else: elementRef;"
 	        data-po="test"
 	      ></div>
 	

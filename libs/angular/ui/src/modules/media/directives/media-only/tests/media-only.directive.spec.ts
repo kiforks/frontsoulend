@@ -31,7 +31,7 @@ describe('MediaOnlyDirective', () => {
 	};
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaOnly="'xs'" data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaOnly="'xs'" data-po="test"></div>`);
 		directivePo = new MediaOnlyDirectivePo(spectator);
 
 		expect(directivePo.element).not.toExist();
@@ -51,7 +51,7 @@ describe('MediaOnlyDirective', () => {
 		spectator = createDirective(
 			`
 	      <div
-	        *appMediaOnly="'xs'; and: and; or: or; else: elementRef;"
+	        *uiMediaOnly="'xs'; and: and; or: or; else: elementRef;"
 	        data-po="test"
 	      ></div>
 	

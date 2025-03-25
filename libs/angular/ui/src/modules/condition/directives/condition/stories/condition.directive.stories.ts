@@ -45,7 +45,7 @@ export const Overview: Story = {
 	render: ({ condition, and, or, else: elseTemplate }) => ({
 		props: { condition, and, or, elseTemplate },
 		template: `
-      <div *appCondition="${condition}; or: ${or}; and: ${and}; else: fallbackRef">
+      <div *uiCondition="${condition}; or: ${or}; and: ${and}; else: fallbackRef">
         The condition is met, so this content is visible.
       </div>
 

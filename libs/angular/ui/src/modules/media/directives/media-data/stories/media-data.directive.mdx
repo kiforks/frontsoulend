@@ -25,7 +25,7 @@ Use the directive in your component template to expose media breakpoints as loca
 
 ```html
 <some-component
-	*appMediaData="let mediaMobile = mediaMobile; let mediaDesktop = mediaDesktop"
+	*uiMediaData="let mediaMobile = mediaMobile; let mediaDesktop = mediaDesktop"
 	[icon]="(mediaMobile | async) ? 'icon-1' : 'icon-2'"
 	[isTransparent]="!!(mediaDesktop | async)"
 ></some-component>

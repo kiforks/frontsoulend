@@ -1,0 +1,1 @@
+export { StorybookConfig } from './configs';

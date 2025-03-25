@@ -45,7 +45,7 @@ export const Overview: Story = {
 	render: ({ breakpoint, and, or, else: elseTemplate }) => ({
 		props: { breakpoint, and, or, elseTemplate },
 		template: `
-      <div *appMediaOnly="'${breakpoint}'; or: ${or}; and: ${and}; else: elseRef">
+      <div *uiMediaOnly="'${breakpoint}'; or: ${or}; and: ${and}; else: elseRef">
         This content will only be visible at the {{ breakpoint }} breakpoint.
       </div>
       

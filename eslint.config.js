@@ -29,7 +29,7 @@ export default [
 		languageOptions: {
 			...config.languageOptions,
 			parserOptions: {
-				project: ['./tsconfig.json', 'libs/angular/ui/.storybook/tsconfig.json'],
+				project: ['./tsconfig.json', 'libs/angular/ui/.storybook/tsconfig.json', 'storybook/.storybook/tsconfig.json'],
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},
@@ -51,7 +51,6 @@ export default [
 					checkObsoleteDependencies: true,
 					checkVersionMismatches: true,
 					ignoredDependencies: [
-						'@angular/cdk',
 						'@angular/router',
 						'lodash',
 						'lodash-es',

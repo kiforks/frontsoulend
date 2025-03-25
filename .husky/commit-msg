@@ -15,10 +15,10 @@ commit_message_main=$(echo "$commit_message" | head -n 1)
 # Get the current branch name
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
-# Extract Jira task ID from branch name
+# Extract task name ID from branch name
 branch_ticket=$(echo "$branch_name" | grep -oE "^(DEV|GEN)-[0-9]+")
 
-# Extract Jira task ID from commit message
+# Extract task name ID from commit message
 commit_ticket=$(echo "$commit_message" | grep -oE "\[(DEV|GEN)-[0-9]+\]" | tr -d "[]")
 
 # Function to output specific error messages
@@ -30,7 +30,7 @@ print_error() {
   echo "'feat [DEV-123]: Some message'"
   echo "where:"
   echo "- 'feat' is one of: feat, fix, build, chore, ci, docs, perf, refactor, revert, style, test."
-  echo "- '[DEV-123]' or '[GEN-123]' is a valid Jira task."
+  echo "- '[DEV-123]' or '[GEN-123]' is a valid task name."
   echo "- The message must start with a capital letter and contain no punctuation at the end."
   echo ""
 }
@@ -48,17 +48,17 @@ if ! echo "$commit_message" | grep -Eq "^(feat|fix|build|chore|ci|docs|perf|refa
   exit 1
 fi
 
-# Check the Jira task format
+# Check the task name format
 if ! echo "$commit_message" | grep -Eq "\[(DEV|GEN)-[0-9]+\]"; then
   print_error
-  echo "❌ Commit error: The Jira task format is incorrect. It should be in the format '[DEV-123]' or '[GEN-123]'."
+  echo "❌ Commit error: The task name format is incorrect. It should be in the format '[DEV-123]' or '[GEN-123]'."
   exit 1
 fi
 
-# Check for colon and space after the Jira task
+# Check for colon and space after the task name
 if ! echo "$commit_message" | grep -Eq "\]: "; then
   print_error
-  echo "❌ Commit error: Missing colon and space after the Jira task."
+  echo "❌ Commit error: Missing colon and space after the task name."
   exit 1
 fi
 
@@ -85,12 +85,12 @@ fi
 
 # Ensure branch and commit message contain the same ticket number
 if [ -z "$branch_ticket" ]; then
-  echo "❌ Commit error: The branch name does not contain a valid Jira task ID."
+  echo "❌ Commit error: The branch name does not contain a valid task name ID."
   exit 1
 fi
 
 if [ "$branch_ticket" != "$commit_ticket" ]; then
-  echo "❌ Commit error: The Jira task in the commit message ($commit_ticket) does not match the branch name ($branch_ticket)."
+  echo "❌ Commit error: The task name in the commit message ($commit_ticket) does not match the branch name ($branch_ticket)."
   exit 1
 fi
 

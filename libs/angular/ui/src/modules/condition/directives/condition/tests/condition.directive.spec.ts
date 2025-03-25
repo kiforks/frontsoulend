@@ -36,7 +36,7 @@ describe('ConditionDirective', () => {
 	it('should correctly toggle element visibility based on condition, or, and values', () => {
 		spectator = createDirective(
 			`
-        <div data-po="test" *appCondition="condition; or: or; and: and; else: stubRef;">
+        <div data-po="test" *uiCondition="condition; or: or; and: and; else: stubRef;">
           {{ contextValue }}
         </div>
 
@@ -78,7 +78,7 @@ describe('ConditionDirective', () => {
 
 		spectator = createDirective(
 			`
-        <div data-po="test" *appCondition="true; or: or; and: and; else: stubRef; let contextValue;">
+        <div data-po="test" *uiCondition="true; or: or; and: and; else: stubRef; let contextValue;">
           {{ contextValue }}
         </div>
 

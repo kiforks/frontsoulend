@@ -24,7 +24,7 @@ It allows dynamic content visibility management by evaluating multiple condition
 Use the directive in your component template to control rendering:
 
 ```html
-<div *appCondition="condition; or: isAlternative; and: isRequired; else: fallbackRef">
+<div *uiCondition="condition; or: isAlternative; and: isRequired; else: fallbackRef">
 	This content is rendered when conditions are met.
 </div>
 
@@ -48,9 +48,9 @@ The `ConditionDirective` can be used as a `hostDirective` to extend the behavior
 		{
 			directive: ConditionDirective,
 			inputs: [
-				'appConditionAnd: customDirectiveAnd',
-				'appConditionElse: customDirectiveElse',
-				'appConditionOr: customDirectiveOr',
+				'uiConditionAnd: customDirectiveAnd',
+				'uiConditionElse: customDirectiveElse',
+				'uiConditionOr: customDirectiveOr',
 			],
 		},
 	],
