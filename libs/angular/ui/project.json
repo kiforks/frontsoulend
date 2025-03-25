@@ -58,7 +58,7 @@
 			"outputs": ["{options.outputDir}"],
 			"options": {
 				"outputDir": "dist/storybook/ng-ui",
-				"configDir": "libs/angular/ui/.storybook",
+				"configDir": "./.storybook",
 				"browserTarget": "ng-ui:build-storybook",
 				"compodoc": false,
 				"experimentalZoneless": true
