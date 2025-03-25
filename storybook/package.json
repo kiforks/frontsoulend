@@ -2,5 +2,11 @@
 	"name": "@frontsoulend/storybook",
 	"version": "0.0.0",
 	"sideEffects": false,
-	"type": "module"
+	"type": "module",
+	"storybook": {
+		"url": "https://main--67e3030faeae1db30374343a.chromatic.com"
+	},
+	"scripts": {
+		"build-storybook": "nx build-storybook @frontsoulend/storybook"
+	}
 }

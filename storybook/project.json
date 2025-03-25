@@ -34,7 +34,7 @@
 			"outputs": ["{options.outputDir}"],
 			"options": {
 				"outputDir": "dist/storybook/@frontsoulend",
-				"configDir": "storybook/.storybook",
+				"configDir": "./.storybook",
 				"browserTarget": "@frontsoulend/storybook:build-storybook",
 				"compodoc": false,
 				"experimentalZoneless": true
