@@ -45,7 +45,7 @@ export abstract class StorybookConfig {
 	public static readonly Composition: PresetValue<StorybookConfigRaw['refs']> = (_config, { configType }) => {
 		if (configType === 'DEVELOPMENT') {
 			return {
-				angular: {
+				'angular-ui': {
 					title: 'Angular UI',
 					url: 'http://localhost:4401',
 				},
@@ -53,9 +53,9 @@ export abstract class StorybookConfig {
 		}
 
 		return {
-			angular: {
+			'angular-ui': {
 				title: 'Angular UI',
-				url: 'https://your-production-angular-storybook-url',
+				url: 'https://main--67e309b257ef7dd73cf03e8d.chromatic.com',
 			},
 		};
 	};
