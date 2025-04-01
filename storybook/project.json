@@ -73,6 +73,16 @@
 				"commands": ["nx storybook ng-ui"],
 				"parallel": true
 			}
+		},
+		"build-storybook:prod": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": [
+					"nx run ng-ui:build-storybook --configDir=libs/angular/ui/.storybook",
+					"nx run @frontsoulend/storybook:build-storybook --configDir=storybook/.storybook"
+				],
+				"parallel": true
+			}
 		}
 	}
 }
