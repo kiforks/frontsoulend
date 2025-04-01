@@ -312,7 +312,7 @@ jobs:
             *.scss
             assets/**
 
-  deploy-storybook:
+  deploy:
     name: 'Deploy Storybook composition'
     runs-on: ubuntu-latest
     steps:
@@ -329,14 +329,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check if version increased in package.json next to .storybook
-        id: check_version
+      - name: Check Storybook-relevant changes or version bump
+        id: check_storybook
         run: |
           git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+
+          MATCHED_FILES=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|(^|/)\.storybook(/|$)' || true)
+
+          VERSION_BUMPED=false
 
           MATCHED_PATHS=$(find . -type d -name ".storybook" | sed 's|/\.storybook||')
-
-          SHOULD_RUN=false
 
           for BASE_PATH in $MATCHED_PATHS; do
             PACKAGE_FILE="${BASE_PATH}/package.json"
@@ -345,7 +348,7 @@ jobs:
               continue
             fi
 
-            if ! git diff --name-only origin/main...HEAD | grep -q "^${PACKAGE_FILE#./}$"; then
+            if ! echo "$CHANGED_FILES" | grep -q "^${PACKAGE_FILE#./}$"; then
               continue
             fi
 
@@ -357,12 +360,12 @@ jobs:
             fi
 
             if [ "$(printf '%s\n%s' "$OLD_VERSION" "$NEW_VERSION" | sort -V | head -n1)" = "$OLD_VERSION" ]; then
-              SHOULD_RUN=true
+              VERSION_BUMPED=true
               break
             fi
           done
 
-          if [ "$SHOULD_RUN" = true ]; then
+          if [ -n "$MATCHED_FILES" ] || [ "$VERSION_BUMPED" = true ]; then
             echo "skip=false" >> "$GITHUB_ENV"
           else
             echo "skip=true" >> "$GITHUB_ENV"
