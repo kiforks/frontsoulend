@@ -315,11 +315,10 @@ jobs:
   deploy:
     name: 'Deploy Storybook composition'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -329,33 +328,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check Storybook-relevant changes
-        id: check_changes
-        shell: bash
-        run: |
-          git fetch origin main || exit 0
-          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
-
-          MATCHED=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|^\.storybook/' || true)
-
-          for file in $CHANGED_FILES; do
-            if [ -f "$file" ] && grep -qE '\.stories\.ts|\.mdx' "$file"; then
-              MATCHED+="\n$file"
-            fi
-          done
-
-          if [ -n "$MATCHED" ]; then
-            echo "skip=false" >> $GITHUB_OUTPUT
-          else
-            echo "skip=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Build Storybook Composition
-        if: steps.check_changes.outputs.skip != 'true'
         run: npm run storybook:prod
 
       - name: Deploy to "storybook" branch
-        if: steps.check_changes.outputs.skip != 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
