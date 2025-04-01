@@ -313,13 +313,13 @@ jobs:
             assets/**
 
   deploy-storybook:
-    name: 'Deploy Storybook composition'
+    name: 'Deploy Storybook'
     runs-on: ubuntu-latest
-    needs: [changes]
-    if: ${{ needs.changes.outputs.frontend == 'true' }}
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -329,19 +329,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check Storybook-relevant changes
+        id: check_changes
+        run: |
+          git fetch origin main
+          git diff --name-only origin/main...HEAD | grep -E '^(libs/angular/ui/|storybook/|.storybook/)' || echo "NO_CHANGES" > /tmp/skip
+
+      - name: Skip deploy if no relevant changes
+        if: steps.check_changes.outputs.skip == 'true'
+        run: echo "No changes in Storybook-related files, skipping deploy"
+
       - name: Build Storybook Composition
+        if: success() && !contains(runner.temp, '/tmp/skip')
         run: npm run storybook:prod
 
-      - name: Check for storybook changes
-        id: git-diff
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git fetch origin storybook
-          git diff --quiet origin/storybook -- ./dist/storybook/@frontsoulend || echo "has_changes=true" >> $GITHUB_OUTPUT
-
       - name: Deploy to "storybook" branch
-        if: steps.git-diff.outputs.has_changes == 'true'
+        if: success() && !contains(runner.temp, '/tmp/skip')
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
