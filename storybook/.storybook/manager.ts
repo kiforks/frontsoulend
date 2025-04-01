@@ -3,6 +3,4 @@ import { create } from '@storybook/theming';
 
 import { StorybookConfig } from '../configs';
 
-addons.setConfig({
-	theme: create(StorybookConfig.Theme),
-});
+addons.setConfig({ theme: create(StorybookConfig.Theme) });
