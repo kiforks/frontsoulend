@@ -329,8 +329,9 @@ jobs:
       - name: Build Storybook Composition
         run: npm run storybook:composition:build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to "storybook" branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/storybook/@frontsoulend
+          publish_branch: storybook
