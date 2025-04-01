@@ -331,14 +331,15 @@ jobs:
 
       - name: Check Storybook-relevant changes
         id: check_changes
+        shell: bash
         run: |
-          git fetch origin main
+          git fetch origin main || exit 0
           CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
 
-          MATCHED=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|^\.storybook/')
+          MATCHED=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|^\.storybook/' || true)
 
           for file in $CHANGED_FILES; do
-            if grep -qE '\.stories\.ts|\.mdx' "$file"; then
+            if [ -f "$file" ] && grep -qE '\.stories\.ts|\.mdx' "$file"; then
               MATCHED+="\n$file"
             fi
           done
