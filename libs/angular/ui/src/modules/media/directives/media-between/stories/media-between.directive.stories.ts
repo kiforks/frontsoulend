@@ -40,7 +40,7 @@ export default {
 		},
 		and: {
 			control: 'boolean',
-			description: 'Combines conditions with a logical AND',
+			description: 'Combines conditions with a logical AND.',
 		},
 		or: {
 			control: 'boolean',
