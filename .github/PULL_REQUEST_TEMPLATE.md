@@ -10,7 +10,7 @@ Briefly describe the changes introduced by this merge request (e.g., updated Sty
 - [ ] **Impact assessment** done to identify potential side effects.
 - [ ] **Documentation updated** if the changes alter usage or behavior.
 
-## Related Issues/Tickets (Optional)
+## Related Issues/Tickets
 
 - Related Issue/Proposal: [Link]
 - Closes: [Link to GitHub Issue or Jira Ticket]
