@@ -1,1 +1,1 @@
-export { StorybookUtils } from './storybook-utils';
+export { StorybookUtils } from './storybook';
