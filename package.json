@@ -31,7 +31,8 @@
 		"packages:update": "ncu -u",
 		"packages:update:install": "ncu -u && npm install",
 		"storybook": "nx storybook @frontsoulend/storybook",
-		"storybook:composition": "nx run @frontsoulend/storybook:storybook-composition"
+		"storybook:composition": "nx run @frontsoulend/storybook:storybook-composition",
+		"storybook:composition:build": "npx concurrently \"nx run ng-ui:build-storybook --configDir=libs/angular/ui/.storybook\" \"nx run @frontsoulend/storybook:build-storybook --configDir=storybook/.storybook\""
 	},
 	"private": true,
 	"type": "module",
@@ -93,6 +94,7 @@
 		"@types/node": "22.13.10",
 		"autoprefixer": "^10.4.21",
 		"chromatic": "^11.27.0",
+		"concurrently": "^9.1.2",
 		"esbuild": "^0.19.2",
 		"eslint": "~9.22.0",
 		"eslint-plugin-storybook": "^0.11.4",
