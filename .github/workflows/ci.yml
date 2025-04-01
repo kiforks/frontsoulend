@@ -293,7 +293,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }}
           workingDir: storybook
           onlyChanged: true
-          autoAcceptChanges: "main"
+          autoAcceptChanges: 'main'
           zip: true
           externals: |
             *.scss
@@ -306,7 +306,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_ANGULAR_UI }}
           workingDir: libs/angular/ui
           onlyChanged: true
-          autoAcceptChanges: "main"
+          autoAcceptChanges: 'main'
           zip: true
           externals: |
             *.scss
