@@ -55,7 +55,7 @@ export abstract class StorybookConfig {
 		return {
 			'angular-ui': {
 				title: 'Angular UI',
-				url: 'https://main--67e309b257ef7dd73cf03e8d.chromatic.com',
+				url: 'https://kiforks.github.io/frontsoulend/ng-ui',
 			},
 		};
 	};
