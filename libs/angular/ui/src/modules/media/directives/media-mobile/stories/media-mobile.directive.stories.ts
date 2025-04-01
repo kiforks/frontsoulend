@@ -19,7 +19,7 @@ export const Overview: Story = {
 		template: `
 			Resize the viewport to a <b>mobile</b> width to see the content.
 			
-      <div *appMediaMobile>
+      <div *uiMediaMobile>
          This content is only visible on mobile devices.
       </div>
     `,

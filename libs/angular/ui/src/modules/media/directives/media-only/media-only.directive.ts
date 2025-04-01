@@ -16,14 +16,14 @@ import { MediaBaseDirective } from '../media-base';
  *
  * Example usage in the DOM:
  * ```html
- * <div *appMediaOnly="'md'">
+ * <div *uiMediaOnly="'md'">
  *   This content will only be displayed for the 'md' breakpoint.
  * </div>
  * ```
  *
  * Usage with conditions in the DOM:
  * ```html
- * <div *appMediaOnly="'md'; or true; and false; else templateRef">
+ * <div *uiMediaOnly="'md'; or true; and false; else templateRef">
  *   This content will only be displayed for the 'md' breakpoint
  *   or if the specified conditions are met.
  * </div>
@@ -34,7 +34,7 @@ import { MediaBaseDirective } from '../media-base';
  * ```
  */
 @Directive({
-	selector: '[appMediaOnly]',
+	selector: '[uiMediaOnly]',
 	standalone: true,
 	providers: [
 		{ provide: MEDIA_ELEMENT, useExisting: MediaOnlyDirective },
@@ -44,16 +44,12 @@ import { MediaBaseDirective } from '../media-base';
 		MediaBaseDirective,
 		{
 			directive: ConditionDirective,
-			inputs: [
-				'appConditionAnd: appMediaOnlyAnd',
-				'appConditionElse: appMediaOnlyElse',
-				'appConditionOr: appMediaOnlyOr',
-			],
+			inputs: ['uiConditionAnd: uiMediaOnlyAnd', 'uiConditionElse: uiMediaOnlyElse', 'uiConditionOr: uiMediaOnlyOr'],
 		},
 	],
 })
 export class MediaOnlyDirective implements MediaElement<MediaBreakpoint>, Condition {
-	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'appMediaOnly' });
+	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'uiMediaOnly' });
 
 	public readonly condition = signal(false);
 

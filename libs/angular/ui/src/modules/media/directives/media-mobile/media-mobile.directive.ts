@@ -12,13 +12,13 @@ import { MediaDeviceDirective } from '../media-device';
  *
  * Example usage in the DOM:
  * ```html
- * <div *appMediaMobile>
+ * <div *uiMediaMobile>
  *   This content will only be displayed on mobile devices.
  * </div>
  * ```
  */
 @Directive({
-	selector: '[appMediaMobile]',
+	selector: '[uiMediaMobile]',
 	standalone: true,
 	providers: [{ provide: MEDIA_DEVICE, useExisting: MediaMobileDirective }],
 	hostDirectives: [MediaDeviceDirective],

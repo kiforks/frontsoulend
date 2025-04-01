@@ -1,5 +1,6 @@
 import { Directive, inject } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+
 import { distinctUntilChanged, switchMap } from 'rxjs';
 
 import { MEDIA_ELEMENT } from '../../tokens';
@@ -24,7 +25,7 @@ import { MEDIA_ELEMENT } from '../../tokens';
  * ```
  */
 @Directive({
-	selector: '[appMediaBase]',
+	selector: '[uiMediaBase]',
 	standalone: true,
 })
 export class MediaBaseDirective {

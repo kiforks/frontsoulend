@@ -1,5 +1,5 @@
 /**
- * Decorator for automatically binding class methods to their instance.
+ * Decorator for automatically binding class methods to their instance
  *
  * Example:
  * ```typescript

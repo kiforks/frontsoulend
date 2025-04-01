@@ -16,14 +16,14 @@ import { MediaBaseDirective } from '../media-base';
  *
  * Example usage in the DOM:
  * ```html
- * <div *appMediaMin="'md'">
+ * <div *uiMediaMin="'md'">
  *   This content will only be displayed for screen sizes from the 'md' breakpoint and up.
  * </div>
  * ```
  *
  * Usage with conditions in the DOM:
  * ```html
- * <div *appMediaMin="'md'; or true; and false; else templateRef">
+ * <div *uiMediaMin="'md'; or true; and false; else templateRef">
  *   This content will only be displayed for screen sizes from the 'md' breakpoint and up
  *   or if the specified conditions are met.
  * </div>
@@ -34,7 +34,7 @@ import { MediaBaseDirective } from '../media-base';
  * ```
  */
 @Directive({
-	selector: '[appMediaMin]',
+	selector: '[uiMediaMin]',
 	standalone: true,
 	providers: [
 		{ provide: MEDIA_ELEMENT, useExisting: MediaMinDirective },
@@ -44,12 +44,12 @@ import { MediaBaseDirective } from '../media-base';
 		MediaBaseDirective,
 		{
 			directive: ConditionDirective,
-			inputs: ['appConditionAnd: appMediaMinAnd', 'appConditionElse: appMediaMinElse', 'appConditionOr: appMediaMinOr'],
+			inputs: ['uiConditionAnd: uiMediaMinAnd', 'uiConditionElse: uiMediaMinElse', 'uiConditionOr: uiMediaMinOr'],
 		},
 	],
 })
 export class MediaMinDirective implements MediaElement, Condition {
-	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'appMediaMin' });
+	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'uiMediaMin' });
 
 	public readonly condition = signal(false);
 

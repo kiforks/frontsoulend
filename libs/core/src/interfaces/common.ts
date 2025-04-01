@@ -64,7 +64,7 @@ export type JSONString = Opaque<'JSONString', string>;
 export type DayNumber = IntRange<1, 32>;
 
 /**
- * Represents a month of the year as an integer range from 1 to 12.
+ * Represents a month of the year as an integer range from 1 to 12
  *
  * @example
  * // Valid examples

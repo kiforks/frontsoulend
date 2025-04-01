@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
-import { Bind } from '@kiforks/utilities';
+import { Bind } from '@frontsoulend/utilities';
 
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 
@@ -15,7 +15,7 @@ import { MEDIA_CONFIG } from '../../tokens';
 export class MediaService {
 	private readonly breakpointObserver = inject(BreakpointObserver);
 	private readonly config: MediaConfigData = {
-		breakpoints: MediaConfig.BREAKPOINTS,
+		breakpoints: MediaConfig.Breakpoints,
 		deviceBreakpoint: MediaConfig.DeviceBreakpoint,
 		...inject(MEDIA_CONFIG, { optional: true }),
 	};
@@ -24,9 +24,9 @@ export class MediaService {
 	private readonly deviceBreakpoint = this.config.deviceBreakpoint;
 
 	/**
-	 * Media of mobile screen maximum breakpoint width.
-	 * No query for the largest breakpoint.
-	 * Makes the content apply to the given breakpoint and narrower.
+	 * Media of mobile screen maximum breakpoint width
+	 * No query for the largest breakpoint
+	 * Makes the content uily to the given breakpoint and narrower.
 	 */
 	public get mediaMobile(): Observable<boolean> {
 		return this.mediaMax(this.deviceBreakpoint);
@@ -35,7 +35,7 @@ export class MediaService {
 	/**
 	 * Media of desktop screen maximum breakpoint width.
 	 * No query for the smallest breakpoint.
-	 * Makes the content apply to the given breakpoint and wider.
+	 * Makes the content uily to the given breakpoint and wider.
 	 */
 	public get mediaDesktop(): Observable<boolean> {
 		return this.mediaMin(this.deviceBreakpoint);
@@ -44,7 +44,7 @@ export class MediaService {
 	/**
 	 * Media of at least the minimum breakpoint width.
 	 * No query for the smallest breakpoint
-	 * Is matched apply to the given breakpoint and wider.
+	 * Is matched uily to the given breakpoint and wider.
 	 */
 	@Bind public mediaMin(breakpoint: MediaBreakpoint): Observable<boolean> {
 		return this.getBreakpointValue(breakpoint, 'min');
@@ -53,7 +53,7 @@ export class MediaService {
 	/**
 	 * Media of at most the maximum breakpoint width.
 	 * No query for the largest breakpoint.
-	 * Is matched apply to the given breakpoint and narrower.
+	 * Is matched uily to the given breakpoint and narrower.
 	 */
 	@Bind public mediaMax(breakpoint: MediaBreakpoint): Observable<boolean> {
 		return this.getBreakpointValue(breakpoint);
@@ -61,7 +61,7 @@ export class MediaService {
 
 	/**
 	 * Media that spans multiple breakpoint widths.
-	 * Is matched apply between the min and max breakpoints.
+	 * Is matched uily between the min and max breakpoints.
 	 */
 	@Bind public mediaBetween([breakpointFrom, breakpointTo]: MediaBetweenBreakpoints): Observable<boolean> {
 		const breakpointMin = this.breakpoints[breakpointFrom];
@@ -73,7 +73,7 @@ export class MediaService {
 	/**
 	 * Media between the breakpoints minimum and maximum widths.
 	 * No minimum for the smallest breakpoint, and no maximum for the largest one.
-	 * Is matched apply only to the given breakpoint, not viewports any wider or narrower.
+	 * Is matched uily only to the given breakpoint, not viewports any wider or narrower.
 	 */
 	@Bind public mediaOnly(breakpoint: MediaBreakpoint): Observable<boolean> {
 		if (breakpoint === 'xxl') {

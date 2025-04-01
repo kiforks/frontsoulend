@@ -15,7 +15,7 @@ import { MediaService } from '../../services';
  * ```
  */
 @Directive({
-	selector: '[appMediaData]',
+	selector: '[uiMediaData]',
 	standalone: true,
 })
 export class MediaDataDirective {

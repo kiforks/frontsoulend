@@ -41,7 +41,7 @@
 		"storybook": {
 			"executor": "@storybook/angular:start-storybook",
 			"options": {
-				"port": 4400,
+				"port": 4401,
 				"configDir": "libs/angular/ui/.storybook",
 				"browserTarget": "ng-ui:build-storybook",
 				"compodoc": false,
@@ -58,7 +58,7 @@
 			"outputs": ["{options.outputDir}"],
 			"options": {
 				"outputDir": "dist/storybook/ng-ui",
-				"configDir": "libs/angular/ui/.storybook",
+				"configDir": "./.storybook",
 				"browserTarget": "ng-ui:build-storybook",
 				"compodoc": false,
 				"experimentalZoneless": true

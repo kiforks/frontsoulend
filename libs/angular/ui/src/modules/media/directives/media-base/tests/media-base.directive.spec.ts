@@ -13,7 +13,7 @@ describe('MediaBaseDirective', () => {
 
 		const spyOnCheckMedia = jest.spyOn(mediaElementMock, 'checkMedia');
 
-		createDirective('<div *appMediaBase></div>', {
+		createDirective('<div *uiMediaBase></div>', {
 			providers: [{ provide: MEDIA_ELEMENT, useValue: mediaElementMock }],
 		});
 
