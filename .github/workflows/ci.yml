@@ -313,7 +313,7 @@ jobs:
             assets/**
 
   deploy:
-    name: 'Deploy Storybook'
+    name: 'Deploy Storybook composition'
     runs-on: ubuntu-latest
 
     steps:
@@ -328,19 +328,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Fetch previous Storybook from "storybook" branch
+        run: |
+          git fetch origin storybook:storybook-temp
+          mkdir old-storybook
+          git --work-tree=old-storybook checkout storybook-temp -- dist/storybook/@frontsoulend
+
       - name: Build Storybook Composition
         run: npm run storybook:prod
 
       - name: Check if Storybook build has changed
         id: storybook_diff
         run: |
-          git init
-          git add dist/storybook/@frontsoulend
-          if git diff --quiet --exit-code; then
-            echo "No changes in Storybook build."
+          if diff -qr dist/storybook/@frontsoulend old-storybook/dist/storybook/@frontsoulend; then
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           else
-            echo "Changes detected in Storybook build."
             echo "should_deploy=true" >> $GITHUB_OUTPUT
           fi
 
