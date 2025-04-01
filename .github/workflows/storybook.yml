@@ -25,25 +25,72 @@ concurrency:
 
 jobs:
   deploy:
-    name: 'Deploy Storybook composition'
+    name: 'Deploy Storybook'
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' }}
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20.x'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Check Storybook-relevant changes or version bump
+        id: check_storybook
+        run: |
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+
+          MATCHED_FILES=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|(^|/)\.storybook(/|$)' || true)
+
+          VERSION_BUMPED=false
+
+          MATCHED_PATHS=$(find . -type d -name ".storybook" | sed 's|/\.storybook||')
+
+          for BASE_PATH in $MATCHED_PATHS; do
+            PACKAGE_FILE="${BASE_PATH}/package.json"
+
+            if [ ! -f "$PACKAGE_FILE" ]; then
+              continue
+            fi
+
+            if ! echo "$CHANGED_FILES" | grep -q "^${PACKAGE_FILE#./}$"; then
+              continue
+            fi
+
+            OLD_VERSION=$(git show origin/main:${PACKAGE_FILE#./} | jq -r '.version')
+            NEW_VERSION=$(jq -r '.version' "$PACKAGE_FILE")
+
+            if [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
+              continue
+            fi
+
+            if [ "$(printf '%s\n%s' "$OLD_VERSION" "$NEW_VERSION" | sort -V | head -n1)" = "$OLD_VERSION" ]; then
+              VERSION_BUMPED=true
+              break
+            fi
+          done
+
+          if [ -n "$MATCHED_FILES" ] || [ "$VERSION_BUMPED" = true ]; then
+            echo "skip=false" >> "$GITHUB_ENV"
+          else
+            echo "skip=true" >> "$GITHUB_ENV"
+          fi
+
       - name: Build Storybook Composition
+        if: env.skip == 'false'
         run: npm run storybook:prod
 
       - name: Deploy to "storybook" branch
+        if: env.skip == 'false'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
