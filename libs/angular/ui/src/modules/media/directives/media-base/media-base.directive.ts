@@ -7,7 +7,7 @@ import { MEDIA_ELEMENT } from '../../tokens';
 
 /**
  * The `MediaBaseDirective` is designed to manage the display of elements based on media queries (like screen size breakpoints).
- * This directive listens to breakpoint changes and conditionally displays or hides elements based on whether the media query matches
+ * This directive listens to breakpoint changes and conditionally displays or hides elements based on whether the media query matches.
  *
  * Example of using `MediaBaseDirective` as a host directive in combination with the token and interface it implements.
  * ```typescript
