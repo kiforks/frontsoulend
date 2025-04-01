@@ -3,7 +3,12 @@ import { Preview } from '@storybook/angular';
 import { PresetValue, StorybookConfigRaw } from '@storybook/core/types';
 import { ThemeVarsPartial } from '@storybook/theming';
 
+import { StorybookUtils } from '../utils';
+
 export abstract class StorybookConfig {
+	public static readonly CompositionProdUrl = 'https://kiforks.github.io/frontsoulend';
+	public static readonly CompositionDevUrl = 'http://localhost:';
+
 	public static readonly Theme: ThemeVarsPartial = {
 		barBg: '#f0f4f8',
 		base: 'light',
@@ -43,11 +48,13 @@ export abstract class StorybookConfig {
 	} satisfies Preview;
 
 	public static readonly Composition: PresetValue<StorybookConfigRaw['refs']> = (_config, { configType }) => {
-		if (configType === 'DEVELOPMENT') {
+		const isDevelopment = configType === 'DEVELOPMENT';
+
+		if (isDevelopment) {
 			return {
 				'angular-ui': {
 					title: 'Angular UI',
-					url: 'http://localhost:4401',
+					url: StorybookUtils.getCompositionUrl('4001', isDevelopment),
 				},
 			};
 		}
@@ -55,7 +62,7 @@ export abstract class StorybookConfig {
 		return {
 			'angular-ui': {
 				title: 'Angular UI',
-				url: 'https://kiforks.github.io/frontsoulend/ng-ui',
+				url: StorybookUtils.getCompositionUrl('ng-ui', isDevelopment),
 			},
 		};
 	};
