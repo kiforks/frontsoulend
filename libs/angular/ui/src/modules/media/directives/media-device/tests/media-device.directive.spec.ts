@@ -26,7 +26,7 @@ describe('MediaDeviceDirective', () => {
 	});
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaDevice data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaDevice data-po="test"></div>`);
 		directivePo = new MediaDeviceDirectivePo(spectator);
 
 		expect(directivePo.element).not.toExist();

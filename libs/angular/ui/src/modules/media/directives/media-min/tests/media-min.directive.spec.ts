@@ -31,7 +31,7 @@ describe('MediaMinDirective', () => {
 	};
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaMin="'xs'" data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaMin="'xs'" data-po="test"></div>`);
 		directivePo = new MediaMinDirectivePO(spectator);
 
 		expect(directivePo.element).not.toExist();
@@ -51,7 +51,7 @@ describe('MediaMinDirective', () => {
 		spectator = createDirective(
 			`
 	      <div
-	        *appMediaMin="'xs'; and: and; or: or; else: elementRef;"
+	        *uiMediaMin="'xs'; and: and; or: or; else: elementRef;"
 	        data-po="test"
 	      ></div>
 	

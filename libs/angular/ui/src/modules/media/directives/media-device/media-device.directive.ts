@@ -23,7 +23,7 @@ import { MEDIA_DEVICE } from '../../tokens';
  * ```
  */
 @Directive({
-	selector: '[appMediaDevice]',
+	selector: '[uiMediaDevice]',
 	standalone: true,
 })
 export class MediaDeviceDirective {

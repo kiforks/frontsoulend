@@ -18,7 +18,7 @@ describe('MediaDataDirective', () => {
 		spectator = createDirective(
 			`
 				<div
-					*appMediaData="
+					*uiMediaData="
 						let mediaMobile = mediaMobile;
 						let mediaDesktop = mediaMobile;
 						let mediaMin = mediaMin;
@@ -49,7 +49,7 @@ describe('MediaDataDirective', () => {
 		spectator = createDirective(
 			`
 				<div
-					*appMediaData="
+					*uiMediaData="
 						let mediaMobile = mediaMobile;
 						let mediaDesktop = mediaMobile;
 						let mediaMin = mediaMin;

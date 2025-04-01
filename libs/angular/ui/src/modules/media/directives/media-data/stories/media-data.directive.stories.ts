@@ -18,7 +18,7 @@ export const Overview: Story = {
       </p>
       
 			<div
-				*appMediaData="
+				*uiMediaData="
 					let mediaMobile = mediaMobile;
 					let mediaDesktop = mediaMobile;
 					let mediaMin = mediaMin;

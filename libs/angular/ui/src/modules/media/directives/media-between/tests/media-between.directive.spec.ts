@@ -31,7 +31,7 @@ describe('MediaBetweenDirective', () => {
 	};
 
 	it('should show or hide the element based on breakpoint changes', () => {
-		spectator = createDirective(`<div *appMediaBetween="['sm', 'lg']" data-po="test"></div>`);
+		spectator = createDirective(`<div *uiMediaBetween="['sm', 'lg']" data-po="test"></div>`);
 		directivePo = new MediaBetweenDirectivePo(spectator);
 
 		expect(directivePo.element).not.toExist();
@@ -51,7 +51,7 @@ describe('MediaBetweenDirective', () => {
 		spectator = createDirective(
 			`
 	      <div
-	        *appMediaBetween="['sm', 'lg']; and: and; or: or; else: elementRef;"
+	        *uiMediaBetween="['sm', 'lg']; and: and; or: or; else: elementRef;"
 	        data-po="test"
 	      ></div>
 	

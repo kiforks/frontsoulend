@@ -6,7 +6,7 @@ import * as MediaDesktopStories from './media-desktop.directive.stories.ts';
 
 # MediaDesktop
 
-The `MediaDesktopDirective` applies a **desktop-specific media query** to control content visibility.
+The `MediaDesktopDirective` uilies a **desktop-specific media query** to control content visibility.
 The content will only be visible when the viewport matches a **desktop breakpoint**.
 
 ## Overview
@@ -24,7 +24,7 @@ The content will only be visible when the viewport matches a **desktop breakpoin
 Use the directive in your component template to display content **only on desktop devices**:
 
 ```html
-<div *appMediaDesktop>This content will only be visible on desktop devices.</div>
+<div *uiMediaDesktop>This content will only be visible on desktop devices.</div>
 
 <ng-template #elseRef>
 	<p>Fallback content when the conditions are not met.</p>

@@ -1,27 +1,4 @@
-import { CommonModule } from '@angular/common';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { StorybookConfig } from '../../../../storybook';
 
-import { moduleMetadata, Preview } from '@storybook/angular';
-
-import { BREAKPOINTS } from './viewports';
-
-const preview: Preview = {
-	parameters: {
-		actions: { argTypesRegex: '^on[A-Z].*' },
-		layout: 'centered',
-		controls: {
-			sort: 'alpha',
-			matchers: {
-				color: /(?<temp1>background|color)$/iu,
-				date: /Date$/u,
-			},
-		},
-		viewport: { viewports: BREAKPOINTS },
-	},
-	decorators: [
-		moduleMetadata({
-			imports: [CommonModule],
-		}),
-	],
-};
-
-export default preview;
+export default StorybookConfig.Preview;

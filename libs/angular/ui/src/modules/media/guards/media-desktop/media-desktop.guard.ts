@@ -13,7 +13,7 @@ import { MediaService } from '../../services';
  *   { path: 'example', component: ExampleComponent, canActivate: [mediaDesktopGuard] }
  * ];
  */
-export const mediaDesktopGuard: CanActivateFn = (): boolean => {
+export const mediaDesktopGuard: CanActivateFn = () => {
 	const mediaService = inject(MediaService);
 	const isMatched = toSignal(mediaService.mediaDesktop);
 
