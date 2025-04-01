@@ -313,7 +313,7 @@ jobs:
             assets/**
 
   deploy-storybook:
-    name: 'Deploy Storybook'
+    name: 'Deploy Storybook composition'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -333,20 +333,16 @@ jobs:
         id: check_changes
         run: |
           git fetch origin main
-          git diff --name-only origin/main...HEAD | grep -E '^(libs/angular/ui/|storybook/|.storybook/)' || echo "NO_CHANGES" > /tmp/skip
-
-      - name: Skip deploy if no relevant changes
-        if: steps.check_changes.outputs.skip == 'true'
-        run: echo "No changes in Storybook-related files, skipping deploy"
+          git diff --name-only origin/main...HEAD | grep -E '^(libs/angular/ui/|storybook/|.storybook/)' || echo "skip=true" >> $GITHUB_OUTPUT
 
       - name: Build Storybook Composition
-        if: success() && !contains(runner.temp, '/tmp/skip')
+        if: steps.check_changes.outputs.skip != 'true'
         run: npm run storybook:prod
 
       - name: Deploy to "storybook" branch
-        if: success() && !contains(runner.temp, '/tmp/skip')
+        if: steps.check_changes.outputs.skip != 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
           publish_dir: ./dist/storybook/@frontsoulend
           publish_branch: storybook
