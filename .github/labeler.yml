@@ -35,6 +35,8 @@ storybook:
   - changed-files:
       - any-glob-to-any-file: '**/.storybook/**/*'
       - any-glob-to-any-file: '**/storybook/**/*'
+      - any-glob-to-any-file: '**/*.stories.ts'
+      - any-glob-to-any-file: '**/*.mdx'
 
 libs:
   - changed-files:
