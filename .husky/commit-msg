@@ -12,6 +12,12 @@ commit_message=$(cat "$1")
 # Extract the first line of the commit message for validation
 commit_message_main=$(echo "$commit_message" | head -n 1)
 
+# Skip validation for merge commits
+if echo "$commit_message_main" | grep -q "^Merge"; then
+  echo "✅ Skipping validation for merge commit."
+  exit 0
+fi
+
 # Get the current branch name
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
@@ -34,12 +40,6 @@ print_error() {
   echo "- The message must start with a capital letter and contain no punctuation at the end."
   echo ""
 }
-
-# Skip validation for merge commits
-if echo "$commit_message" | grep -q "^Merge"; then
-  echo "✅ Skipping validation for merge commit."
-  exit 0
-fi
 
 # Check the type (feat, fix, etc.)
 if ! echo "$commit_message" | grep -Eq "^(feat|fix|build|chore|ci|docs|perf|refactor|revert|style|test) "; then
