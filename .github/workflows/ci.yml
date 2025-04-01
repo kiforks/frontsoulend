@@ -335,14 +335,12 @@ jobs:
           git fetch origin main
           CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
 
-          echo "$CHANGED_FILES" > changed.txt
+          MATCHED_FILES=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|(^|/)\\.storybook/' || true)
 
-          MATCHED=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|^\.storybook/' || true)
-
-          if [ -z "$MATCHED" ]; then
-            echo "skip=true" >> "$GITHUB_ENV"
-          else
+          if [ -n "$MATCHED_FILES" ]; then
             echo "skip=false" >> "$GITHUB_ENV"
+          else
+            echo "skip=true" >> "$GITHUB_ENV"
           fi
 
       - name: Build Storybook Composition
