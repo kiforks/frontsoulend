@@ -326,10 +326,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build main Storybook
-        run: npm run build-storybook
-
-      - name: Build framework Storybooks
+      - name: Build Storybooks
         run: npm run storybook:composition:build
 
       - name: Deploy to GitHub Pages
