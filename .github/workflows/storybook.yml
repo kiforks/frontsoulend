@@ -41,7 +41,7 @@ jobs:
         run: npm ci
 
       - name: Build Storybook Composition
-        run: npm run storybook:composition:build
+        run: npm run storybook:prod
 
       - name: Deploy to "storybook" branch
         uses: peaceiris/actions-gh-pages@v4

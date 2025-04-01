@@ -32,7 +32,7 @@
 		"packages:update:install": "ncu -u && npm install",
 		"storybook": "nx storybook @frontsoulend/storybook",
 		"storybook:composition": "nx run @frontsoulend/storybook:storybook-composition",
-		"storybook:composition:build": "npx concurrently \"nx run ng-ui:build-storybook --configDir=libs/angular/ui/.storybook\" \"nx run @frontsoulend/storybook:build-storybook --configDir=storybook/.storybook\""
+		"storybook:prod": "nx run @frontsoulend/storybook:build-storybook:prod"
 	},
 	"private": true,
 	"type": "module",
