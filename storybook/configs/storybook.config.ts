@@ -6,7 +6,7 @@ import { ThemeVarsPartial } from '@storybook/theming';
 import { StorybookUtils } from '../utils';
 
 export abstract class StorybookConfig {
-	public static readonly CompositionProdUrl = 'https://kiforks.github.io/frontsoulend/';
+	public static readonly CompositionProdUrl = 'https://kiforks.github.io/frontsoulend';
 	public static readonly CompositionDevUrl = 'http://localhost:';
 
 	public static readonly Theme: ThemeVarsPartial = {
