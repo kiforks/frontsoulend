@@ -335,7 +335,7 @@ jobs:
           git fetch origin main
           CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
 
-          MATCHED_FILES=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|(^|/)\\.storybook/' || true)
+          MATCHED_FILES=$(echo "$CHANGED_FILES" | grep -E '\.stories\.ts$|\.mdx$|(^|/)\.storybook(/|$)' || true)
 
           if [ -n "$MATCHED_FILES" ]; then
             echo "skip=false" >> "$GITHUB_ENV"
