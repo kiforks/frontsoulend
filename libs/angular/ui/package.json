@@ -1,6 +1,6 @@
 {
 	"name": "@frontsoulend/ng-ui",
-	"version": "0.0.6",
+	"version": "0.0.4",
 	"storybook": {
 		"url": "https://kiforks.github.io/frontsoulend/ng-ui"
 	},
