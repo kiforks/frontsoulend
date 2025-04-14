@@ -11,8 +11,8 @@
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/apps/frontend/angular/platform",
-				"index": "apps/frontend/angular/platform/src/index.html",
-				"main": "apps/frontend/angular/platform/src/main.ts",
+				"index": "apps/frontend/angular/platform/src/app/index.html",
+				"main": "apps/frontend/angular/platform/src/app/main.ts",
 				"polyfills": ["zone.js"],
 				"tsConfig": "apps/frontend/angular/platform/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
@@ -22,7 +22,7 @@
 						"input": "apps/frontend/angular/platform/public"
 					}
 				],
-				"styles": ["apps/frontend/angular/platform/src/styles.scss"],
+				"styles": ["apps/frontend/angular/platform/src/app/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
