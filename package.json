@@ -13,7 +13,7 @@
 		"stylelint:all:fix": "npx stylelint ./**/*.scss --fix",
 		"eslint": "nx affected --target=lint --base=origin/main",
 		"eslint:fix": "nx affected --target=lint --fix --base=origin/main",
-		"eslint:all": "npx eslint --flag unstable_config_lookup_from_file './**/*.{js,jsx,ts,tsx,html,json}' ",
+		"eslint:all": "npx eslint --flag unstable_config_lookup_from_file './**/*.{js,jsx,ts,tsx,html,json}'",
 		"eslint:all:fix": "npx eslint --flag unstable_config_lookup_from_file './**/*.{js,jsx,ts,tsx,html,json}' --fix",
 		"lint": "nx affected --target=lint,stylelint --base=origin/main && npm run format",
 		"lint:fix": "nx affected --target=lint,stylelint --fix --base=origin/main && npm run format:fix",

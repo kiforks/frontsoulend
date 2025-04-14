@@ -29,7 +29,11 @@ export default [
 		languageOptions: {
 			...config.languageOptions,
 			parserOptions: {
-				project: ['./tsconfig.json', 'libs/angular/ui/.storybook/tsconfig.json', 'storybook/.storybook/tsconfig.json'],
+				project: [
+					'./tsconfig.base.json',
+					'libs/angular/ui/.storybook/tsconfig.json',
+					'storybook/.storybook/tsconfig.json',
+				],
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},

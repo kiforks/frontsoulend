@@ -1,5 +1,5 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { compilerOptions } from '../../../tsconfig.json';
+import { compilerOptions } from '../../../tsconfig.base.json';
 
 import { pathsToModuleNameMapper } from 'ts-jest';
 
