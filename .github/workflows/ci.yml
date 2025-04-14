@@ -213,7 +213,6 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -235,7 +234,6 @@ jobs:
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes, lint, version-check]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -250,12 +248,12 @@ jobs:
         uses: nrwl/nx-set-shas@v4
       - name: Run frontend tests
         run: npm run test:ci
+
   frontend-build:
     name: 'Frontend build'
     runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
     timeout-minutes: 30
     needs: [changes, lint, version-check]
-    if: ${{ needs.condition.outputs.run_on_pr_and_schedule == 'true' && needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' && needs.changes.outputs.general == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -268,7 +266,6 @@ jobs:
       - run: npm install
       - name: Set SHAs for NX
         uses: nrwl/nx-set-shas@v4
-
       - name: Frontend build
         run: npm run build:production
 
@@ -298,7 +295,6 @@ jobs:
           externals: |
             *.scss
             assets/**
-
       - name: Publish Storybook Angular UI
         uses: chromaui/action@latest
         with:
