@@ -75,6 +75,48 @@ export default [
 					checkNestedExternalImports: true,
 					depConstraints: [
 						{
+							sourceTag: 'slice:app',
+							onlyDependOnLibsWithTags: [
+								'slice:shared',
+								'slice:entities',
+								'slice:features',
+								'slice:widgets',
+								'slice:pages',
+								'slice:processes',
+							],
+						},
+						{
+							sourceTag: 'slice:processes',
+							onlyDependOnLibsWithTags: [
+								'slice:shared',
+								'slice:entities',
+								'slice:features',
+								'slice:widgets',
+								'slice:pages',
+							],
+						},
+						{
+							sourceTag: 'slice:pages',
+							onlyDependOnLibsWithTags: ['slice:shared', 'slice:entities', 'slice:features', 'slice:widgets'],
+						},
+						{
+							sourceTag: 'slice:widgets',
+							onlyDependOnLibsWithTags: ['slice:shared', 'slice:entities', 'slice:features'],
+						},
+						{
+							sourceTag: 'slice:features',
+							onlyDependOnLibsWithTags: ['slice:shared', 'slice:entities'],
+						},
+						{
+							sourceTag: 'slice:entities',
+							onlyDependOnLibsWithTags: ['slice:shared'],
+						},
+						{
+							sourceTag: 'slice:shared',
+							onlyDependOnLibsWithTags: [],
+						},
+
+						{
 							sourceTag: '*',
 							onlyDependOnLibsWithTags: ['*'],
 						},
