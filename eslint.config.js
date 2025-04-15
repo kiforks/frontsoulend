@@ -41,6 +41,7 @@ export default [
 	kiforDisableRecommend,
 	...kiforTests,
 
+	/** TODO update global eslint config */
 	{
 		files: ['**/*.json'],
 		languageOptions: {
@@ -69,6 +70,147 @@ export default [
 			],
 		},
 	},
+
+	/** TODO update global eslint config */
+	{
+		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.js'],
+		rules: {
+			'id-length': [
+				'error',
+				{
+					min: 2,
+					exceptions: ['_', 'i', 'e', 'x', 'y', 'z', 'm'],
+				},
+			],
+		},
+	},
+
+	/**
+	 * @layer shared
+	 * @description The shared layer cannot import from any other layer.
+	 */
+	{
+		files: ['**/shared/**/*.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['**/entities', '**/features', '**/widgets', '**/pages', '**/processes', '**/app'],
+							message: '❌ Shared layer must not import from any other FSD layer.',
+						},
+					],
+				},
+			],
+		},
+	},
+
+	/**
+	 * @layer entities
+	 * @description Entities can only use shared.
+	 */
+	{
+		files: ['**/entities/**/*.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['**/features', '**/widgets', '**/pages', '**/processes', '**/app'],
+							message: '❌ Entities can only import from shared.',
+						},
+					],
+				},
+			],
+		},
+	},
+
+	/**
+	 * @layer features
+	 * @description Features can use shared and entities.
+	 */
+	{
+		files: ['**/features/**/*.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['**/widgets', '**/pages', '**/processes', '**/app'],
+							message: '❌ Features can only import from shared and entities.',
+						},
+					],
+				},
+			],
+		},
+	},
+
+	/**
+	 * @layer widgets
+	 * @description Widgets can use shared, entities, and features.
+	 */
+	{
+		files: ['**/widgets/**/*.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['**/pages', '**/processes', '**/app'],
+							message: '❌ Widgets can only import from shared, entities, and features.',
+						},
+					],
+				},
+			],
+		},
+	},
+
+	/**
+	 * @layer pages
+	 * @description Pages can use shared, entities, features, and widgets.
+	 */
+	{
+		files: ['**/pages/**/*.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['**/processes', '**/app'],
+							message: '❌ Pages can only import from shared, entities, features, and widgets.',
+						},
+					],
+				},
+			],
+		},
+	},
+
+	/**
+	 * @layer processes
+	 * @description Processes can use shared, entities, features, widgets, and pages.
+	 */
+	{
+		files: ['**/processes/**/*.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['**/app'],
+							message: '❌ Processes can only import from shared, entities, features, widgets, and pages.',
+						},
+					],
+				},
+			],
+		},
+	},
+
 	{
 		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
 		rules: {
@@ -78,48 +220,6 @@ export default [
 					enforceBuildableLibDependency: true,
 					checkNestedExternalImports: true,
 					depConstraints: [
-						{
-							sourceTag: 'slice:app',
-							onlyDependOnLibsWithTags: [
-								'slice:shared',
-								'slice:entities',
-								'slice:features',
-								'slice:widgets',
-								'slice:pages',
-								'slice:processes',
-							],
-						},
-						{
-							sourceTag: 'slice:processes',
-							onlyDependOnLibsWithTags: [
-								'slice:shared',
-								'slice:entities',
-								'slice:features',
-								'slice:widgets',
-								'slice:pages',
-							],
-						},
-						{
-							sourceTag: 'slice:pages',
-							onlyDependOnLibsWithTags: ['slice:shared', 'slice:entities', 'slice:features', 'slice:widgets'],
-						},
-						{
-							sourceTag: 'slice:widgets',
-							onlyDependOnLibsWithTags: ['slice:shared', 'slice:entities', 'slice:features'],
-						},
-						{
-							sourceTag: 'slice:features',
-							onlyDependOnLibsWithTags: ['slice:shared', 'slice:entities'],
-						},
-						{
-							sourceTag: 'slice:entities',
-							onlyDependOnLibsWithTags: ['slice:shared'],
-						},
-						{
-							sourceTag: 'slice:shared',
-							onlyDependOnLibsWithTags: [],
-						},
-
 						{
 							sourceTag: '*',
 							onlyDependOnLibsWithTags: ['*'],
@@ -137,8 +237,8 @@ export default [
 							onlyDependOnLibsWithTags: ['scope:core', 'scope:utilities'],
 						},
 						{
-							sourceTag: 'scope:ng-ui',
-							onlyDependOnLibsWithTags: ['scope:ng-ui', 'scope:utilities', 'scope:core'],
+							sourceTag: 'scope:ui',
+							onlyDependOnLibsWithTags: ['scope:ui', 'scope:utilities', 'scope:core'],
 						},
 					],
 				},
