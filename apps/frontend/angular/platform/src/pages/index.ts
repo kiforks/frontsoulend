@@ -1,1 +1,3 @@
-export { RootComponent } from './ui';
+export { RootComponent } from './components';
+
+export { Routes } from './root.routes';
