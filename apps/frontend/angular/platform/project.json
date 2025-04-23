@@ -5,6 +5,12 @@
 	"prefix": "app",
 	"sourceRoot": "apps/frontend/angular/platform/src",
 	"tags": ["scope:app"],
+	"i18n": {
+		"sourceLocale": "en-US",
+		"locales": {
+			"ua": "apps/frontend/angular/platform/src/locale/messages.ua.xlf"
+		}
+	},
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:browser-esbuild",
@@ -22,7 +28,8 @@
 					}
 				],
 				"styles": ["apps/frontend/angular/platform/src/shared/scss/styles.scss"],
-				"scripts": []
+				"scripts": [],
+				"localize": ["en-US", "ua"]
 			},
 			"configurations": {
 				"production": {
@@ -44,7 +51,10 @@
 							"maximumError": "4kb"
 						}
 					],
-					"outputHashing": "all"
+					"outputHashing": "all",
+					"localize": true,
+					"i18nMissingTranslation": "error",
+					"i18nDuplicateTranslation": "error"
 				},
 				"development": {
 					"optimization": false,
@@ -70,7 +80,8 @@
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"buildTarget": "platform:build"
+				"buildTarget": "platform:build",
+				"outputPath": "apps/frontend/angular/platform/src/locale"
 			}
 		},
 		"lint": {
