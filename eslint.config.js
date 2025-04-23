@@ -1,6 +1,7 @@
 import nxPlugin from '@nx/eslint-plugin';
 
 import kiforDisableRecommend from '@kiforks/eslint-config/disable-recommend.js';
+import kiforFsd from '@kiforks/eslint-config/feature-sliced-design.js';
 import kiforJavascript from '@kiforks/eslint-config/javascript.js';
 import kiforJest from '@kiforks/eslint-config/jest.js';
 import kiforTests from '@kiforks/eslint-config/test.js';
@@ -40,8 +41,8 @@ export default [
 	})),
 	kiforDisableRecommend,
 	...kiforTests,
+	...kiforFsd,
 
-	/** TODO update global eslint config */
 	{
 		files: ['**/*.json'],
 		languageOptions: {
@@ -65,146 +66,6 @@ export default [
 						'jest-preset-angular',
 						'@faker-js/faker',
 						'ng-mocks',
-					],
-				},
-			],
-		},
-	},
-
-	/** TODO update global eslint config */
-	{
-		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.js'],
-		rules: {
-			'id-length': [
-				'error',
-				{
-					min: 2,
-					exceptions: ['_', 'i', 'e', 'x', 'y', 'z', 'm'],
-				},
-			],
-		},
-	},
-
-	/**
-	 * @layer shared
-	 * @description The shared layer cannot import from any other layer.
-	 */
-	{
-		files: ['**/shared/**/*.ts'],
-		rules: {
-			'no-restricted-imports': [
-				'error',
-				{
-					patterns: [
-						{
-							group: ['**/entities', '**/features', '**/widgets', '**/pages', '**/processes', '**/app'],
-							message: '❌ Shared layer must not import from any other FSD layer.',
-						},
-					],
-				},
-			],
-		},
-	},
-
-	/**
-	 * @layer entities
-	 * @description Entities can only use shared.
-	 */
-	{
-		files: ['**/entities/**/*.ts'],
-		rules: {
-			'no-restricted-imports': [
-				'error',
-				{
-					patterns: [
-						{
-							group: ['**/features', '**/widgets', '**/pages', '**/processes', '**/app'],
-							message: '❌ Entities can only import from shared.',
-						},
-					],
-				},
-			],
-		},
-	},
-
-	/**
-	 * @layer features
-	 * @description Features can use shared and entities.
-	 */
-	{
-		files: ['**/features/**/*.ts'],
-		rules: {
-			'no-restricted-imports': [
-				'error',
-				{
-					patterns: [
-						{
-							group: ['**/widgets', '**/pages', '**/processes', '**/app'],
-							message: '❌ Features can only import from shared and entities.',
-						},
-					],
-				},
-			],
-		},
-	},
-
-	/**
-	 * @layer widgets
-	 * @description Widgets can use shared, entities, and features.
-	 */
-	{
-		files: ['**/widgets/**/*.ts'],
-		rules: {
-			'no-restricted-imports': [
-				'error',
-				{
-					patterns: [
-						{
-							group: ['**/pages', '**/processes', '**/app'],
-							message: '❌ Widgets can only import from shared, entities, and features.',
-						},
-					],
-				},
-			],
-		},
-	},
-
-	/**
-	 * @layer pages
-	 * @description Pages can use shared, entities, features, and widgets.
-	 */
-	{
-		files: ['**/pages/**/*.ts'],
-		rules: {
-			'no-restricted-imports': [
-				'error',
-				{
-					patterns: [
-						{
-							group: ['**/processes', '**/app'],
-							message: '❌ Pages can only import from shared, entities, features, and widgets.',
-						},
-					],
-				},
-			],
-		},
-	},
-
-	/**
-	 * @layer processes
-	 * @description Processes can use shared, entities, features, widgets, and pages.
-	 */
-	{
-		files: ['**/processes/**/*.ts'],
-		rules: {
-			'no-restricted-imports': [
-				'error',
-				{
-					patterns: [
-						{
-							group: ['**/app'],
-							message: '❌ Processes can only import from shared, entities, features, widgets, and pages.',
-						},
 					],
 				},
 			],
