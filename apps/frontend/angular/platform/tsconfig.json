@@ -2,8 +2,9 @@
 	"extends": "../../../../tsconfig.angular.json",
 	"compilerOptions": {
 		"paths": {
-			"@app/*": ["./src/app/*"],
-			"@env/*": ["./src/environments/*"],
+			"~env/*": ["apps/frontend/angular/platform/environments/*"],
+			"~modules/*": ["apps/frontend/angular/platform/src/modules/*"],
+			"~shared/*": ["apps/frontend/angular/platform/src/shared/*"],
 			"@frontsoulend/core": ["libs/core/src/index.ts"],
 			"@frontsoulend/utilities": ["libs/utilities/src/index.ts"],
 			"@frontsoulend/ng-ui": ["libs/angular/ui/src/index.ts"]

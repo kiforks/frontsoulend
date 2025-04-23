@@ -22,7 +22,7 @@
 						"input": "apps/frontend/angular/platform/public"
 					}
 				],
-				"styles": ["apps/frontend/angular/platform/src/shared/ui/scss/styles.scss"],
+				"styles": ["apps/frontend/angular/platform/src/shared/scss/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
