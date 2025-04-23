@@ -29,7 +29,8 @@
 				],
 				"styles": ["apps/frontend/angular/platform/src/shared/scss/styles.scss"],
 				"scripts": [],
-				"localize": ["en-US", "ua"]
+				"localize": ["en-US", "ua"],
+				"polyfills": ["@angular/localize/init"]
 			},
 			"configurations": {
 				"production": {
