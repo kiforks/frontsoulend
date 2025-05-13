@@ -1,7 +1,7 @@
 import type { StorybookConfig } from '@storybook/angular';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { StorybookConfig as Config } from '../../../../storybook';
+import { StorybookConfig as Config } from '../../../../../storybook';
 
 const config: StorybookConfig = {
 	stories: ['../**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],

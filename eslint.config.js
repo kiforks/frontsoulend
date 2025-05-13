@@ -32,7 +32,7 @@ export default [
 			parserOptions: {
 				project: [
 					'./tsconfig.base.json',
-					'libs/angular/ui/.storybook/tsconfig.json',
+					'libs/frontend/angular/ui/.storybook/tsconfig.json',
 					'storybook/.storybook/tsconfig.json',
 				],
 				tsconfigRootDir: import.meta.dirname,

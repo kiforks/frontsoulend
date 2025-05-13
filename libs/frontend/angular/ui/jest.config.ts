@@ -1,5 +1,5 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { compilerOptions } from '../../../tsconfig.base.json';
+import { compilerOptions } from '../../../../tsconfig.base.json';
 
 import { pathsToModuleNameMapper } from 'ts-jest';
 
@@ -12,7 +12,7 @@ export default {
 		'jest-preset-angular/build/serializers/html-comment',
 	],
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-	coverageDirectory: '../../../coverage/libs/angular/ui',
+	coverageDirectory: '../../../coverage/@frontsoulend/frontend/angular/ui',
 	testEnvironment: 'jsdom',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [

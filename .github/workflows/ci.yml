@@ -300,7 +300,7 @@ jobs:
         with:
           skip: '@(renovate/**|dependabot/**)'
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_ANGULAR_UI }}
-          workingDir: libs/angular/ui
+          workingDir: libs/frontend/angular/ui
           onlyChanged: true
           autoAcceptChanges: 'main'
           zip: true

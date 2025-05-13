@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Bind } from '@linters';
+import { Bind } from '@frontsoulend/utilities';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 

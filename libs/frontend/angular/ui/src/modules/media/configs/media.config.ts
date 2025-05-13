@@ -13,7 +13,7 @@ export abstract class MediaConfig {
 	public static readonly MaxScreenRange = 0.02;
 	/**
 	 * Breakpoints were taken from:
-	 * @see libs/ui/scss/utilities/media/variables/_breakpoints.scss
+	 * @see @frontsoulend/ui/scss/utilities/media/variables/_breakpoints.scss
 	 * */
 	public static readonly Breakpoints: MediaBreakpoints = {
 		/**
