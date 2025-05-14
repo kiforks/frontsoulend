@@ -58,10 +58,10 @@ npm install
 
 if [ "$dry_run" = true ]; then
   echo "🛠️ Building packages (CI mode)..."
-  npm run build:deploy-libs
+  npm run build:libs
 else
   echo "🛠️ Building packages (CD mode)..."
-  npm run build:deploy-libs:ci
+  npm run build:libs:ci
 fi
 
 echo "📌 Packages ready for publish:"
