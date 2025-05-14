@@ -4,7 +4,6 @@
 	"sourceRoot": "libs/frontend/angular/ui/src",
 	"projectType": "library",
 	"tags": ["scope:lib", "scope:ui"],
-	"implicitDependencies": ["utilities"],
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:package",
