@@ -5,7 +5,7 @@ base_ref=${1:-"HEAD~1"}
 head_ref=${2:-"HEAD"}
 dry_run=${3:-true}
 
-mapfile -t CHANGED_FILES < <(git diff --name-only "$base_ref" "$head_ref" -- 'libs/**/package.json')
+mapfile -t CHANGED_FILES < <(git diff --name-only "$base_ref" "$head_ref" -- '*/libs/**/package.json')
 
 if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
   echo "No package.json changes detected."

@@ -40,4 +40,4 @@ storybook:
 
 libs:
   - changed-files:
-      - any-glob-to-any-file: 'libs/**/*'
+      - any-glob-to-any-file: '*/libs/**/*'

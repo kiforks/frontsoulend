@@ -5,9 +5,9 @@
 			"~env/*": ["frontend/angular/platform/environments/*"],
 			"~modules/*": ["frontend/angular/platform/src/modules/*"],
 			"~shared/*": ["frontend/angular/platform/src/shared/*"],
-			"@libs/frontend/core": ["libs/frontend/core/src/index.ts"],
-			"@libs/frontend/utilities": ["libs/frontend/utilities/src/index.ts"],
-			"@libs/frontend/angular/ui": ["libs/frontend/angular/ui/src/index.ts"]
+			"@core": ["frontend/libs/core/src/index.ts"],
+			"@utilities": ["frontend/libs/utilities/src/index.ts"],
+			"@ui": ["frontend/libs/angular/ui/src/index.ts"]
 		}
 	}
 }

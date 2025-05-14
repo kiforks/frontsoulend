@@ -30,12 +30,7 @@
 		"typeRoots": ["node_modules/@types"],
 		"declaration": true,
 		"declarationMap": true,
-		"inlineSources": true,
-		"paths": {
-			"@libs/frontend/angular/ui": ["dist/libs/frontend/angular/ui/src"],
-			"@libs/frontend/core": ["dist/libs/frontend/core/src"],
-			"@libs/frontend/utilities": ["dist/libs/frontend/utilities/src"]
-		}
+		"inlineSources": true
 	},
 	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"],
 	"ts-node": {

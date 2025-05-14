@@ -3,15 +3,10 @@ import { compilerOptions } from './tsconfig.spec.json';
 import { pathsToModuleNameMapper } from 'ts-jest';
 
 export default {
-	displayName: 'frontend/angular/platform',
+	displayName: 'frontend/libs/utilities',
 	preset: '../../../jest.preset.js',
-	snapshotSerializers: [
-		'jest-preset-angular/build/serializers/no-ng-attributes',
-		'jest-preset-angular/build/serializers/ng-snapshot',
-		'jest-preset-angular/build/serializers/html-comment',
-	],
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-	coverageDirectory: '../../../coverage/frontend/angular/platform',
+	coverageDirectory: '../../../../coverage/frontend/libs/utilities',
 	testEnvironment: 'jsdom',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
@@ -25,7 +20,7 @@ export default {
 	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 	moduleNameMapper: {
 		...pathsToModuleNameMapper(compilerOptions.paths, {
-			prefix: '<rootDir>/../../../',
+			prefix: '<rootDir>/../../',
 		}),
 	},
 };
