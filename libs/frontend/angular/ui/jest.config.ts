@@ -12,7 +12,7 @@ export default {
 		'jest-preset-angular/build/serializers/html-comment',
 	],
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-	coverageDirectory: '../../../coverage/libs/frontend/angular/ui',
+	coverageDirectory: '../../../../coverage/libs/frontend/angular/ui',
 	testEnvironment: 'jsdom',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [

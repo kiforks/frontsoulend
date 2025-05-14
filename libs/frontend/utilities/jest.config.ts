@@ -7,7 +7,7 @@ export default {
 	displayName: 'utilities',
 	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-	coverageDirectory: '../../../coverage/libs/frontend/utilities',
+	coverageDirectory: '../../../../coverage/libs/frontend/utilities',
 	testEnvironment: 'jsdom',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
