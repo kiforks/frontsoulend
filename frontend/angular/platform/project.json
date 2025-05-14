@@ -1,14 +1,14 @@
 {
 	"name": "frontend/angular/platform",
-	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "application",
 	"prefix": "app",
-	"sourceRoot": "apps/frontend/angular/platform/src",
+	"sourceRoot": "frontend/angular/platform/src",
 	"tags": ["scope:app"],
 	"i18n": {
 		"sourceLocale": "en-US",
 		"locales": {
-			"uk": "apps/frontend/angular/platform/src/locale/messages.uk.xlf"
+			"uk": "frontend/angular/platform/src/locale/messages.uk.xlf"
 		}
 	},
 	"targets": {
@@ -16,18 +16,18 @@
 			"executor": "@nx/angular:browser-esbuild",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/apps/frontend/angular/platform",
-				"index": "apps/frontend/angular/platform/src/app/index.html",
-				"main": "apps/frontend/angular/platform/src/app/main.ts",
-				"tsConfig": "apps/frontend/angular/platform/tsconfig.app.json",
+				"outputPath": "dist/frontend/angular/platform",
+				"index": "frontend/angular/platform/src/app/index.html",
+				"main": "frontend/angular/platform/src/app/main.ts",
+				"tsConfig": "frontend/angular/platform/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
 					{
 						"glob": "**/*",
-						"input": "apps/frontend/angular/platform/public"
+						"input": "frontend/angular/platform/public"
 					}
 				],
-				"styles": ["apps/frontend/angular/platform/src/shared/scss/styles.scss"],
+				"styles": ["frontend/angular/platform/src/shared/scss/styles.scss"],
 				"scripts": [],
 				"localize": ["en-US", "uk"],
 				"polyfills": ["@angular/localize/init"]
@@ -36,8 +36,8 @@
 				"production": {
 					"fileReplacements": [
 						{
-							"replace": "apps/frontend/angular/platform/environments/environment.ts",
-							"with": "apps/frontend/angular/platform/environments/environment.prod.ts"
+							"replace": "frontend/angular/platform/environments/environment.ts",
+							"with": "frontend/angular/platform/environments/environment.prod.ts"
 						}
 					],
 					"budgets": [
@@ -82,7 +82,7 @@
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
 				"buildTarget": "frontend/angular/platform:build",
-				"outputPath": "apps/frontend/angular/platform/src/locale"
+				"outputPath": "frontend/angular/platform/src/locale"
 			}
 		},
 		"lint": {
@@ -92,13 +92,13 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "apps/frontend/angular/platform/jest.config.ts"
+				"jestConfig": "frontend/angular/platform/jest.config.ts"
 			}
 		},
 		"stylelint": {
 			"executor": "nx-stylelint:lint",
 			"options": {
-				"lintFilePatterns": ["./apps/frontend/angular/platform/src/**/*.scss"]
+				"lintFilePatterns": ["./frontend/angular/platform/src/**/*.scss"]
 			}
 		},
 		"serve-static": {
@@ -106,7 +106,7 @@
 			"options": {
 				"buildTarget": "frontend/angular/platform:build",
 				"port": 4200,
-				"staticFilePath": "dist/apps/frontend/angular/platform/browser",
+				"staticFilePath": "dist/frontend/angular/platform/browser",
 				"spa": true
 			}
 		}

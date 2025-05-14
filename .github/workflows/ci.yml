@@ -91,14 +91,14 @@ jobs:
               - '.github/workflows/ci.yml'
             frontend: &frontend
               - *all_ci
-              - 'apps/frontend/**/package.json'
-              - 'apps/frontend/**/package-lock.lock'
-              - 'apps/frontend/**/*.js'
-              - 'apps/frontend/**/*.ts'
-              - 'apps/frontend/**/*.html'
-              - 'apps/frontend/**/*.css'
-              - 'apps/frontend/**/*.scss'
-              - 'apps/frontend/**/*.json'
+              - 'frontend/**/package.json'
+              - 'frontend/**/package-lock.lock'
+              - 'frontend/**/*.js'
+              - 'frontend/**/*.ts'
+              - 'frontend/**/*.html'
+              - 'frontend/**/*.css'
+              - 'frontend/**/*.scss'
+              - 'frontend/**/*.json'
             e2e: &e2e
               - *all_ci
               - 'apps/qa/**/package.json'

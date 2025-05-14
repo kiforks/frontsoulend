@@ -17,7 +17,7 @@ docker:
 
 frontend:
   - changed-files:
-      - any-glob-to-any-file: 'apps/frontend/**/*'
+      - any-glob-to-any-file: 'frontend/**/*'
 
 qa:
   - changed-files:
