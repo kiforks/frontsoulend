@@ -159,8 +159,14 @@ jobs:
           for file in $CHANGED_FILES; do
             echo "Checking file: $file"
 
-            OLD_VERSION=$(git show HEAD~1:$file | jq -r '.version')
-            NEW_VERSION=$(jq -r '.version' $file)
+            if git cat-file -e HEAD~1:"$file"; then
+              OLD_VERSION=$(git show HEAD~1:"$file" | jq -r '.version')
+            else
+              echo "Skipping $file: not present in HEAD~1 (new file or moved)"
+              continue
+            fi
+
+            NEW_VERSION=$(jq -r '.version' "$file")
 
             echo "Old version: $OLD_VERSION, New version: $NEW_VERSION"
 
@@ -187,6 +193,7 @@ jobs:
           else
             echo "All versions are valid."
           fi
+
   publish-libs:
     name: 'Dry run publish libs'
     runs-on: ubuntu-latest
