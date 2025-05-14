@@ -1,6 +1,6 @@
 import { InputSignal, WritableSignal } from '@angular/core';
 
-import { Breakpoint } from '@frontsoulend/core';
+import { Breakpoint } from '@libs/frontend/core';
 
 import { Observable } from 'rxjs';
 

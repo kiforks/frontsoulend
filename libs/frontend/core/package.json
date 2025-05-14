@@ -1,6 +1,6 @@
 {
-	"name": "@frontsoulend/core",
-	"version": "0.0.3",
+	"name": "@frontsoulend/frontend-core",
+	"version": "0.0.1",
 	"dependencies": {},
 	"type": "module",
 	"types": "./src/index.d.ts",

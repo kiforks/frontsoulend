@@ -1,6 +1,6 @@
 import { Directive, effect, inject, input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { Nullable } from '@frontsoulend/core';
+import { Nullable } from '@libs/frontend/core';
 
 import { Condition } from '../../interfaces';
 

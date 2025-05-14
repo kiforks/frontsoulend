@@ -1,5 +1,5 @@
 {
-	"name": "utilities",
+	"name": "libs/frontend/utilities",
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/frontend/utilities/src",
 	"projectType": "library",
