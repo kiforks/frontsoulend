@@ -62,7 +62,7 @@ export default defineConfig({
 	},
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: 'npx nx run platform:serve',
+		command: 'npx nx run frontend/angular/platform:serve',
 		cwd: workspaceRoot,
 		// eslint-disable-next-line dot-notation
 		reuseExistingServer: !process.env['CI'],

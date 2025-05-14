@@ -1,5 +1,5 @@
 {
-	"name": "platform",
+	"name": "frontend/angular/platform",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "application",
 	"prefix": "app",
@@ -69,10 +69,10 @@
 			"executor": "@nx/angular:dev-server",
 			"configurations": {
 				"production": {
-					"buildTarget": "platform:build:production"
+					"buildTarget": "frontend/angular/platform:build:production"
 				},
 				"development": {
-					"buildTarget": "platform:build:development",
+					"buildTarget": "frontend/angular/platform:build:development",
 					"hmr": true
 				}
 			},
@@ -81,7 +81,7 @@
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"buildTarget": "platform:build",
+				"buildTarget": "frontend/angular/platform:build",
 				"outputPath": "apps/frontend/angular/platform/src/locale"
 			}
 		},
@@ -104,7 +104,7 @@
 		"serve-static": {
 			"executor": "@nx/web:file-server",
 			"options": {
-				"buildTarget": "platform:build",
+				"buildTarget": "frontend/angular/platform:build",
 				"port": 4200,
 				"staticFilePath": "dist/apps/frontend/angular/platform/browser",
 				"spa": true
