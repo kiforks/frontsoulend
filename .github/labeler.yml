@@ -1,6 +1,6 @@
 backend:
   - changed-files:
-      - any-glob-to-any-file: 'apps/backend/**/*'
+      - any-glob-to-any-file: 'backend/**/*'
 
 devops:
   - changed-files:
