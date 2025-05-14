@@ -33,7 +33,7 @@
 			"executor": "@storybook/angular:build-storybook",
 			"outputs": ["{options.outputDir}"],
 			"options": {
-				"outputDir": "dist/storybook/@frontsoulend",
+				"outputDir": "dist/storybook/",
 				"configDir": "./.storybook",
 				"browserTarget": "storybook:build-storybook",
 				"compodoc": false,
@@ -57,7 +57,7 @@
 			"dependsOn": ["build-storybook"],
 			"options": {
 				"buildTarget": "storybook:build-storybook",
-				"staticFilePath": "dist/storybook/@frontsoulend",
+				"staticFilePath": "dist/storybook/",
 				"spa": true,
 				"experimentalZoneless": true
 			},
