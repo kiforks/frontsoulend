@@ -5,14 +5,14 @@ import { pathsToModuleNameMapper } from 'ts-jest';
 
 export default {
 	displayName: 'angular:ui',
-	preset: '../../../jest.preset.js',
+	preset: '../../../../jest.preset.js',
 	snapshotSerializers: [
 		'jest-preset-angular/build/serializers/no-ng-attributes',
 		'jest-preset-angular/build/serializers/ng-snapshot',
 		'jest-preset-angular/build/serializers/html-comment',
 	],
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-	coverageDirectory: '../../../coverage/@frontsoulend/frontend/angular/ui',
+	coverageDirectory: '../../../coverage/libs/frontend/angular/ui',
 	testEnvironment: 'jsdom',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
@@ -26,7 +26,7 @@ export default {
 	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 	moduleNameMapper: {
 		...pathsToModuleNameMapper(compilerOptions.paths, {
-			prefix: '<rootDir>/../../../',
+			prefix: '<rootDir>/../../../../',
 		}),
 	},
 };

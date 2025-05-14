@@ -5,8 +5,8 @@
 			"~env/*": ["apps/frontend/angular/platform/environments/*"],
 			"~modules/*": ["apps/frontend/angular/platform/src/modules/*"],
 			"~shared/*": ["apps/frontend/angular/platform/src/shared/*"],
-			"@frontsoulend/core": ["libs/core/src/index.ts"],
-			"@frontsoulend/utilities": ["libs/utilities/src/index.ts"],
+			"@frontsoulend/core": ["libs/frontend/core/src/index.ts"],
+			"@frontsoulend/utilities": ["libs/frontend/utilities/src/index.ts"],
 			"@frontsoulend/ng-ui": ["libs/frontend/angular/ui/src/index.ts"]
 		}
 	}

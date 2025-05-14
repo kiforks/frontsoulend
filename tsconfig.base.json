@@ -32,10 +32,10 @@
 		"declarationMap": true,
 		"inlineSources": true,
 		"paths": {
-			"@frontsoulend/core": ["libs/core/src/index.ts"],
+			"@frontsoulend/core": ["libs/frontend/core/src/index.ts"],
 			"@frontsoulend/ng-ui": ["libs/frontend/angular/ui/src/index.ts"],
-			"@frontsoulend/utilities": ["libs/utilities/src/index.ts"],
-			"@linters": ["libs/utilities/src/index.ts"]
+			"@frontsoulend/utilities": ["libs/frontend/utilities/src/index.ts"],
+			"@linters": ["libs/frontend/utilities/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"],

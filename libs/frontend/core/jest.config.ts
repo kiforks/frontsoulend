@@ -1,8 +1,8 @@
 export default {
-	coverageDirectory: '../../coverage/libs/core',
+	coverageDirectory: '../../coverage/libs/frontend/core',
 	displayName: 'core',
 	moduleFileExtensions: ['ts', 'js', 'html'],
-	preset: '../../jest.preset.js',
+	preset: '../../../jest.preset.js',
 	testEnvironment: 'node',
 	transform: {},
 };

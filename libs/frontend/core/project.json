@@ -1,7 +1,7 @@
 {
 	"name": "core",
-	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "libs/core/src",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/frontend/core/src",
 	"projectType": "library",
 	"release": {
 		"version": {
@@ -17,9 +17,9 @@
 			"executor": "@nx/esbuild:esbuild",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/libs/core",
-				"main": "libs/core/src/index.ts",
-				"tsConfig": "libs/core/tsconfig.lib.json",
+				"outputPath": "dist/libs/frontend/core",
+				"main": "libs/frontend/core/src/index.ts",
+				"tsConfig": "libs/frontend/core/tsconfig.lib.json",
 				"assets": [],
 				"generatePackageJson": true,
 				"format": ["esm"]
@@ -34,7 +34,7 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "libs/core/jest.config.ts"
+				"jestConfig": "libs/frontend/core/jest.config.ts"
 			}
 		}
 	}

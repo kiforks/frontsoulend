@@ -1,13 +1,13 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { compilerOptions } from '../../tsconfig.base.json';
+import { compilerOptions } from '../../../tsconfig.base.json';
 
 import { pathsToModuleNameMapper } from 'ts-jest';
 
 export default {
 	displayName: 'utilities',
-	preset: '../../jest.preset.js',
+	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-	coverageDirectory: '../../../coverage/libs/utilities',
+	coverageDirectory: '../../../coverage/libs/frontend/utilities',
 	testEnvironment: 'jsdom',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
