@@ -70,7 +70,7 @@
 		"storybook-composition": {
 			"executor": "nx:run-commands",
 			"options": {
-				"commands": ["nx storybook ng-ui"],
+				"commands": ["nx storybook libs/frontend/angular/ui"],
 				"parallel": true
 			}
 		},
@@ -78,7 +78,7 @@
 			"executor": "nx:run-commands",
 			"options": {
 				"commands": [
-					"nx run ng-ui:build-storybook --configDir=libs/frontend/angular/ui/.storybook",
+					"nx run libs/frontend/angular/ui:build-storybook --configDir=libs/frontend/angular/ui/.storybook",
 					"nx run @frontsoulend/storybook:build-storybook --configDir=storybook/.storybook"
 				],
 				"parallel": true

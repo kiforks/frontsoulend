@@ -62,7 +62,7 @@ export abstract class StorybookConfig {
 		return {
 			'angular-ui': {
 				title: 'Angular UI',
-				url: StorybookUtils.getCompositionUrl('ng-ui', isDevelopment),
+				url: StorybookUtils.getCompositionUrl('angular/ui', isDevelopment),
 			},
 		};
 	};

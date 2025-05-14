@@ -1,5 +1,5 @@
 {
-	"name": "ng-ui",
+	"name": "libs/frontend/angular/ui",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/frontend/angular/ui/src",
 	"projectType": "library",
@@ -43,7 +43,7 @@
 			"options": {
 				"port": 4401,
 				"configDir": "libs/frontend/angular/ui/.storybook",
-				"browserTarget": "ng-ui:build-storybook",
+				"browserTarget": "libs/frontend/angular/ui:build-storybook",
 				"compodoc": false,
 				"experimentalZoneless": true
 			},
@@ -59,7 +59,7 @@
 			"options": {
 				"outputDir": "dist/storybook/frontend/angular/ui",
 				"configDir": "./.storybook",
-				"browserTarget": "ng-ui:build-storybook",
+				"browserTarget": "libs/frontend/angular/ui:build-storybook",
 				"compodoc": false,
 				"experimentalZoneless": true
 			},
@@ -80,14 +80,14 @@
 			"executor": "@nx/web:file-server",
 			"dependsOn": ["build-storybook"],
 			"options": {
-				"buildTarget": "ng-ui:build-storybook",
-				"staticFilePath": "dist/storybook/ng-ui",
+				"buildTarget": "libs/frontend/angular/ui:build-storybook",
+				"staticFilePath": "dist/storybook/angular/ui",
 				"spa": true,
 				"experimentalZoneless": true
 			},
 			"configurations": {
 				"ci": {
-					"buildTarget": "ng-ui:build-storybook:ci"
+					"buildTarget": "libs/frontend/angular/ui:build-storybook:ci"
 				}
 			}
 		}

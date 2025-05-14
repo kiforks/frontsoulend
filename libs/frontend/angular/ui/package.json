@@ -1,8 +1,8 @@
 {
-	"name": "@frontsoulend/ng-ui",
-	"version": "0.0.6",
+	"name": "@frontsoulend/frontend.angular.ui",
+	"version": "0.0.1",
 	"storybook": {
-		"url": "https://kiforks.github.io/frontsoulend/ng-ui"
+		"url": "https://kiforks.github.io/frontsoulend/angular/ui"
 	},
 	"peerDependencies": {
 		"rxjs": "~7.8.0",
@@ -14,6 +14,6 @@
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
-		"build-storybook": "nx build-storybook ng-ui"
+		"build-storybook": "nx build-storybook libs/frontend/angular/ui"
 	}
 }
