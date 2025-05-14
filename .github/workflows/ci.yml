@@ -101,10 +101,10 @@ jobs:
               - 'frontend/**/*.json'
             e2e: &e2e
               - *all_ci
-              - 'apps/qa/**/package.json'
-              - 'apps/qa/**/package-lock.lock'
-              - 'apps/qa/**/*.ts'
-              - 'apps/qa/**/*.json'
+              - 'qa/**/package.json'
+              - 'qa/**/package-lock.lock'
+              - 'qa/**/*.ts'
+              - 'qa/**/*.json'
             changed:
               - *all_ci
               - *frontend

@@ -21,7 +21,7 @@ frontend:
 
 qa:
   - changed-files:
-      - any-glob-to-any-file: 'apps/qa/**/*'
+      - any-glob-to-any-file: 'qa/**/*'
 
 docs:
   - changed-files:
