@@ -30,3 +30,4 @@ export {
 } from './guards';
 export { MEDIA_DEVICE, MEDIA_CONFIG, MEDIA_ELEMENT } from './tokens';
 export { MediaConfig } from './configs';
+export { MediaServiceMock, MediaElementMock } from './mocks';

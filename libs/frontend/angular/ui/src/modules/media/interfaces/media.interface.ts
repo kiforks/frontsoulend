@@ -1,4 +1,4 @@
-import { InputSignal, WritableSignal } from '@angular/core';
+import { Signal, WritableSignal } from '@angular/core';
 
 import { Breakpoint } from '@libs/frontend/core';
 
@@ -20,7 +20,7 @@ export interface MediaConfigData {
 }
 
 export interface MediaElement<B = MediaBreakpoint> {
-	readonly breakpoint: InputSignal<B>;
+	readonly breakpoint: Signal<B>;
 
 	readonly checkMedia: (breakpoint: B) => Observable<boolean>;
 	readonly condition: WritableSignal<boolean>;
