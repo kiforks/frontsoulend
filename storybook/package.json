@@ -1,5 +1,5 @@
 {
-	"name": "@frontsoulend/storybook",
+	"name": "storybook",
 	"version": "0.0.0",
 	"sideEffects": false,
 	"type": "module",
@@ -7,6 +7,6 @@
 		"url": "https://kiforks.github.io/frontsoulend"
 	},
 	"scripts": {
-		"build-storybook": "nx build-storybook @frontsoulend/storybook"
+		"build-storybook": "nx build-storybook storybook"
 	}
 }

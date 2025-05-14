@@ -31,9 +31,9 @@
 		"packages:check": "ncu",
 		"packages:update": "ncu -u",
 		"packages:update:install": "ncu -u && npm install",
-		"storybook": "nx storybook @frontsoulend/storybook",
-		"storybook:composition": "nx run @frontsoulend/storybook:storybook-composition",
-		"storybook:prod": "nx run @frontsoulend/storybook:build-storybook:prod"
+		"storybook": "nx storybook storybook",
+		"storybook:composition": "nx run storybook:storybook-composition",
+		"storybook:prod": "nx run storybook:build-storybook:prod"
 	},
 	"private": true,
 	"type": "module",
