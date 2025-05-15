@@ -68,14 +68,19 @@ jobs:
               continue
             fi
 
-            OLD_VERSION=$(git show "$BASE_COMMIT":"${PACKAGE_FILE#./}" | jq -r '.version')
+            if git ls-tree -r "$BASE_COMMIT" --name-only | grep -q "^${PACKAGE_FILE#./}$"; then
+              OLD_VERSION=$(git show "$BASE_COMMIT":"${PACKAGE_FILE#./}" | jq -r '.version')
+            else
+              OLD_VERSION=""
+            fi
+
             NEW_VERSION=$(jq -r '.version' "$PACKAGE_FILE")
 
             if [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
               continue
             fi
 
-            if [ "$(printf '%s\n%s' "$OLD_VERSION" "$NEW_VERSION" | sort -V | head -n1)" = "$OLD_VERSION" ]; then
+            if [ -z "$OLD_VERSION" ] || [ "$(printf '%s\n%s' "$OLD_VERSION" "$NEW_VERSION" | sort -V | head -n1)" = "$OLD_VERSION" ]; then
               VERSION_BUMPED=true
               break
             fi
