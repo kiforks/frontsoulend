@@ -105,6 +105,6 @@ jobs:
         if: env.skip == 'false'
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.STORYBOOK_DEPLOY_KEY }}
           publish_dir: ./dist/frontend/storybook/
           publish_branch: storybook
