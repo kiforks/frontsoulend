@@ -295,7 +295,7 @@ jobs:
         with:
           skip: '@(renovate/**|dependabot/**)'
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }}
-          workingDir: storybook
+          workingDir: frontend/storybook
           onlyChanged: true
           autoAcceptChanges: 'main'
           zip: true

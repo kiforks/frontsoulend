@@ -33,7 +33,7 @@ export default [
 				project: [
 					'./tsconfig.base.json',
 					'frontend/libs/angular/ui/.storybook/tsconfig.json',
-					'storybook/.storybook/tsconfig.json',
+					'frontend/storybook/.storybook/tsconfig.json',
 				],
 				tsconfigRootDir: import.meta.dirname,
 			},

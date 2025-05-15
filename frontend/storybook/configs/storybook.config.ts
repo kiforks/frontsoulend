@@ -3,7 +3,7 @@ import { Preview } from '@storybook/angular';
 import { PresetValue, StorybookConfigRaw } from '@storybook/core/types';
 import { ThemeVarsPartial } from '@storybook/theming';
 
-import { StorybookUtils } from '../utils';
+import { StorybookHelper } from '../helpers';
 
 export abstract class StorybookConfig {
 	public static readonly CompositionProdUrl = 'https://kiforks.github.io/frontsoulend/';
@@ -54,7 +54,7 @@ export abstract class StorybookConfig {
 			return {
 				'angular-ui': {
 					title: 'Angular UI',
-					url: StorybookUtils.getCompositionUrl('4001', isDevelopment),
+					url: StorybookHelper.getCompositionUrl('4001', isDevelopment),
 				},
 			};
 		}
@@ -62,7 +62,7 @@ export abstract class StorybookConfig {
 		return {
 			'angular-ui': {
 				title: 'Angular UI',
-				url: StorybookUtils.getCompositionUrl('angular/ui', isDevelopment),
+				url: StorybookHelper.getCompositionUrl('angular/ui', isDevelopment),
 			},
 		};
 	};

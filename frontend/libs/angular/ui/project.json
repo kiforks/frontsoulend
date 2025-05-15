@@ -41,7 +41,7 @@
 		"storybook": {
 			"executor": "@storybook/angular:start-storybook",
 			"options": {
-				"port": 4401,
+				"port": 4001,
 				"configDir": "frontend/libs/angular/ui/.storybook",
 				"browserTarget": "frontend/libs/angular/ui:build-storybook",
 				"compodoc": false,
@@ -57,7 +57,7 @@
 			"executor": "@storybook/angular:build-storybook",
 			"outputs": ["{options.outputDir}"],
 			"options": {
-				"outputDir": "dist/storybook/frontend/angular/ui",
+				"outputDir": "dist/frontend/storybook/angular/ui",
 				"configDir": "./.storybook",
 				"browserTarget": "frontend/libs/angular/ui:build-storybook",
 				"compodoc": false,
@@ -81,7 +81,7 @@
 			"dependsOn": ["build-storybook"],
 			"options": {
 				"buildTarget": "frontend/libs/angular/ui:build-storybook",
-				"staticFilePath": "dist/storybook/angular/ui",
+				"staticFilePath": "dist/frontend/storybook/angular/ui",
 				"spa": true,
 				"experimentalZoneless": true
 			},

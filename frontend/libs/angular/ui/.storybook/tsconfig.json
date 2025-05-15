@@ -1,7 +1,11 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"emitDecoratorMetadata": true
+		"emitDecoratorMetadata": true,
+		"paths": {
+			"@core": ["frontend/libs/core/src"],
+			"@utilities": ["frontend/libs/utilities/src"]
+		}
 	},
 	"exclude": ["../**/*.spec.ts"],
 	"include": [
