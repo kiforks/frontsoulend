@@ -99,7 +99,7 @@ jobs:
 
       - name: Build Storybook Composition
         if: env.skip == 'false'
-        run: npm run frontend/storybook:prod
+        run: npm run storybook:prod
 
       - name: Deploy to "storybook" branch
         if: env.skip == 'false'
