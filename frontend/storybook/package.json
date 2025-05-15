@@ -1,0 +1,12 @@
+{
+	"name": "storybook",
+	"version": "0.0.0",
+	"sideEffects": false,
+	"type": "module",
+	"storybook": {
+		"url": "https://kiforks.github.io/frontsoulend"
+	},
+	"scripts": {
+		"build-storybook": "nx build-storybook storybook"
+	}
+}

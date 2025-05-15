@@ -91,20 +91,20 @@ jobs:
               - '.github/workflows/ci.yml'
             frontend: &frontend
               - *all_ci
-              - 'apps/frontend/**/package.json'
-              - 'apps/frontend/**/package-lock.lock'
-              - 'apps/frontend/**/*.js'
-              - 'apps/frontend/**/*.ts'
-              - 'apps/frontend/**/*.html'
-              - 'apps/frontend/**/*.css'
-              - 'apps/frontend/**/*.scss'
-              - 'apps/frontend/**/*.json'
+              - 'frontend/**/package.json'
+              - 'frontend/**/package-lock.lock'
+              - 'frontend/**/*.js'
+              - 'frontend/**/*.ts'
+              - 'frontend/**/*.html'
+              - 'frontend/**/*.css'
+              - 'frontend/**/*.scss'
+              - 'frontend/**/*.json'
             e2e: &e2e
               - *all_ci
-              - 'apps/qa/**/package.json'
-              - 'apps/qa/**/package-lock.lock'
-              - 'apps/qa/**/*.ts'
-              - 'apps/qa/**/*.json'
+              - 'qa/**/package.json'
+              - 'qa/**/package-lock.lock'
+              - 'qa/**/*.ts'
+              - 'qa/**/*.json'
             changed:
               - *all_ci
               - *frontend
@@ -153,14 +153,20 @@ jobs:
 
           FAILED=false
 
-          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json libs/**/package.json)
+          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json */libs/**/package.json)
 
           echo "Checking versions for changed package.json files..."
           for file in $CHANGED_FILES; do
             echo "Checking file: $file"
 
-            OLD_VERSION=$(git show HEAD~1:$file | jq -r '.version')
-            NEW_VERSION=$(jq -r '.version' $file)
+            if git cat-file -e HEAD~1:"$file"; then
+              OLD_VERSION=$(git show HEAD~1:"$file" | jq -r '.version')
+            else
+              echo "Skipping $file: not present in HEAD~1 (new file or moved)"
+              continue
+            fi
+
+            NEW_VERSION=$(jq -r '.version' "$file")
 
             echo "Old version: $OLD_VERSION, New version: $NEW_VERSION"
 
@@ -187,6 +193,7 @@ jobs:
           else
             echo "All versions are valid."
           fi
+
   publish-libs:
     name: 'Dry run publish libs'
     runs-on: ubuntu-latest
@@ -288,7 +295,7 @@ jobs:
         with:
           skip: '@(renovate/**|dependabot/**)'
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }}
-          workingDir: storybook
+          workingDir: frontend/storybook
           onlyChanged: true
           autoAcceptChanges: 'main'
           zip: true
@@ -300,7 +307,7 @@ jobs:
         with:
           skip: '@(renovate/**|dependabot/**)'
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_ANGULAR_UI }}
-          workingDir: libs/angular/ui
+          workingDir: frontend/libs/angular/ui
           onlyChanged: true
           autoAcceptChanges: 'main'
           zip: true

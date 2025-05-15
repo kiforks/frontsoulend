@@ -1,0 +1,18 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"@core": ["dist/frontend/libs/core/src"],
+			"@utilities": ["dist/frontend/libs/utilities/src"]
+		}
+	},
+	"exclude": [
+		"src/**/*.spec.ts",
+		"src/test-setup.ts",
+		"jest.config.ts",
+		"src/**/*.test.ts",
+		"**/*.stories.ts",
+		"**/*.stories.js"
+	],
+	"include": ["src/**/*.ts"]
+}

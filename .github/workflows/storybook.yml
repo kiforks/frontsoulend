@@ -89,12 +89,12 @@ jobs:
 
       - name: Build Storybook Composition
         if: env.skip == 'false'
-        run: npm run storybook:prod
+        run: npm run frontend/storybook:prod
 
       - name: Deploy to "storybook" branch
         if: env.skip == 'false'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/storybook/@frontsoulend
+          publish_dir: ./dist/frontend/storybook/
           publish_branch: storybook

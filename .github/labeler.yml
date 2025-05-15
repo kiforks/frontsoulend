@@ -1,6 +1,6 @@
 backend:
   - changed-files:
-      - any-glob-to-any-file: 'apps/backend/**/*'
+      - any-glob-to-any-file: 'backend/**/*'
 
 devops:
   - changed-files:
@@ -17,11 +17,11 @@ docker:
 
 frontend:
   - changed-files:
-      - any-glob-to-any-file: 'apps/frontend/**/*'
+      - any-glob-to-any-file: 'frontend/**/*'
 
 qa:
   - changed-files:
-      - any-glob-to-any-file: 'apps/qa/**/*'
+      - any-glob-to-any-file: 'qa/**/*'
 
 docs:
   - changed-files:
@@ -40,4 +40,4 @@ storybook:
 
 libs:
   - changed-files:
-      - any-glob-to-any-file: 'libs/**/*'
+      - any-glob-to-any-file: '*/libs/**/*'

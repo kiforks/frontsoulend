@@ -1,6 +1,6 @@
 {
 	"$schema": "./node_modules/nx/schemas/nx-schema.json",
-	"defaultProject": "platform",
+	"defaultProject": "frontend/angular/platform",
 	"defaultBase": "main",
 	"namedInputs": {
 		"default": ["{projectRoot}/**/*", "sharedGlobals"],
