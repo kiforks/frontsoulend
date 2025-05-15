@@ -5,7 +5,7 @@ base_ref=${1:-"HEAD~1"}
 head_ref=${2:-"HEAD"}
 dry_run=${3:-true}
 
-mapfile -t CHANGED_FILES < <(git diff --name-only "$base_ref" "$head_ref" -- 'libs/**/package.json')
+mapfile -t CHANGED_FILES < <(git diff --name-only "$base_ref" "$head_ref" -- '*/libs/**/package.json')
 
 if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
   echo "No package.json changes detected."
@@ -58,10 +58,10 @@ npm install
 
 if [ "$dry_run" = true ]; then
   echo "🛠️ Building packages (CI mode)..."
-  npm run build:deploy-libs
+  npm run build:libs
 else
   echo "🛠️ Building packages (CD mode)..."
-  npm run build:deploy-libs:ci
+  npm run build:libs:ci
 fi
 
 echo "📌 Packages ready for publish:"

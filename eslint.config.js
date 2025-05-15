@@ -1,6 +1,7 @@
 import nxPlugin from '@nx/eslint-plugin';
 
 import kiforDisableRecommend from '@kiforks/eslint-config/disable-recommend.js';
+import kiforFsd from '@kiforks/eslint-config/feature-sliced-design.js';
 import kiforJavascript from '@kiforks/eslint-config/javascript.js';
 import kiforJest from '@kiforks/eslint-config/jest.js';
 import kiforTests from '@kiforks/eslint-config/test.js';
@@ -29,13 +30,18 @@ export default [
 		languageOptions: {
 			...config.languageOptions,
 			parserOptions: {
-				project: ['./tsconfig.json', 'libs/angular/ui/.storybook/tsconfig.json', 'storybook/.storybook/tsconfig.json'],
+				project: [
+					'./tsconfig.base.json',
+					'frontend/libs/angular/ui/.storybook/tsconfig.json',
+					'frontend/storybook/.storybook/tsconfig.json',
+				],
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},
 	})),
 	kiforDisableRecommend,
 	...kiforTests,
+	...kiforFsd,
 
 	{
 		files: ['**/*.json'],
@@ -65,6 +71,7 @@ export default [
 			],
 		},
 	},
+
 	{
 		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
 		rules: {
@@ -91,8 +98,8 @@ export default [
 							onlyDependOnLibsWithTags: ['scope:core', 'scope:utilities'],
 						},
 						{
-							sourceTag: 'scope:ng-ui',
-							onlyDependOnLibsWithTags: ['scope:ng-ui', 'scope:utilities', 'scope:core'],
+							sourceTag: 'scope:ui',
+							onlyDependOnLibsWithTags: ['scope:ui', 'scope:utilities', 'scope:core'],
 						},
 					],
 				},

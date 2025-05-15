@@ -1,0 +1,19 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"emitDecoratorMetadata": true,
+		"paths": {
+			"@core": ["frontend/libs/core/src"],
+			"@utilities": ["frontend/libs/utilities/src"]
+		}
+	},
+	"exclude": ["../**/*.spec.ts"],
+	"include": [
+		"../src/**/*.stories.ts",
+		"../src/**/*.stories.js",
+		"../src/**/*.stories.jsx",
+		"../src/**/*.stories.tsx",
+		"../src/**/*.stories.mdx",
+		"./**/*.ts"
+	]
+}

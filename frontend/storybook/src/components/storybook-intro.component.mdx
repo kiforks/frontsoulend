@@ -1,0 +1,68 @@
+import { Meta } from '@storybook/addon-docs';
+import { moduleMetadata } from '@storybook/angular';
+
+import { StorybookIntroComponent } from './storybook-intro.component';
+
+<Meta
+	title="📘 Intro / Storybook Host Overview"
+	component={StorybookIntroComponent}
+	parameters={{
+		layout: 'centered',
+		docs: {
+			page: null,
+		},
+	}}
+	decorators={[
+		moduleMetadata({
+			declarations: [StorybookIntroComponent],
+			imports: [],
+		}),
+	]}
+/>
+
+# 📘 Storybook Host: Intro
+
+> Welcome to the **main Storybook host** for this Nx workspace!
+
+This Storybook serves as the **central hub** that composes other Storybook instances (Angular, React, etc.) using **Storybook Composition**.
+It provides a single entry point for all teams to preview UI components, test interactions, and navigate shared libraries across frameworks.
+
+---
+
+## 🧩 What’s inside?
+
+- ✅ Unified view of all UI stories
+- 🧭 Easy navigation across multiple teams & frameworks
+- ⚙️ Nx-powered workspace structure
+- 🔄 Version consistency & build pipelines
+- 🤖 LLM / AI-ready documentation context
+
+---
+
+## 🧱 Frameworks used in this workspace:
+
+- **Angular** – UI
+
+---
+
+## 🔗 Linked Storybook Instances (Composition)
+
+Access framework-specific Storybook environments:
+
+- **Angular UI**
+  - [Local instance](http://localhost:4401)
+  - [Deployed version](https://storybook.yourdomain.com/angular)
+
+> 💡 You can navigate between frameworks via this central Storybook host.
+
+---
+
+## 👋 Getting started
+
+To start Storybook Composition locally:
+
+```bash
+nx storybook storybook
+```
+
+Then open [http://localhost:4400](http://localhost:4400) to view the composed result.

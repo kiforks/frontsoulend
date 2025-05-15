@@ -1,0 +1,41 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"sourceMap": true,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"target": "ESNext",
+		"module": "ESNext",
+		"lib": ["ESNext", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"strict": true,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"esModuleInterop": true,
+		"useDefineForClassFields": false,
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": true,
+		"downlevelIteration": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"typeRoots": ["node_modules/@types"],
+		"declaration": true,
+		"declarationMap": true,
+		"inlineSources": true
+	},
+	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"],
+	"ts-node": {
+		"compilerOptions": {
+			"module": "commonjs"
+		}
+	}
+}

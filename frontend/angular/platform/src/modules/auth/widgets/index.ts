@@ -1,0 +1,1 @@
+export { AuthPanelComponent } from './components';
