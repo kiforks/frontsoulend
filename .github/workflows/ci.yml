@@ -291,6 +291,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create patch build for baseline comparison (Host)
+        run: |
+          npx chromatic \
+            --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }} \
+            --patch-build=${{ github.head_ref }}...main \
+            --only-changed \
+            --exit-once-uploaded
+
       - name: Publish frontend/storybook project
         uses: chromaui/action@latest
         with:
@@ -305,6 +313,14 @@ jobs:
           externals: |
             *.scss
             assets/**
+
+      - name: Create patch build for baseline comparison (Angular UI)
+        run: |
+          npx chromatic \
+            --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN_ANGULAR_UI }} \
+            --patch-build=${{ github.head_ref }}...main \
+            --only-changed \
+            --exit-once-uploaded
 
       - name: Publish frontend/libs/angular/ui project
         uses: chromaui/action@latest
