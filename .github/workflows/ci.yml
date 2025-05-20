@@ -290,7 +290,7 @@ jobs:
           node-version: 22.12.0
       - name: Install dependencies
         run: npm ci
-      - name: Publish Storybook Host
+      - name: Publish frontend/storybook project
         uses: chromaui/action@latest
         with:
           skip: '@(renovate/**|dependabot/**)'
@@ -302,7 +302,7 @@ jobs:
           externals: |
             *.scss
             assets/**
-      - name: Publish Storybook Angular UI
+      - name: Publish frontend/libs/angular/ui project
         uses: chromaui/action@latest
         with:
           skip: '@(renovate/**|dependabot/**)'
