@@ -60,7 +60,7 @@ export const Overview: Story = {
 		props: { breakpoint, and, or, elseTemplate },
 		template: `
       <div *uiMediaBetween="['${breakpoint.at(0)}', '${breakpoint.at(-1)}']; or: ${or}; and: ${and}; else: elseRef">
-        This content is visible ONLY the "{{ breakpoint.at(0) }}" and "{{ breakpoint.at(-1) }}" breakpoints.
+        This content is visible between the "{{ breakpoint.at(0) }}" and "{{ breakpoint.at(-1) }}" breakpoints.
       </div>
       
       <ng-template #elseRef>
