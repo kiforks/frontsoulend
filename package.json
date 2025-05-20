@@ -33,7 +33,7 @@
 		"packages:update:install": "ncu -u && npm install",
 		"storybook": "nx frontend/storybook storybook",
 		"storybook:composition": "nx run frontend/storybook:storybook-composition",
-		"storybook:prod": "npx nx affected -t build-storybook"
+		"storybook:prod": "nx run-many --target=build-storybook --all --parallel"
 	},
 	"private": true,
 	"type": "module",
