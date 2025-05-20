@@ -4,13 +4,13 @@
 	"projectType": "application",
 	"prefix": "app",
 	"sourceRoot": "frontend/angular/platform/src",
-	"tags": ["scope:app"],
 	"i18n": {
 		"sourceLocale": "en-US",
 		"locales": {
 			"uk": "frontend/angular/platform/src/locale/messages.uk.xlf"
 		}
 	},
+	"tags": ["scope:app"],
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:browser-esbuild",
@@ -76,7 +76,8 @@
 					"hmr": true
 				}
 			},
-			"defaultConfiguration": "development"
+			"defaultConfiguration": "development",
+			"continuous": true
 		},
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
