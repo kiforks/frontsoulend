@@ -7,6 +7,6 @@
 		"url": "https://kiforks.github.io/frontsoulend"
 	},
 	"scripts": {
-		"build-storybook": "nx build-storybook storybook"
+		"build-storybook": "nx build-storybook frontend/storybook"
 	}
 }
