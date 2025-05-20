@@ -33,8 +33,8 @@
 			"executor": "@storybook/angular:build-storybook",
 			"outputs": ["{options.outputDir}"],
 			"options": {
-				"outputDir": "dist/storybook/frontend",
-				"configDir": "./.storybook",
+				"outputDir": "dist/frontend/storybook",
+				"configDir": "frontend/storybook/.storybook",
 				"browserTarget": "frontend/storybook:build-storybook",
 				"compodoc": false,
 				"experimentalZoneless": true
@@ -71,13 +71,6 @@
 			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["nx storybook frontend/libs/angular/ui"],
-				"parallel": true
-			}
-		},
-		"build-storybook:prod": {
-			"executor": "nx:run-commands",
-			"options": {
-				"commands": ["nx run frontend/libs/angular/ui:build-storybook --configDir=frontend/libs/angular/ui/.storybook"],
 				"parallel": true
 			}
 		}
