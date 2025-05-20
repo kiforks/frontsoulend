@@ -12,7 +12,6 @@ if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
   exit 0
 fi
 
-FAILED=false
 declare -a PACKAGES_TO_PUBLISH=()
 
 for file in "${CHANGED_FILES[@]}"; do
@@ -26,28 +25,20 @@ for file in "${CHANGED_FILES[@]}"; do
     if [ "$package_name" != "$old_name" ]; then
       echo "📦 New package name detected: $package_name@$new_version"
       PACKAGES_TO_PUBLISH+=("$file")
+    elif [ "$new_version" == "$old_version" ]; then
+      echo "ℹ️  Version not changed for $package_name (still $new_version) — skipping."
+    elif [ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" != "$old_version" ]; then
+      echo "❌ Version decreased for $package_name ($old_version → $new_version)"
+      exit 1
     else
-      if [ "$new_version" == "$old_version" ]; then
-        echo "❌ Version not changed for $package_name (still $new_version)"
-        FAILED=true
-      elif [ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" != "$old_version" ]; then
-        echo "❌ Version decreased for $package_name ($old_version → $new_version)"
-        FAILED=true
-      else
-        echo "✅ Version increased for $package_name ($old_version → $new_version)"
-        PACKAGES_TO_PUBLISH+=("$file")
-      fi
+      echo "✅ Version increased for $package_name ($old_version → $new_version)"
+      PACKAGES_TO_PUBLISH+=("$file")
     fi
   else
     echo "📦 Completely new package detected: $package_name@$new_version"
     PACKAGES_TO_PUBLISH+=("$file")
   fi
 done
-
-if [ "${FAILED:-false}" = true ]; then
-  echo "Version issues found, exiting."
-  exit 1
-fi
 
 if [ ${#PACKAGES_TO_PUBLISH[@]} -eq 0 ]; then
   echo "No packages to publish."
@@ -65,6 +56,7 @@ else
 fi
 
 echo "📌 Packages ready for publish:"
+FAILED=false
 for file in "${PACKAGES_TO_PUBLISH[@]}"; do
   pkg=$(jq -r '.name + "@" + .version' "$file")
   dist_dir="dist/$(dirname "$file")"
@@ -86,7 +78,7 @@ for file in "${PACKAGES_TO_PUBLISH[@]}"; do
   cd - > /dev/null
 done
 
-if [ "${FAILED:-false}" = true ]; then
+if [ "$FAILED" = true ]; then
   echo "One or more dry-run publishes failed. Exiting."
   exit 1
 fi
