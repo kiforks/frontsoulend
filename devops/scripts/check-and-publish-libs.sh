@@ -17,7 +17,7 @@ mapfile -t CHANGED_PACKAGES < <(
     done
 )
 
-if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
+if [ ${#CHANGED_PACKAGES[@]} -eq 0 ]; then
   echo "No package.json changes detected."
   exit 0
 fi
@@ -25,7 +25,7 @@ fi
 FAILED=false
 declare -a PACKAGES_TO_PUBLISH=()
 
-for file in "${CHANGED_FILES[@]}"; do
+for file in "${CHANGED_PACKAGES[@]}"; do
   package_name=$(jq -r '.name' "$file")
   new_version=$(jq -r '.version' "$file")
 
