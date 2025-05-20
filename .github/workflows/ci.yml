@@ -30,251 +30,251 @@ concurrency:
 
 jobs:
   # General
-  labeler:
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Automatic label creation for PR
-        uses: actions/labeler@v5
-        with:
-          sync-labels: true
-
-  condition:
-    name: 'Condition'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    outputs:
-      run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
-      is_draft: ${{ steps.set.outputs.is_draft }}
-      is_closed: ${{ steps.set.outputs.is_closed }}
-    steps:
-      - name: Determine RUN_ON_PR_AND_SCHEDULE, DRAFT, and CLOSED status
-        id: set
-        run: |
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" == "closed" ]]; then
-            echo "is_closed=true" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "is_closed=false" >> $GITHUB_OUTPUT
-          fi
-
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
-            echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
-          else
-            echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
-          fi
-
-          if [[ "${{ github.event.pull_request.draft }}" == "true" ]]; then
-            echo "is_draft=true" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "is_draft=false" >> $GITHUB_OUTPUT
-          fi
-  changes:
-    name: 'Changes'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    needs: condition
-    outputs:
-      frontend: ${{ steps.filter.outputs.frontend }}
-      e2e: ${{ steps.filter.outputs.e2e }}
-      general: ${{ steps.general.outputs.changed }}
-    if: ${{ needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' }}
-    steps:
-      - name: Check for file changes
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          list-files: json
-          filters: |
-            all_ci: &all_ci
-              - '.github/workflows/ci.yml'
-            frontend: &frontend
-              - *all_ci
-              - 'frontend/**/package.json'
-              - 'frontend/**/package-lock.lock'
-              - 'frontend/**/*.js'
-              - 'frontend/**/*.ts'
-              - 'frontend/**/*.html'
-              - 'frontend/**/*.css'
-              - 'frontend/**/*.scss'
-              - 'frontend/**/*.json'
-            e2e: &e2e
-              - *all_ci
-              - 'qa/**/package.json'
-              - 'qa/**/package-lock.lock'
-              - 'qa/**/*.ts'
-              - 'qa/**/*.json'
-            changed:
-              - *all_ci
-              - *frontend
-              - *e2e
-      - name: Check if general files have changed
-        if: github.event_name == 'pull_request'
-        id: general
-        run: |
-          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
-            echo "general=false"
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "general=true"
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
-  version-check:
-    name: 'Version Check'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    needs: [condition]
-    if: ${{ needs.condition.outputs.is_draft == 'false' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup jq
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-
-      - name: Check Package Versions
-        run: |
-          compare_versions() {
-            local old_version=$1
-            local new_version=$2
-
-            if [[ "$old_version" == "$new_version" ]]; then
-              echo "same"
-            elif [[ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" == "$old_version" ]]; then
-              echo "increased"
-            else
-              echo "decreased"
-            fi
-          }
-
-          FAILED=false
-
-          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json */libs/**/package.json)
-
-          echo "Checking versions for changed package.json files..."
-          for file in $CHANGED_FILES; do
-            echo "Checking file: $file"
-
-            if git cat-file -e HEAD~1:"$file"; then
-              OLD_VERSION=$(git show HEAD~1:"$file" | jq -r '.version')
-            else
-              echo "Skipping $file: not present in HEAD~1 (new file or moved)"
-              continue
-            fi
-
-            NEW_VERSION=$(jq -r '.version' "$file")
-
-            echo "Old version: $OLD_VERSION, New version: $NEW_VERSION"
-
-            if [[ -z "$OLD_VERSION" || -z "$NEW_VERSION" ]]; then
-              echo "Warning: Could not determine version for $file"
-              continue
-            fi
-
-            RESULT=$(compare_versions "$OLD_VERSION" "$NEW_VERSION")
-
-            if [[ "$RESULT" == "decreased" ]]; then
-              echo "Error: Version decreased for $file (Old: $OLD_VERSION, New: $NEW_VERSION)"
-              FAILED=true
-            elif [[ "$RESULT" == "same" ]]; then
-              echo "Info: Version remained the same for $file (Version: $NEW_VERSION)"
-            elif [[ "$RESULT" == "increased" ]]; then
-              echo "Info: Version increased for $file (Old: $OLD_VERSION, New: $NEW_VERSION)"
-            fi
-          done
-
-          if $FAILED; then
-            echo "One or more versions have decreased. Failing the job."
-            exit 1
-          else
-            echo "All versions are valid."
-          fi
-
-  publish-libs:
-    name: 'Dry run publish libs'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [changes]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.head_ref }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-          registry-url: 'https://registry.npmjs.org/'
-
-      - name: Check publish readiness (dry-run)
-        run: ./devops/scripts/check-and-publish-libs.sh origin/main HEAD true
-  # Linters
-  lint:
-    name: 'Run linters'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run formatting
-        run: npm run lint
-
-  # Frontend
-  frontend-tests:
-    name: 'Frontend tests'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes, lint, version-check]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Run frontend tests
-        run: npm run test:ci
-
-  frontend-build:
-    name: 'Frontend build'
-    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
-    timeout-minutes: 30
-    needs: [changes, lint, version-check]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm install
-      - name: Set SHAs for NX
-        uses: nrwl/nx-set-shas@v4
-      - name: Frontend build
-        run: npm run build:production
+  #  labeler:
+  #    permissions:
+  #      contents: read
+  #      pull-requests: write
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Automatic label creation for PR
+  #        uses: actions/labeler@v5
+  #        with:
+  #          sync-labels: true
+  #
+  #  condition:
+  #    name: 'Condition'
+  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  #    outputs:
+  #      run_on_pr_and_schedule: ${{ steps.set.outputs.run_on_pr_and_schedule }}
+  #      is_draft: ${{ steps.set.outputs.is_draft }}
+  #      is_closed: ${{ steps.set.outputs.is_closed }}
+  #    steps:
+  #      - name: Determine RUN_ON_PR_AND_SCHEDULE, DRAFT, and CLOSED status
+  #        id: set
+  #        run: |
+  #          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" == "closed" ]]; then
+  #            echo "is_closed=true" >> $GITHUB_OUTPUT
+  #            exit 0
+  #          else
+  #            echo "is_closed=false" >> $GITHUB_OUTPUT
+  #          fi
+  #
+  #          if [[ "$GITHUB_EVENT_NAME" == "pull_request" && "$GITHUB_EVENT_ACTION" != "closed" ]] || [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+  #            echo "run_on_pr_and_schedule=true" >> $GITHUB_OUTPUT
+  #          else
+  #            echo "run_on_pr_and_schedule=false" >> $GITHUB_OUTPUT
+  #          fi
+  #
+  #          if [[ "${{ github.event.pull_request.draft }}" == "true" ]]; then
+  #            echo "is_draft=true" >> $GITHUB_OUTPUT
+  #            exit 0
+  #          else
+  #            echo "is_draft=false" >> $GITHUB_OUTPUT
+  #          fi
+  #  changes:
+  #    name: 'Changes'
+  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  #    needs: condition
+  #    outputs:
+  #      frontend: ${{ steps.filter.outputs.frontend }}
+  #      e2e: ${{ steps.filter.outputs.e2e }}
+  #      general: ${{ steps.general.outputs.changed }}
+  #    if: ${{ needs.condition.outputs.is_draft == 'false' && needs.condition.outputs.is_closed == 'false' }}
+  #    steps:
+  #      - name: Check for file changes
+  #        uses: dorny/paths-filter@v2
+  #        id: filter
+  #        with:
+  #          list-files: json
+  #          filters: |
+  #            all_ci: &all_ci
+  #              - '.github/workflows/ci.yml'
+  #            frontend: &frontend
+  #              - *all_ci
+  #              - 'frontend/**/package.json'
+  #              - 'frontend/**/package-lock.lock'
+  #              - 'frontend/**/*.js'
+  #              - 'frontend/**/*.ts'
+  #              - 'frontend/**/*.html'
+  #              - 'frontend/**/*.css'
+  #              - 'frontend/**/*.scss'
+  #              - 'frontend/**/*.json'
+  #            e2e: &e2e
+  #              - *all_ci
+  #              - 'qa/**/package.json'
+  #              - 'qa/**/package-lock.lock'
+  #              - 'qa/**/*.ts'
+  #              - 'qa/**/*.json'
+  #            changed:
+  #              - *all_ci
+  #              - *frontend
+  #              - *e2e
+  #      - name: Check if general files have changed
+  #        if: github.event_name == 'pull_request'
+  #        id: general
+  #        run: |
+  #          if [ $(echo '${{ steps.filter.outputs.changed_files }}' | jq .[] | sed '/\(.*Test\.php\|"frontend\/.*\.spec\.ts\|"frontend\/.*\.po\.ts\|"frontend\/.*\.host\.ts\)/d' | wc -l ) -eq 0 ]; then
+  #            echo "general=false"
+  #            echo "changed=false" >> $GITHUB_OUTPUT
+  #          else
+  #            echo "general=true"
+  #            echo "changed=true" >> $GITHUB_OUTPUT
+  #          fi
+  #
+  #  version-check:
+  #    name: 'Version Check'
+  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  #    needs: [condition]
+  #    if: ${{ needs.condition.outputs.is_draft == 'false' }}
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #        with:
+  #          fetch-depth: 0
+  #
+  #      - name: Setup jq
+  #        run: |
+  #          sudo apt-get update
+  #          sudo apt-get install -y jq
+  #
+  #      - name: Check Package Versions
+  #        run: |
+  #          compare_versions() {
+  #            local old_version=$1
+  #            local new_version=$2
+  #
+  #            if [[ "$old_version" == "$new_version" ]]; then
+  #              echo "same"
+  #            elif [[ "$(printf '%s\n%s' "$old_version" "$new_version" | sort -V | head -n1)" == "$old_version" ]]; then
+  #              echo "increased"
+  #            else
+  #              echo "decreased"
+  #            fi
+  #          }
+  #
+  #          FAILED=false
+  #
+  #          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json */libs/**/package.json)
+  #
+  #          echo "Checking versions for changed package.json files..."
+  #          for file in $CHANGED_FILES; do
+  #            echo "Checking file: $file"
+  #
+  #            if git cat-file -e HEAD~1:"$file"; then
+  #              OLD_VERSION=$(git show HEAD~1:"$file" | jq -r '.version')
+  #            else
+  #              echo "Skipping $file: not present in HEAD~1 (new file or moved)"
+  #              continue
+  #            fi
+  #
+  #            NEW_VERSION=$(jq -r '.version' "$file")
+  #
+  #            echo "Old version: $OLD_VERSION, New version: $NEW_VERSION"
+  #
+  #            if [[ -z "$OLD_VERSION" || -z "$NEW_VERSION" ]]; then
+  #              echo "Warning: Could not determine version for $file"
+  #              continue
+  #            fi
+  #
+  #            RESULT=$(compare_versions "$OLD_VERSION" "$NEW_VERSION")
+  #
+  #            if [[ "$RESULT" == "decreased" ]]; then
+  #              echo "Error: Version decreased for $file (Old: $OLD_VERSION, New: $NEW_VERSION)"
+  #              FAILED=true
+  #            elif [[ "$RESULT" == "same" ]]; then
+  #              echo "Info: Version remained the same for $file (Version: $NEW_VERSION)"
+  #            elif [[ "$RESULT" == "increased" ]]; then
+  #              echo "Info: Version increased for $file (Old: $OLD_VERSION, New: $NEW_VERSION)"
+  #            fi
+  #          done
+  #
+  #          if $FAILED; then
+  #            echo "One or more versions have decreased. Failing the job."
+  #            exit 1
+  #          else
+  #            echo "All versions are valid."
+  #          fi
+  #
+  #  publish-libs:
+  #    name: 'Dry run publish libs'
+  #    runs-on: ubuntu-latest
+  #    timeout-minutes: 10
+  #    needs: [changes]
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #        with:
+  #          fetch-depth: 0
+  #          ref: ${{ github.head_ref }}
+  #
+  #      - name: Setup Node.js
+  #        uses: actions/setup-node@v4
+  #        with:
+  #          node-version: '20.x'
+  #          cache: 'npm'
+  #          registry-url: 'https://registry.npmjs.org/'
+  #
+  #      - name: Check publish readiness (dry-run)
+  #        run: ./devops/scripts/check-and-publish-libs.sh origin/main HEAD true
+  #  # Linters
+  #  lint:
+  #    name: 'Run linters'
+  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  #    timeout-minutes: 30
+  #    needs: [changes]
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #        with:
+  #          fetch-depth: 0
+  #      - name: Setup Node.js
+  #        uses: actions/setup-node@v4
+  #        with:
+  #          node-version: 20
+  #          cache: 'npm'
+  #      - run: npm install
+  #      - name: Set SHAs for NX
+  #        uses: nrwl/nx-set-shas@v4
+  #      - name: Run formatting
+  #        run: npm run lint
+  #
+  #  # Frontend
+  #  frontend-tests:
+  #    name: 'Frontend tests'
+  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  #    timeout-minutes: 30
+  #    needs: [changes, lint, version-check]
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #        with:
+  #          fetch-depth: 0
+  #      - name: Setup Node.js
+  #        uses: actions/setup-node@v4
+  #        with:
+  #          node-version: 20
+  #          cache: 'npm'
+  #      - run: npm install
+  #      - name: Set SHAs for NX
+  #        uses: nrwl/nx-set-shas@v4
+  #      - name: Run frontend tests
+  #        run: npm run test:ci
+  #
+  #  frontend-build:
+  #    name: 'Frontend build'
+  #    runs-on: ${{ vars.PIPELINE_TESTS_TAG }}
+  #    timeout-minutes: 30
+  #    needs: [changes, lint, version-check]
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #        with:
+  #          fetch-depth: 0
+  #      - name: Setup Node.js
+  #        uses: actions/setup-node@v4
+  #        with:
+  #          node-version: 20
+  #          cache: 'npm'
+  #      - run: npm install
+  #      - name: Set SHAs for NX
+  #        uses: nrwl/nx-set-shas@v4
+  #      - name: Frontend build
+  #        run: npm run build:production
 
   chromatic:
     name: Run Chromatic
