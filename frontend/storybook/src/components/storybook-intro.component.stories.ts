@@ -1,16 +1,20 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
 
 import { StorybookIntroComponent } from './storybook-intro.component';
 
-const meta: Meta<StorybookIntroComponent> = {
-	title: '📘 Intro / Storybook Host Overview',
+type Story = StoryObj;
+
+export default {
 	component: StorybookIntroComponent,
-};
-
-export default meta;
-
-type Story = StoryObj<StorybookIntroComponent>;
-
-export const Introduction: Story = {
+	title: 'Components/Storybook Intro',
 	args: {},
+	tags: ['components'],
+} satisfies Meta<Story>;
+
+export const Overview: Story = {
+	render: () => ({
+		template: `
+      <storybook-intro></storybook-intro>
+    `,
+	}),
 };
