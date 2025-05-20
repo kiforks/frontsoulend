@@ -10,8 +10,5 @@
 		"@angular/cdk": "19.2.11"
 	},
 	"sideEffects": false,
-	"type": "module",
-	"scripts": {
-		"build-storybook": "nx build-storybook frontend/libs/angular/ui"
-	}
+	"type": "module"
 }

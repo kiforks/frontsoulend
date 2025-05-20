@@ -295,19 +295,22 @@ jobs:
         with:
           skip: '@(renovate/**|dependabot/**)'
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }}
-          workingDir: frontend/storybook
+          workingDir: .
+          buildCommand: 'nx build-storybook frontend/storybook --config-dir=frontend/storybook/.storybook'
           onlyChanged: true
           autoAcceptChanges: 'main'
           zip: true
           externals: |
             *.scss
             assets/**
+
       - name: Publish frontend/libs/angular/ui project
         uses: chromaui/action@latest
         with:
           skip: '@(renovate/**|dependabot/**)'
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN_ANGULAR_UI }}
-          workingDir: frontend/libs/angular/ui
+          workingDir: .
+          buildCommand: 'nx build-storybook frontend/libs/angular/ui --config-dir=frontend/libs/angular/ui/.storybook'
           onlyChanged: true
           autoAcceptChanges: 'main'
           zip: true
