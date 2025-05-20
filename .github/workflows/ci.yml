@@ -291,13 +291,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create patch build for baseline comparison (Host)
+      - name: Create patch build for baseline comparison (frontend/storybook)
         run: |
           npx chromatic \
-            --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }} \
-            --patch-build=${{ github.head_ref }}...main \
-            --only-changed \
-            --exit-once-uploaded
+           --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN_HOST }} \
+           --patch-build=${{ github.head_ref }}...main \
+           --build-command="npx nx build-storybook frontend/storybook --config-dir=frontend/storybook/.storybook --output-dir=dist/frontend/storybook" \
+           --output-dir=dist/frontend/storybook \
+           --only-changed \
+           --exit-once-uploaded
 
       - name: Publish frontend/storybook project
         uses: chromaui/action@latest
@@ -314,11 +316,13 @@ jobs:
             *.scss
             assets/**
 
-      - name: Create patch build for baseline comparison (Angular UI)
+      - name: Create patch build for baseline comparison (frontend/libs/angular/ui)
         run: |
           npx chromatic \
             --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN_ANGULAR_UI }} \
             --patch-build=${{ github.head_ref }}...main \
+            --build-command="npx nx build-storybook frontend/libs/angular/ui --config-dir=frontend/libs/angular/ui/.storybook --output-dir=dist/frontend/storybook/angular/ui" \
+            --output-dir=dist/frontend/storybook/angular/ui \
             --only-changed \
             --exit-once-uploaded
 
