@@ -4,7 +4,6 @@ import { nxE2EPreset } from '@nx/playwright/preset';
 import { defineConfig, devices } from '@playwright/test';
 
 // For CI, you may want to set BASE_URL to the deployed application.
-// eslint-disable-next-line dot-notation
 const baseURL = process.env['BASE_URL'] || 'http://localhost:4200';
 
 /**
@@ -64,7 +63,6 @@ export default defineConfig({
 	webServer: {
 		command: 'npx nx run frontend/apps/angular/platform:serve',
 		cwd: workspaceRoot,
-		// eslint-disable-next-line dot-notation
 		reuseExistingServer: !process.env['CI'],
 		url: 'http://localhost:4200',
 	},
