@@ -34,6 +34,7 @@ export default [
 					'./tsconfig.base.json',
 					'frontend/libs/angular/ui/.storybook/tsconfig.json',
 					'frontend/storybook/.storybook/tsconfig.json',
+					'backend/apps/nestjs/platform/tsconfig.json',
 				],
 				tsconfigRootDir: import.meta.dirname,
 			},
