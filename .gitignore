@@ -44,3 +44,6 @@ Thumbs.db
 .angular
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+
+# Keep environment variables out of version control
+.env
