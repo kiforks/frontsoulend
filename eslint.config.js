@@ -73,6 +73,15 @@ export default [
 		},
 	},
 
+	// eslint-disable-next-line no-warning-comments
+	/* TODO move to the config */
+	{
+		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+		rules: {
+			'dot-notation': 'off',
+		},
+	},
+
 	{
 		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
 		rules: {
