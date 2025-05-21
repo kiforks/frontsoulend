@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AppService } from './app.service';
+import { AppService } from '../../services';
 
 import { AppController } from './app.controller';
 

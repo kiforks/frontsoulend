@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 
-import { AppService } from './app.service';
+import { AppService } from '../../services';
 
 @Controller()
 // eslint-disable-next-line @darraghor/nestjs-typed/controllers-should-supply-api-tags
