@@ -1,0 +1,56 @@
+{
+	"name": "backend/apps/nestjs/platform",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "backend/apps/nestjs/platform/src",
+	"projectType": "application",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nx/esbuild:esbuild",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "development",
+			"options": {
+				"main": "backend/apps/nestjs/platform/src/main.ts",
+				"outputPath": "dist/backend/apps/nestjs/platform",
+				"outputFileName": "main.js",
+				"tsConfig": "backend/apps/nestjs/platform/tsconfig.app.json",
+				"platform": "node",
+				"format": ["esm"],
+				"assets": []
+			},
+			"configurations": {
+				"development": {
+					"minify": false
+				},
+				"production": {
+					"minify": true
+				}
+			}
+		},
+		"serve": {
+			"continuous": true,
+			"executor": "@nx/js:node",
+			"defaultConfiguration": "development",
+			"dependsOn": ["build"],
+			"options": {
+				"buildTarget": "platform:build",
+				"runBuildTargetDependencies": false
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "platform:build:development"
+				},
+				"production": {
+					"buildTarget": "platform:build:production"
+				}
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "backend/apps/nestjs/platform/jest.config.ts"
+			}
+		}
+	}
+}
