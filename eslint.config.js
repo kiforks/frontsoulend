@@ -101,6 +101,18 @@ export default [
 							sourceTag: 'scope:ui',
 							onlyDependOnLibsWithTags: ['scope:ui', 'scope:utilities', 'scope:core'],
 						},
+						{
+							sourceTag: 'type:frontend',
+							notDependOnLibsWithTags: ['type:backend', 'type:qa'],
+						},
+						{
+							sourceTag: 'type:backend',
+							notDependOnLibsWithTags: ['type:frontend', 'type:qa'],
+						},
+						{
+							sourceTag: 'type:qa',
+							notDependOnLibsWithTags: ['type:frontend', 'type:backend'],
+						},
 					],
 				},
 			],

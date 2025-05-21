@@ -10,7 +10,7 @@
 			"manifestRootsToUpdate": ["dist/{projectRoot}"]
 		}
 	},
-	"tags": ["scope:lib", "scope:core"],
+	"tags": ["frontend", "scope:lib", "scope:core"],
 	"targets": {
 		"build": {
 			"executor": "@nx/esbuild:esbuild",

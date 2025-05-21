@@ -5,6 +5,7 @@
 	"sourceRoot": "qa/platform/src",
 	"implicitDependencies": ["frontend/apps/angular/platform"],
 	"// targets": "to see all targets run: nx show project platform-e2e --web",
+	"tags": ["qa", "scope:app"],
 	"targets": {
 		"lint": {
 			"executor": "@nx/eslint:lint"

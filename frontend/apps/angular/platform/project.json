@@ -10,7 +10,7 @@
 			"uk": "frontend/apps/angular/platform/src/locale/messages.uk.xlf"
 		}
 	},
-	"tags": ["scope:app"],
+	"tags": ["frontend", "scope:app"],
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:browser-esbuild",

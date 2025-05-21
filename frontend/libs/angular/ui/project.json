@@ -3,7 +3,7 @@
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "frontend/libs/angular/ui/src",
 	"projectType": "library",
-	"tags": ["scope:lib", "scope:ui"],
+	"tags": ["frontend", "scope:lib", "scope:ui"],
 	"implicitDependencies": ["frontend/libs/utilities", "frontend/libs/core"],
 	"targets": {
 		"build": {
