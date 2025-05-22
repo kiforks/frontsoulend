@@ -2,6 +2,7 @@ import eslintNestJsTyped from '@darraghor/eslint-plugin-nestjs-typed';
 
 import nestJsConfig from 'eslint-plugin-nestjs';
 
+/* TODO Move to a separate config package */
 export default [
 	{
 		plugins: {
