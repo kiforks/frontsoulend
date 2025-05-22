@@ -8,6 +8,7 @@ const bootstrap = async () => {
 
 	app.useGlobalPipes(...AppConfig.Pipes);
 	app.useGlobalFilters(...AppConfig.Filters);
+	app.setGlobalPrefix('api');
 
 	const port = 5000;
 

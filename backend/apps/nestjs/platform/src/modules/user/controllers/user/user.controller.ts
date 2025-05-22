@@ -1,15 +1,4 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	ParseIntPipe,
-	Patch,
-	Post,
-	UsePipes,
-	ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserCreateDto, UserUpdateDto } from '../../dto';
@@ -18,7 +7,6 @@ import { UserService } from '../../services';
 import { UserEntity } from '../../entities';
 
 @ApiTags('user')
-@UsePipes(new ValidationPipe())
 @Controller('user')
 export class UserController {
 	constructor(private readonly userService: UserService) {}
