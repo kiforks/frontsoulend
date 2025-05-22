@@ -33,15 +33,15 @@
 			"defaultConfiguration": "development",
 			"dependsOn": ["build"],
 			"options": {
-				"buildTarget": "platform:build",
+				"buildTarget": "backend/apps/nestjs/platform:build",
 				"runBuildTargetDependencies": false
 			},
 			"configurations": {
 				"development": {
-					"buildTarget": "platform:build:development"
+					"buildTarget": "backend/apps/nestjs/platform:build:development"
 				},
 				"production": {
-					"buildTarget": "platform:build:production"
+					"buildTarget": "backend/apps/nestjs/platform:build:production"
 				}
 			}
 		},
