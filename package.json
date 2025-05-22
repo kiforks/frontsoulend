@@ -53,7 +53,8 @@
 		"packages:update:install": "ncu -u && npm install",
 		"storybook": "nx frontend/storybook storybook",
 		"storybook:composition": "nx run frontend/storybook:storybook-composition",
-		"storybook:prod": "nx run-many --target=build-storybook --all --parallel"
+		"storybook:prod": "nx run-many --target=build-storybook --all --parallel",
+		"prisma:generate": "prisma generate --schema=backend/prisma/schema.prisma"
 	},
 	"private": true,
 	"type": "module",
