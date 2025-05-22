@@ -15,4 +15,10 @@ export default [
 		},
 	},
 	...eslintNestJsTyped.configs.flatRecommended,
+	{
+		rules: {
+			/* This rule is not working properly */
+			'@darraghor/nestjs-typed/validated-non-primitive-property-needs-type-decorator': 'off',
+		},
+	},
 ].map(config => ({ ...config, files: ['**/*.ts'] }));
