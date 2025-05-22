@@ -15,7 +15,7 @@ import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from 
 import { UserCreateDto, UserUpdateDto } from '../../dto';
 import { UserService } from '../../services';
 
-import { User } from '../../entities';
+import { UserEntity } from '../../entities';
 
 @ApiTags('user')
 @UsePipes(new ValidationPipe())
@@ -24,26 +24,26 @@ export class UserController {
 	constructor(private readonly userService: UserService) {}
 
 	@Post()
-	@ApiCreatedResponse({ type: User })
+	@ApiCreatedResponse({ type: UserEntity })
 	public create(@Body() dto: UserCreateDto) {
 		return this.userService.create(dto);
 	}
 
 	@Get()
-	@ApiOkResponse({ type: [User] })
+	@ApiOkResponse({ type: [UserEntity] })
 	public findAll() {
 		return this.userService.findAll();
 	}
 
 	@Get(':id')
-	@ApiOkResponse({ type: User })
+	@ApiOkResponse({ type: UserEntity })
 	@ApiNotFoundResponse({ description: 'User not found' })
 	public findOne(@Param('id', ParseIntPipe) id: number) {
 		return this.userService.findOne(id);
 	}
 
 	@Patch(':id')
-	@ApiOkResponse({ type: User })
+	@ApiOkResponse({ type: UserEntity })
 	public update(@Param('id', ParseIntPipe) id: number, @Body() dto: UserUpdateDto) {
 		return this.userService.update(id, dto);
 	}
