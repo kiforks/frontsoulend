@@ -53,8 +53,7 @@
 		"packages:update:install": "ncu -u && npm install",
 		"storybook": "nx frontend/storybook storybook",
 		"storybook:composition": "nx run frontend/storybook:storybook-composition",
-		"storybook:prod": "nx run-many --target=build-storybook --all --parallel",
-		"prisma:generate": "prisma generate --schema=backend/prisma/schema.prisma"
+		"storybook:prod": "nx run-many --target=build-storybook --all --parallel"
 	},
 	"private": true,
 	"type": "module",
@@ -133,6 +132,7 @@
 		"chromatic": "^11.28.2",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.2",
+		"dotenv": "^16.5.0",
 		"esbuild": "^0.19.2",
 		"eslint": "~9.27.0",
 		"eslint-plugin-nestjs": "^1.2.3",
