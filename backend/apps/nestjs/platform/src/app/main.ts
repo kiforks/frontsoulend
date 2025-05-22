@@ -10,7 +10,7 @@ const bootstrap = async () => {
 	app.useGlobalFilters(...AppConfig.Filters);
 	app.setGlobalPrefix('api');
 
-	const port = 5000;
+	const port = 3000;
 
 	await app.listen(port);
 
