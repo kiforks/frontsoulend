@@ -1,19 +1,19 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { AppModule } from '../modules/app';
+import { AppConfig, AppModule } from '../modules/app';
 
 const bootstrap = async () => {
 	const app = await NestFactory.create(AppModule);
-	const globalPrefix = 'api';
 
-	app.setGlobalPrefix(globalPrefix);
+	app.useGlobalPipes(...AppConfig.Pipes);
+	app.useGlobalFilters(...AppConfig.Filters);
 
 	const port = 5000;
 
 	await app.listen(port);
 
-	Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+	Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 };
 
 bootstrap();
