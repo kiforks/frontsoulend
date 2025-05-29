@@ -3,12 +3,17 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppConfig, AppModule } from '../modules/app';
 
-const bootstrap = async () => {
-	const app = await NestFactory.create(AppModule);
+import { Logger as PinoLogger } from 'nestjs-pino';
 
+const bootstrap = async () => {
+	const app = await NestFactory.create(AppModule, {
+		bufferLogs: true,
+	});
+
+	app.useLogger(app.get(PinoLogger));
 	app.useGlobalPipes(...AppConfig.Pipes);
 	app.useGlobalFilters(...AppConfig.Filters);
-	app.setGlobalPrefix('api');
+	app.setGlobalPrefix('v1');
 
 	const port = 3000;
 
