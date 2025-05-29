@@ -12,7 +12,8 @@
 	],
 	"compilerOptions": {
 		"paths": {
-			"~app/*": ["backend/apps/nestjs/platform/src/app/*"]
+			"~app/*": ["backend/apps/nestjs/platform/src/app/*"],
+			"~modules/*": ["backend/apps/nestjs/platform/src/modules/*"]
 		}
 	}
 }
