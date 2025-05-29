@@ -6,15 +6,13 @@
 	"tags": ["backend", "scope:app"],
 	"targets": {
 		"build": {
-			"executor": "@nx/esbuild:esbuild",
+			"executor": "@nx/js:tsc",
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "development",
 			"options": {
 				"main": "backend/apps/nestjs/platform/src/app/main.ts",
 				"outputPath": "dist/backend/apps/nestjs/platform",
-				"outputFileName": "main.js",
 				"tsConfig": "backend/apps/nestjs/platform/tsconfig.app.json",
-				"platform": "node",
 				"format": ["esm"],
 				"assets": []
 			},
