@@ -8,8 +8,11 @@ export class UserEntity implements PrismaUser {
 	@ApiProperty({ example: 'user@example.com' })
 	public email!: string;
 
-	@ApiProperty({ example: null, nullable: true })
-	public password!: string | null;
+	@ApiProperty({ example: 'Some password' })
+	public password!: string;
+
+	@ApiProperty({ example: 'John' })
+	public name!: string;
 
 	@ApiProperty({ example: '2024-01-01T00:00:00.000Z' })
 	public createdAt!: Date;
