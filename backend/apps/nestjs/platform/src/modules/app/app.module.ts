@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 
+import { BrandModule } from '../brand';
 import { PrismaModule } from '../prisma';
+import { ProductModule } from '../product';
 import { UserModule } from '../user';
 
 import { LoggerModule } from 'nestjs-pino';
@@ -22,6 +24,8 @@ import { LoggerModule } from 'nestjs-pino';
 		}),
 		PrismaModule,
 		UserModule,
+		BrandModule,
+		ProductModule,
 	],
 })
 export class AppModule {}
