@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { User } from '@prisma/client';
 
 import { PrismaService } from '../../../prisma';
-import { UserModel } from '../../../user';
 
 import { compare } from 'bcrypt';
 
@@ -9,7 +9,7 @@ import { compare } from 'bcrypt';
 export class AuthService {
 	constructor(private readonly prismaService: PrismaService) {}
 
-	public async validateUser(email: string, password: string): Promise<UserModel | null> {
+	public async validateUser(email: string, password: string): Promise<User | null> {
 		const user = await this.prismaService.user.findUnique({ where: { email } });
 
 		if (!user) {
