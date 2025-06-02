@@ -1,5 +1,5 @@
 {
-	"*.{ts,tsx,js,jsx,html,json}": ["eslint"],
+	"*.{ts,tsx,js,jsx,html,json}": ["eslint --flag unstable_config_lookup_from_file"],
 	"*.{css,scss}": ["stylelint"],
 	"*.{ts,html,json,scss,css,js,tsx,jsx,md,mdx,yml}": ["prettier --check"],
 	"*.prisma": ["prisma format"]
