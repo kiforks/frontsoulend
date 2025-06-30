@@ -16,7 +16,7 @@ services:
     image: redis:latest
     restart: always
     ports:
-      - '6379:6369'
+      - '6379:6379'
     volumes:
       - redis_data:/data
     networks:
