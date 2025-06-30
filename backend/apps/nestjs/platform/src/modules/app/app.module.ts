@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AuthModule } from '../auth';
 import { PrismaModule } from '../prisma';
+import { RedisModule } from '../redis';
 import { UserModule } from '../user';
 
 import { LoggerModule } from 'nestjs-pino';
@@ -28,6 +29,7 @@ import { LoggerModule } from 'nestjs-pino';
 		PrismaModule,
 		UserModule,
 		AuthModule,
+		RedisModule,
 	],
 })
 export class AppModule {}

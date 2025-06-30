@@ -12,9 +12,19 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6369'
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
 
 volumes:
   postgres_data: {}
+  redis_data: {}
 
 networks:
   app-network: {}
