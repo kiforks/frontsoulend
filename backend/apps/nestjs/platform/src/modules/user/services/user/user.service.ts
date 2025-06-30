@@ -12,17 +12,19 @@ import { PrismaError } from 'prisma-error-enum';
 export class UserService {
 	constructor(private readonly prismaService: PrismaService) {}
 
-	public async create({ password, email, name }: UserCreateDto) {
+	public async create(user: UserCreateDto) {
 		const salt = 10;
-		const hashedPassword = await hash(password, salt);
+		const password = user.password ? await hash(user.password, salt) : null;
 
 		try {
-			return await this.prismaService.user.create({ data: { email, password: hashedPassword, name } });
+			return await this.prismaService.user.create({
+				data: { email: user.email, password, name: user.name ?? null },
+			});
 		} catch (error: unknown) {
 			const prismaError = error as Prisma.PrismaClientKnownRequestError;
 
 			if (prismaError.code === PrismaError.UniqueConstraintViolation) {
-				throw new BadRequestException(`The following email "${email}" is already registered`);
+				throw new BadRequestException(`The following email "${user.email}" is already registered`);
 			}
 
 			throw error;
@@ -35,6 +37,10 @@ export class UserService {
 
 	public findOne(id: number) {
 		return this.prismaService.user.findUnique({ where: { id } });
+	}
+
+	public findByEmail(email: string) {
+		return this.prismaService.user.findUnique({ where: { email } });
 	}
 
 	public update(id: number, dto: UserUpdateDto) {
