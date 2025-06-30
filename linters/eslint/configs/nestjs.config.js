@@ -32,4 +32,13 @@ export default [
 			'class-methods-use-this': 'off',
 		},
 	},
+
+	{
+		files: ['**/*.ts'],
+		rules: {
+			'class-methods-use-this': 'off',
+			'no-underscore-dangle': 'off',
+			camelcase: 'off',
+		},
+	},
 ];
