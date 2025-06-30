@@ -3,7 +3,8 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 
 import { AuthService } from '../../services';
-import { AuthJwtGuard, AuthLocalGuard } from '../../guards';
+import { AuthGoogleGuard, AuthJwtGuard, AuthLocalGuard } from '../../guards';
+import { AuthGoogleRequest } from '../../types';
 
 import { UserCreateDto, UserCurrent, UserEntity, UserService } from '../../../user';
 
@@ -33,5 +34,18 @@ export class AuthController {
 	@ApiOkResponse({ description: 'Returns the authenticated user', type: UserEntity })
 	public profile(@UserCurrent() user: User) {
 		return user;
+	}
+
+	@Get('google/callback')
+	@UseGuards(AuthGoogleGuard)
+	@ApiOkResponse({ description: 'Returns the authenticated user' })
+	public googleAuth(@Req() { user }: AuthGoogleRequest) {
+		const email = user.emails?.at(0)?.value;
+
+		if (!email) {
+			throw new Error('Google email not found');
+		}
+
+		return this.authService.googleAuth(email);
 	}
 }
