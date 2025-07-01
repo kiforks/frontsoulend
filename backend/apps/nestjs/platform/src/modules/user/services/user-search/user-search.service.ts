@@ -14,11 +14,11 @@ export class UserSearchService implements OnModuleInit {
 		private readonly prismaService: PrismaService
 	) {}
 
-	public async onModuleInit() {
+	public async onModuleInit(): Promise<void> {
 		await this.indexAll();
 	}
 
-	public async index(user: User) {
+	public async index(user: User): Promise<void> {
 		await this.elasticsearchService.index<User>({
 			index: UserConfig.Key,
 			id: user.id.toString(),
@@ -26,7 +26,7 @@ export class UserSearchService implements OnModuleInit {
 		});
 	}
 
-	public async createIndex() {
+	public async createIndex(): Promise<void> {
 		const exists = await this.elasticsearchService.indices.exists({ index: UserConfig.Key });
 
 		if (!exists) {
@@ -64,14 +64,14 @@ export class UserSearchService implements OnModuleInit {
 		await this.elasticsearchService.indices.delete({ index: UserConfig.Key });
 	}
 
-	public async remove(id: number) {
+	public async remove(id: number): Promise<void> {
 		await this.elasticsearchService.delete({
 			index: UserConfig.Key,
 			id: id.toString(),
 		});
 	}
 
-	public async update(id: number, data: Partial<UserUpdateDto>) {
+	public async update(id: number, data: Partial<UserUpdateDto>): Promise<void> {
 		await this.elasticsearchService.update({
 			index: UserConfig.Key,
 			id: id.toString(),
@@ -79,7 +79,7 @@ export class UserSearchService implements OnModuleInit {
 		});
 	}
 
-	public async search(query: string) {
+	public async search(query: string): Promise<User[]> {
 		const {
 			hits: { hits },
 		} = await this.elasticsearchService.search<User>({
@@ -92,10 +92,10 @@ export class UserSearchService implements OnModuleInit {
 			},
 		});
 
-		return hits.map(hit => hit._source);
+		return hits.map(hit => hit._source).filter(source => !!source);
 	}
 
-	public async indexCollection() {
+	public async indexCollection(): Promise<void> {
 		const users = await this.prismaService.user.findMany();
 
 		for (const user of users) {
@@ -104,7 +104,7 @@ export class UserSearchService implements OnModuleInit {
 		}
 	}
 
-	public async indexAll() {
+	public async indexAll(): Promise<void> {
 		await this.createIndex();
 		await this.indexCollection();
 	}

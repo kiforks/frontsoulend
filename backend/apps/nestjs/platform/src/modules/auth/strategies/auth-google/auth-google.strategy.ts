@@ -15,7 +15,6 @@ export class AuthGoogleStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	// eslint-disable-next-line class-methods-use-this
 	public validate(_accessToken: string, _refreshToken: string, profile: Profile): Profile {
 		return profile;
 	}

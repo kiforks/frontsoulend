@@ -27,6 +27,11 @@ export default [
 	...kiforJavascript,
 	...kiforTypescript.map(config => ({
 		...config,
+		rules: {
+			...config.rules,
+			/* TODO move to the config */
+			'@typescript-eslint/explicit-module-boundary-types': 'error',
+		},
 		languageOptions: {
 			...config.languageOptions,
 			parserOptions: {

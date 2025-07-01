@@ -1,3 +1,7 @@
 import { createParamDecorator } from '@nestjs/common';
 
-export const UserCurrent = createParamDecorator((_data: unknown, context) => context.switchToHttp().getRequest().user);
+import { User } from '../../types';
+
+export const UserCurrent = createParamDecorator(
+	(_data: unknown, context): User => context.switchToHttp().getRequest().user
+);

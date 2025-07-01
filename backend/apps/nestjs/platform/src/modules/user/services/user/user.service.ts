@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 
 import { UserCreateDto, UserUpdateDto } from '../../dto';
 import { UserHelper } from '../../helpers';
+import { User } from '../../types';
 
 import { PrismaService } from '../../../prisma';
 import { RedisService } from '../../../redis';
@@ -20,7 +21,7 @@ export class UserService {
 		private readonly userSearchService: UserSearchService
 	) {}
 
-	public async create(user: UserCreateDto) {
+	public async create(user: UserCreateDto): Promise<User> {
 		const salt = 10;
 		const password = user.password ? await hash(user.password, salt) : null;
 
@@ -45,7 +46,7 @@ export class UserService {
 		}
 	}
 
-	public async findOne(id: number) {
+	public async findOne(id: number): Promise<User | null> {
 		const cacheKey = UserHelper.getRedisId(id);
 		const cached = await this.redisService.get<UserEntity>(cacheKey);
 
@@ -62,7 +63,7 @@ export class UserService {
 		return user;
 	}
 
-	public async findByEmail(email: string) {
+	public async findByEmail(email: string): Promise<User | null> {
 		const cacheKey = UserHelper.getRedisEmail(email);
 		const cached = await this.redisService.get<UserEntity>(cacheKey);
 
@@ -79,7 +80,7 @@ export class UserService {
 		return user;
 	}
 
-	public async update(id: number, dto: UserUpdateDto) {
+	public async update(id: number, dto: UserUpdateDto): Promise<User> {
 		const updatedUser = await this.prismaService.user.update({ where: { id }, data: dto });
 
 		await this.redisService.set(UserHelper.getRedisId(updatedUser.id), updatedUser);
@@ -89,7 +90,7 @@ export class UserService {
 		return updatedUser;
 	}
 
-	public async remove(id: number) {
+	public async remove(id: number): Promise<User> {
 		const removedUser = await this.prismaService.user.delete({ where: { id } });
 
 		await this.redisService.del(UserHelper.getRedisId(removedUser.id));
@@ -99,7 +100,7 @@ export class UserService {
 		return removedUser;
 	}
 
-	public findAll() {
+	public findAll(): Promise<User[]> {
 		return this.prismaService.user.findMany();
 	}
 }

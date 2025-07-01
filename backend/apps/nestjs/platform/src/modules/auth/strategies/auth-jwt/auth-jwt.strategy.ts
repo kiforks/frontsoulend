@@ -15,7 +15,6 @@ export class AuthJwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	// eslint-disable-next-line class-methods-use-this
 	public validate({ id, email }: User): Pick<User, 'email' | 'id'> {
 		return { id, email };
 	}
