@@ -10,7 +10,6 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
 				node: configService.get('ELASTICSEARCH_URL'),
 				requestTimeout: 600,
 				ssl: false,
-				compatibility: true,
 			}),
 			inject: [ConfigService],
 		}),
