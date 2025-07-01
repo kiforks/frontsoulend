@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AuthModule } from '../auth';
+import { ElasticModule } from '../elastic';
 import { PrismaModule } from '../prisma';
 import { RedisModule } from '../redis';
 import { UserModule } from '../user';
@@ -26,6 +27,7 @@ import { LoggerModule } from 'nestjs-pino';
 				},
 			},
 		}),
+		ElasticModule,
 		PrismaModule,
 		UserModule,
 		AuthModule,
