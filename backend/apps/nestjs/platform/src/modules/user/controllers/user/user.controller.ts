@@ -1,15 +1,18 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserCreateDto, UserUpdateDto } from '../../dto';
-import { UserService } from '../../services';
+import { UserSearchService, UserService } from '../../services';
 
 import { UserEntity } from '../../entities';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-	constructor(private readonly userService: UserService) {}
+	constructor(
+		private readonly userService: UserService,
+		private readonly userSearchService: UserSearchService
+	) {}
 
 	@Post()
 	@ApiCreatedResponse({ type: UserEntity })
@@ -17,10 +20,24 @@ export class UserController {
 		return this.userService.create(dto);
 	}
 
-	@Get()
+	@Post('search/index')
+	@ApiOkResponse({ description: 'User search index was recreated and populated with all users' })
+	public async createIndex() {
+		await this.userSearchService.indexAll();
+
+		return { message: 'User search index was recreated and populated with all users' };
+	}
+
+	@Get('list')
 	@ApiOkResponse({ type: [UserEntity] })
 	public findAll() {
 		return this.userService.findAll();
+	}
+
+	@Get('search')
+	@ApiOkResponse({ type: [UserEntity] })
+	public search(@Query('query') query: string) {
+		return this.userSearchService.search(query);
 	}
 
 	@Get(':id')

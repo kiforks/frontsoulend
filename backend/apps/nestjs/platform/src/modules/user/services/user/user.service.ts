@@ -7,6 +7,7 @@ import { UserHelper } from '../../helpers';
 import { PrismaService } from '../../../prisma';
 import { RedisService } from '../../../redis';
 import { UserEntity } from '../../entities';
+import { UserSearchService } from '../user-search';
 
 import { hash } from 'bcrypt';
 import { PrismaError } from 'prisma-error-enum';
@@ -15,7 +16,8 @@ import { PrismaError } from 'prisma-error-enum';
 export class UserService {
 	constructor(
 		private readonly prismaService: PrismaService,
-		private readonly redisService: RedisService
+		private readonly redisService: RedisService,
+		private readonly userSearchService: UserSearchService
 	) {}
 
 	public async create(user: UserCreateDto) {
@@ -29,6 +31,7 @@ export class UserService {
 
 			await this.redisService.set(UserHelper.getRedisId(createdUser.id), createdUser);
 			await this.redisService.set(UserHelper.getRedisEmail(createdUser.email), createdUser);
+			await this.userSearchService.index(createdUser);
 
 			return createdUser;
 		} catch (error: unknown) {
@@ -81,6 +84,7 @@ export class UserService {
 
 		await this.redisService.set(UserHelper.getRedisId(updatedUser.id), updatedUser);
 		await this.redisService.set(UserHelper.getRedisEmail(updatedUser.email), updatedUser);
+		await this.userSearchService.update(updatedUser.id, dto);
 
 		return updatedUser;
 	}
@@ -90,6 +94,7 @@ export class UserService {
 
 		await this.redisService.del(UserHelper.getRedisId(removedUser.id));
 		await this.redisService.del(UserHelper.getRedisEmail(removedUser.email));
+		await this.userSearchService.remove(removedUser.id);
 
 		return removedUser;
 	}
