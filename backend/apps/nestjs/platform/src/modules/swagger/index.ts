@@ -1,0 +1,1 @@
+export { provideSwagger } from './providers';
