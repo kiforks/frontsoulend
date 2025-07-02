@@ -16,7 +16,7 @@ export class UserController {
 	) {}
 
 	@Post()
-	@ApiCreatedResponse({ type: UserEntity })
+	@ApiCreatedResponse({ type: UserEntity, description: 'User successfully created' })
 	public create(@Body() dto: UserCreateDto): Promise<User> {
 		return this.userService.create(dto);
 	}
@@ -30,26 +30,26 @@ export class UserController {
 	}
 
 	@Get('list')
-	@ApiOkResponse({ type: [UserEntity] })
+	@ApiOkResponse({ type: [UserEntity], description: 'List of all users' })
 	public findAll(): Promise<User[]> {
 		return this.userService.findAll();
 	}
 
 	@Get('search')
-	@ApiOkResponse({ type: [UserEntity] })
+	@ApiOkResponse({ type: [UserEntity], description: 'List of users matching the search query' })
 	public search(@Query('query') query: string): Promise<User[]> {
 		return this.userSearchService.search(query);
 	}
 
 	@Get(':id')
-	@ApiOkResponse({ type: UserEntity })
+	@ApiOkResponse({ type: UserEntity, description: 'User by ID' })
 	@ApiNotFoundResponse({ description: 'User not found' })
 	public findOne(@Param('id', ParseIntPipe) id: number): Promise<User | null> {
 		return this.userService.findOne(id);
 	}
 
 	@Patch(':id')
-	@ApiOkResponse({ type: UserEntity })
+	@ApiOkResponse({ type: UserEntity, description: 'User successfully updated' })
 	public update(@Param('id', ParseIntPipe) id: number, @Body() dto: UserUpdateDto): Promise<User> {
 		return this.userService.update(id, dto);
 	}
