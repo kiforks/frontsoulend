@@ -1,8 +1,8 @@
-import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { Routes } from '../pages';
 
 export const appConfig: ApplicationConfig = {
-	providers: [provideExperimentalZonelessChangeDetection(), provideRouter(Routes)],
+	providers: [provideZonelessChangeDetection(), provideRouter(Routes)],
 };

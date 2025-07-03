@@ -4,7 +4,8 @@
 		"paths": {
 			"@core": ["dist/frontend/libs/core/src"],
 			"@utilities": ["dist/frontend/libs/utilities/src"]
-		}
+		},
+		"moduleResolution": "bundler"
 	},
 	"exclude": [
 		"src/**/*.spec.ts",

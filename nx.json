@@ -107,30 +107,36 @@
 			"changeDetection": "OnPush",
 			"prefix": "app",
 			"skipTests": true,
-			"skipImport": true
+			"skipImport": true,
+			"type": "component"
 		},
 		"@schematics/angular:directive": {
 			"prefix": "app",
 			"skipTests": true,
 			"skipImport": true,
-			"flat": false
+			"flat": false,
+			"type": "directive"
 		},
 		"@schematics/angular:pipe": {
 			"skipTests": true,
 			"skipImport": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
 		},
 		"@schematics/angular:service": {
 			"skipTests": true,
-			"flat": false
+			"flat": false,
+			"type": "service"
 		},
 		"@schematics/angular:guard": {
 			"skipTests": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
 		},
 		"@schematics/angular:interceptor": {
 			"skipTests": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
 		},
 		"@schematics/angular:interface": {
 			"prefix": "app",
@@ -162,30 +168,36 @@
 			"changeDetection": "OnPush",
 			"prefix": "app",
 			"skipTests": true,
-			"skipImport": true
+			"skipImport": true,
+			"type": "component"
 		},
 		"@nx/angular:directive": {
 			"prefix": "app",
 			"skipTests": true,
 			"skipImport": true,
-			"flat": false
+			"flat": false,
+			"type": "directive"
 		},
 		"@nx/angular:pipe": {
 			"skipTests": true,
 			"skipImport": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
 		},
 		"@nx/angular:service": {
 			"skipTests": true,
-			"flat": false
+			"flat": false,
+			"type": "service"
 		},
 		"@nx/angular:guard": {
 			"skipTests": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
 		},
 		"@nx/angular:interceptor": {
 			"skipTests": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
 		},
 		"@nx/angular:interface": {
 			"prefix": "app",
@@ -197,7 +209,23 @@
 		"@nx/angular:module": {
 			"style": "scss",
 			"skipImport": true,
-			"flat": false
+			"flat": false,
+			"typeSeparator": "."
+		},
+		"@nx/angular:scam": {
+			"type": "component"
+		},
+		"@nx/angular:scam-directive": {
+			"type": "directive"
+		},
+		"@schematics/angular:module": {
+			"typeSeparator": "."
+		},
+		"@nx/angular:resolver": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:resolver": {
+			"typeSeparator": "."
 		}
 	},
 	"nxCloudId": "672be036b76a0e014484fa2b",

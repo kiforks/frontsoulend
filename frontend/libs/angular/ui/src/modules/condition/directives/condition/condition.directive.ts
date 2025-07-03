@@ -14,7 +14,7 @@ import { CONDITION_KEYWORD } from '../../tokens';
  * ## Example Usage:
  *
  * ### **Standalone Usage**
- * ```html
+ * ```HTML
  * <div *uiCondition="condition; or: true; and: false; else: fallbackRef;">
  *   ...
  * </div>
@@ -26,7 +26,7 @@ import { CONDITION_KEYWORD } from '../../tokens';
  * The above template will be displayed only if `condition` is `true`, or `or` is `true`, and `and` is `true`.
  *
  * ### **Usage with Another Directive**
- * ```typescript
+ * ```TypeScript
  * interface Context {
  *   $implicit: string;
  * }
@@ -102,8 +102,9 @@ export class ConditionDirective<C extends object = object> {
 
 	private readonly element = inject<Condition<C>>(CONDITION_KEYWORD, { optional: true });
 	private readonly viewContainerRef = inject(ViewContainerRef);
+	private readonly templateRef = inject(TemplateRef);
 
-	constructor(private readonly templateRef: TemplateRef<C>) {
+	constructor() {
 		effect(() => this.render());
 	}
 

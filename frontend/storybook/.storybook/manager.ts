@@ -1,7 +1,7 @@
-import { addons } from '@storybook/manager-api';
-import { create } from '@storybook/theming';
-
 import { StorybookConfig } from '../configs';
+
+import { addons } from 'storybook/manager-api';
+import { create } from 'storybook/theming';
 
 addons.setConfig({
 	theme: create(StorybookConfig.Theme),

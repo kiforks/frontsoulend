@@ -1,9 +1,10 @@
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { Preview } from '@storybook/angular';
-import { PresetValue, StorybookConfigRaw } from '@storybook/core/types';
-import { ThemeVarsPartial } from '@storybook/theming';
 
 import { StorybookHelper } from '../helpers';
+import { PresetValue, StorybookConfigRaw } from 'storybook/internal/types';
+
+import { ThemeVarsPartial } from 'storybook/theming';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 
 export abstract class StorybookConfig {
 	public static readonly CompositionProdUrl = 'https://kiforks.github.io/frontsoulend/';
@@ -22,12 +23,9 @@ export abstract class StorybookConfig {
 	};
 
 	public static readonly Addons: string[] = [
-		'@storybook/addon-essentials',
-		'@storybook/addon-interactions',
 		'@storybook/addon-a11y',
 		'@storybook/addon-links',
-		'@storybook/addon-queryparams',
-		'@storybook/addon-storysource',
+		'@storybook/addon-docs',
 	];
 
 	public static readonly Viewports = INITIAL_VIEWPORTS;

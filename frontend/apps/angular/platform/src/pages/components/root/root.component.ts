@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [RouterOutlet],
 	templateUrl: './root.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RootComponent {}
