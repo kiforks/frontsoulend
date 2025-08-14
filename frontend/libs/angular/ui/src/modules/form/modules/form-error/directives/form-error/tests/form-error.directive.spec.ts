@@ -464,7 +464,7 @@ describe('FormErrorDirective', () => {
 
 			expect(directivePO.component).toExist();
 
-			spectator.component.viewContainerRef.clear();
+			spectator.component.viewContainerRef?.clear();
 
 			expect(directivePO.component).not.toExist();
 		}));

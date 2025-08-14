@@ -44,7 +44,7 @@ export abstract class FormErrorHelper {
 	): Observable<unknown> {
 		const statusChanges$ = control.statusChanges;
 		const focusout$ = fromEvent(hostElement, 'focusout', { capture: true });
-		const formSubmit$: Observable<unknown> = form?.ngSubmit || EMPTY;
+		const formSubmit$: Observable<unknown> = form?.ngSubmit ?? EMPTY;
 
 		return merge(statusChanges$, focusout$, formSubmit$);
 	}

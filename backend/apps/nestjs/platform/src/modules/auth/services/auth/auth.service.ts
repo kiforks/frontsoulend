@@ -36,9 +36,7 @@ export class AuthService {
 	public async googleAuth(email: string): Promise<string> {
 		let user = await this.userService.findByEmail(email);
 
-		if (!user) {
-			user = await this.userService.create({ email });
-		}
+		user ??= await this.userService.create({ email });
 
 		return this.jwtService.sign({ id: user.id, email });
 	}

@@ -115,8 +115,9 @@ export class ConditionDirective<C extends object = object> {
 	 * - If no conditions are met and no fallback exists, the template is cleared.
 	 */
 	private render(): void {
-		const context = this.element?.context || {};
+		const context = this.element?.context ?? {};
 		const value = this.element?.condition() ?? this.condition();
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		const condition = (value && this.and()) || this.or();
 		const elseTemplateRef = this.else();
 

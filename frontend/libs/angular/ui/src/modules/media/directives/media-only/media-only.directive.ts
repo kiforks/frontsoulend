@@ -48,7 +48,7 @@ import { MediaBaseDirective } from '../media-base';
 		},
 	],
 })
-export class MediaOnlyDirective implements MediaElement<MediaBreakpoint>, Condition {
+export class MediaOnlyDirective implements MediaElement, Condition {
 	public readonly breakpoint = input.required<MediaBreakpoint>({ alias: 'uiMediaOnly' });
 
 	public readonly condition = signal(false);

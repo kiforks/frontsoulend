@@ -17,25 +17,25 @@ export class FormErrorDirectivePO {
 	) {}
 
 	public get component(): FormErrorComponent {
-		return this.spectator.query(FormErrorComponent) as FormErrorComponent;
+		return this.spectator.query(FormErrorComponent)!;
 	}
 
 	public get configComponent(): FormErrorConfigSpecComponent {
-		return this.spectator.query(FormErrorConfigSpecComponent) as FormErrorConfigSpecComponent;
+		return this.spectator.query(FormErrorConfigSpecComponent)!;
 	}
 
 	public get passwordInput(): HTMLInputElement {
-		return this.spectator.query('[data-po="ui-form-error-password"]') as HTMLInputElement;
+		return this.spectator.query('[data-po="ui-form-error-password"]')!;
 	}
 
 	public get containerComponent(): FormErrorComponent {
 		return this.spectator.query(FormErrorComponent, {
 			parentSelector: '[data-po="ui-form-error-container"]',
-		}) as FormErrorComponent;
+		})!;
 	}
 
 	public get group(): HTMLElement {
-		return this.spectator.query('[data-po="ui-form-error-password"]') as HTMLElement;
+		return this.spectator.query('[data-po="ui-form-error-password"]')!;
 	}
 
 	public typePassword(value: string, debounceTime = FormErrorOptionsConfig.DebounceTime): void {

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, ValidationPipe } from '@nestjs/common';
 import {
 	ApiBody,
 	ApiCreatedResponse,
@@ -30,7 +30,7 @@ export class UserController {
 		type: UserEntity,
 		description: 'User successfully created',
 	})
-	public create(@Body() dto: UserCreateDto): Promise<User> {
+	public create(@Body(new ValidationPipe()) dto: UserCreateDto): Promise<User> {
 		return this.userService.create(dto);
 	}
 
@@ -95,7 +95,7 @@ export class UserController {
 		type: UserEntity,
 		description: 'User successfully updated',
 	})
-	public update(@Param('id', ParseIntPipe) id: number, @Body() dto: UserUpdateDto): Promise<User> {
+	public update(@Param('id', ParseIntPipe) id: number, @Body(new ValidationPipe()) dto: UserUpdateDto): Promise<User> {
 		return this.userService.update(id, dto);
 	}
 

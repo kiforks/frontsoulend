@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { ChatDto } from '../../dto';
@@ -17,7 +17,7 @@ export class ChatController {
 		type: ChatSchema,
 		description: 'Message sent successfully. Returns the sent message schema.',
 	})
-	public sendMessage(@Body() chatDto: ChatDto): Promise<ChatSchema> {
+	public sendMessage(@Body(new ValidationPipe()) chatDto: ChatDto): Promise<ChatSchema> {
 		return this.chatService.sendMessage(chatDto);
 	}
 

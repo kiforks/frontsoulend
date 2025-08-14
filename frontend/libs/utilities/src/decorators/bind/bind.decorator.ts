@@ -21,7 +21,7 @@
 export function Bind<T extends Function>(
 	_target: unknown,
 	propertyKey: string,
-	descriptor: TypedPropertyDescriptor<T>
+	descriptor?: TypedPropertyDescriptor<T>
 	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 ): TypedPropertyDescriptor<T> | void {
 	if (!descriptor || typeof descriptor.value !== 'function') {
@@ -31,7 +31,7 @@ export function Bind<T extends Function>(
 	return {
 		configurable: true,
 		get(this: T): T {
-			const bound: T = descriptor.value?.bind(this);
+			const bound: T = descriptor.value?.bind(this) as T;
 
 			Object.defineProperty(this, propertyKey, {
 				value: bound,

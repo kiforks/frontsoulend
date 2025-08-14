@@ -29,7 +29,7 @@ export class FormErrorWrapperSpecComponent {
 
 	// eslint-disable-next-line @typescript-eslint/member-ordering
 	protected readonly viewContainerRef = computed(() => {
-		const viewContainerRef = this.config?.viewContainerRef || this.childContainerRef();
+		const viewContainerRef = this.config?.viewContainerRef ?? this.childContainerRef();
 
 		if (!viewContainerRef) {
 			throw new Error('[FormErrorWrapperSpecComponent]: View container ref is not defined');

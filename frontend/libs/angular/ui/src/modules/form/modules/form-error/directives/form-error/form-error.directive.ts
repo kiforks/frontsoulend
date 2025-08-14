@@ -46,9 +46,13 @@ export class FormErrorDirective<M extends { [K in keyof M]: object } = object> i
 	}));
 
 	private get control(): AbstractControl {
-		const control = this.ngControl || (this.controlContainer as ControlContainer);
+		const control = this.ngControl ?? this.controlContainer;
 
-		return control.control as AbstractControl;
+		if (!control?.control) {
+			throw new Error('[FormErrorDirective]: Control is not defined');
+		}
+
+		return control.control;
 	}
 
 	private get form(): Nullable<NgForm> {

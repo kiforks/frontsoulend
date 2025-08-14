@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import {
 	ApiBadRequestResponse,
 	ApiBody,
@@ -28,7 +28,7 @@ export class AuthController {
 	@ApiBody({ type: UserCreateDto, description: 'User registration data' })
 	@ApiOkResponse({ description: 'Register successful', type: UserEntity })
 	@ApiBadRequestResponse({ description: 'Validation error or user already exists' })
-	public register(@Body() dto: UserCreateDto): Promise<User> {
+	public register(@Body(new ValidationPipe()) dto: UserCreateDto): Promise<User> {
 		return this.userService.create(dto);
 	}
 

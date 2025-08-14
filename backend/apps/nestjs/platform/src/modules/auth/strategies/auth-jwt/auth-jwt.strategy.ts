@@ -8,10 +8,16 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 @Injectable()
 export class AuthJwtStrategy extends PassportStrategy(Strategy) {
 	constructor(configService: ConfigService) {
+		const secretOrKey = configService.get('JWT_SECRET');
+
+		if (!secretOrKey) {
+			throw new Error('JWT_SECRET is not defined');
+		}
+
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			ignoreExpiration: false,
-			secretOrKey: configService.get('JWT_SECRET') as string,
+			secretOrKey,
 		});
 	}
 

@@ -11,7 +11,6 @@ import { FORM_ERROR_CONFIG } from '../../../../tokens';
 	template: `
 		<ui-form-error-wrapper-spec />
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [
 		{
 			provide: FORM_ERROR_CONFIG,
@@ -19,10 +18,11 @@ import { FORM_ERROR_CONFIG } from '../../../../tokens';
 				({ viewContainerRef: inject(ViewContainerRef, { self: true }) }) satisfies Partial<FormErrorConfig>,
 		},
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormErrorHostSpecComponent {
 	private readonly config = inject(FORM_ERROR_CONFIG);
 
 	// eslint-disable-next-line @typescript-eslint/member-ordering
-	public readonly viewContainerRef = this.config.viewContainerRef as ViewContainerRef;
+	public readonly viewContainerRef = this.config.viewContainerRef;
 }

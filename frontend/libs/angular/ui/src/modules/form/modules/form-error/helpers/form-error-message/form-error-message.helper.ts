@@ -23,7 +23,7 @@ export abstract class FormErrorMessageHelper {
 			return null;
 		}
 
-		return FormErrorMessageHelper.resolveErrorMessage<M>(errorKey, control, messages);
+		return FormErrorMessageHelper.resolveErrorMessage<M>(errorKey as string, control, messages);
 	}
 
 	/**
@@ -41,7 +41,7 @@ export abstract class FormErrorMessageHelper {
 
 		const [firstErrorKey] = Object.keys(errors);
 
-		return firstErrorKey ?? null;
+		return firstErrorKey || null;
 	}
 
 	/**
@@ -66,21 +66,18 @@ export abstract class FormErrorMessageHelper {
 
 		const data = messages[errorKey as keyof M];
 
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!data) {
 			return null;
 		}
 
-		const error = errors[errorKey];
+		const error: M[keyof M] = errors[errorKey];
 
 		if (typeof data === 'function') {
 			return data(error);
 		}
 
-		return FormErrorMessageHelper.handleConfigMessage<M[keyof M]>(
-			error,
-			control,
-			data as FormErrorMessageConfig<M[keyof M]>
-		);
+		return FormErrorMessageHelper.handleConfigMessage<M[keyof M]>(error, control, data);
 	}
 
 	/**

@@ -44,7 +44,7 @@ describe('BindDecorator', () => {
 
 			// eslint-disable-next-line no-new
 			new InvalidClass();
-		}).toThrowError(new TypeError('Only methods can be decorated with @bind. <value> is not a method!'));
+		}).toThrow(new TypeError('Only methods can be decorated with @bind. <value> is not a method!'));
 	});
 
 	it('should cache the bound method to avoid re-binding on every call', () => {

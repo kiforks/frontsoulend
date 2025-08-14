@@ -15,10 +15,17 @@ import Stripe from 'stripe';
 		PaymentService,
 		{
 			provide: PAYMENT_CLIENT,
-			useFactory: (configService: ConfigService) =>
-				new Stripe(configService.get('STRIPE_SECRET_KEY') as string, {
-					apiVersion: '2025-05-28.basil',
-				}),
+			useFactory: (configService: ConfigService) => {
+				const key = configService.get('STRIPE_API_VERSION');
+
+				if (!key) {
+					throw new Error('STRIPE_API_VERSION is not defined');
+				}
+
+				return new Stripe(key, {
+					apiVersion: '2025-06-30.basil',
+				});
+			},
 			inject: [ConfigService],
 		},
 	],

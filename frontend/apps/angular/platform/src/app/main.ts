@@ -4,4 +4,4 @@ import { appConfig } from './app.config';
 
 import { RootComponent } from '../pages';
 
-bootstrapApplication(RootComponent, appConfig).catch(err => console.error(err));
+bootstrapApplication(RootComponent, appConfig).catch((err: unknown) => console.error(err));
