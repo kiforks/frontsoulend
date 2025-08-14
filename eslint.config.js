@@ -29,8 +29,7 @@ export default [
 		...config,
 		rules: {
 			...config.rules,
-			/* TODO move to the config */
-			'@typescript-eslint/explicit-module-boundary-types': 'error',
+			'@typescript-eslint/prefer-nullish-coalescing': ['error', { ignoreBooleanCoercion: true }],
 		},
 		languageOptions: {
 			...config.languageOptions,
@@ -75,15 +74,6 @@ export default [
 					],
 				},
 			],
-		},
-	},
-
-	/* TODO move to the config */
-	{
-		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-		rules: {
-			'dot-notation': 'off',
-			'no-warning-comments': ['error', { terms: ['fixme'], location: 'anywhere' }],
 		},
 	},
 

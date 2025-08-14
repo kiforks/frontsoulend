@@ -4,12 +4,4 @@ import angularConfig from '../../../../linters/eslint/configs/angular.config.js'
 import storybookConfig from '../../../../linters/eslint/configs/storybook.config.js';
 
 /** @type { import("eslint").Linter.Config[] } */
-export default [
-	...angularConfig,
-	...storybookConfig,
-	{
-		rules: {
-			'storybook/no-title-property-in-meta': 'off',
-		},
-	},
-];
+export default [...angularConfig, ...storybookConfig];

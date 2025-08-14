@@ -1,44 +1,4 @@
-import eslintNestJsTyped from '@darraghor/eslint-plugin-nestjs-typed';
+import kiforNestjs from '@kiforks/eslint-config/nestjs.js';
 
-import nestJsConfig from 'eslint-plugin-nestjs';
-
-/* TODO Move to a separate config package */
-export default [
-	...[
-		{
-			plugins: {
-				nestjs: nestJsConfig,
-			},
-			rules: {
-				'nestjs/parse-int-pipe': 'error',
-				'nestjs/deprecated-api-modules': 'error',
-				'nestjs/use-dependency-injection': 'error',
-				'nestjs/use-validation-pipe': 'error',
-			},
-		},
-		...eslintNestJsTyped.configs.flatRecommended,
-		{
-			rules: {
-				/* This rule is not working properly */
-				'@darraghor/nestjs-typed/validated-non-primitive-property-needs-type-decorator': 'off',
-				'@darraghor/nestjs-typed/injectable-should-be-provided': 'off',
-				'nestjs/use-validation-pipe': 'off',
-			},
-		},
-	].map(config => ({ ...config, files: ['**/*.ts'] })),
-	{
-		files: ['**/*.controller.ts'],
-		rules: {
-			'class-methods-use-this': 'off',
-		},
-	},
-
-	{
-		files: ['**/*.ts'],
-		rules: {
-			'class-methods-use-this': 'off',
-			'no-underscore-dangle': 'off',
-			camelcase: 'off',
-		},
-	},
-];
+/** @type { import("eslint").Linter.Config[] } */
+export default kiforNestjs;

@@ -1,8 +1,4 @@
-import storybookConfig from 'eslint-plugin-storybook';
+import kiforStorybook from '@kiforks/eslint-config/storybook.js';
 
-export default [
-	...storybookConfig.configs['flat/recommended'],
-	...storybookConfig.configs['flat/csf'],
-	...storybookConfig.configs['flat/csf-strict'],
-	...storybookConfig.configs['flat/addon-interactions'],
-].map(config => ({ ...config, files: ['**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)'] }));
+/** @type { import("eslint").Linter.Config[] } */
+export default kiforStorybook;
