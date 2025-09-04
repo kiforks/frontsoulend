@@ -499,6 +499,11 @@ describe('FormErrorDirective', () => {
 			directivePO.typePassword('');
 
 			expect(directivePO.containerComponent).toExist();
+
+			directivePO.typePassword('123456');
+			directivePO.blurPassword();
+
+			expect(directivePO.containerComponent).not.toExist();
 		}));
 	});
 });

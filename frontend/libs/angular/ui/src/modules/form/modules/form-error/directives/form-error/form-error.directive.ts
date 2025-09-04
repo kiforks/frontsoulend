@@ -23,7 +23,7 @@ import { FORM_ERROR_CONFIG, FORM_ERROR_MESSAGES } from '../../tokens';
 	`,
 })
 export class FormErrorDirective<M extends { [K in keyof M]: object } = object> implements OnInit {
-	private readonly formErrorMessages = inject<FormErrorMessages<M>>(FORM_ERROR_MESSAGES);
+	private readonly formErrorMessages = inject<FormErrorMessages<M>>(FORM_ERROR_MESSAGES, { optional: true });
 	private readonly formErrorConfig = inject<Partial<FormErrorConfig>>(FORM_ERROR_CONFIG, { optional: true });
 	private readonly ngControl = inject(NgControl, { self: true, optional: true });
 	private readonly controlContainer = inject(ControlContainer, { self: true, optional: true });
@@ -64,10 +64,16 @@ export class FormErrorDirective<M extends { [K in keyof M]: object } = object> i
 	}
 
 	private setup(): void {
-		this.observeChanges(this.control);
+		const messages = this.messages();
+
+		if (!messages) {
+			throw new Error('[FormErrorDirective]: Messages are not defined');
+		}
+
+		this.observeChanges(this.control, messages);
 	}
 
-	private observeChanges(control: AbstractControl): void {
+	private observeChanges(control: AbstractControl, messages: FormErrorMessages<M>): void {
 		const errorMessageTrigger$ = FormErrorHelper.getTrigger$(control, this.form, this.elementRef.nativeElement);
 
 		errorMessageTrigger$
@@ -76,11 +82,11 @@ export class FormErrorDirective<M extends { [K in keyof M]: object } = object> i
 				skip(1),
 				debounceTime(this.configValue().debounceTime),
 				map(() => ({
-					message: FormErrorMessageHelper.getMessage(control, this.messages()),
+					message: FormErrorMessageHelper.getMessage(control, messages),
 					isValid: FormErrorValidationHelper.isValid(this.configValue().validationType, control, this.form),
 				})),
 				distinctUntilChanged((previous, current) => isEqual(previous, current)),
-				tap(() => this.viewContainerRef.clear()),
+				tap(() => this.configValue().viewContainerRef.clear()),
 				filter(({ isValid }) => isValid),
 				map(({ message }) => message),
 				takeUntilDestroyed(this.destroyRef)
