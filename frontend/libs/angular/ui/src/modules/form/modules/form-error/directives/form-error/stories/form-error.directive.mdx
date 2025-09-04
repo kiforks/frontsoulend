@@ -1,0 +1,76 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+
+import * as FormErrorStories from './form-error.directive.stories.ts';
+
+<Meta of={FormErrorStories} />
+
+# FormError
+
+The `FormErrorDirective` shows concise, configurable messages for invalid controls or groups.
+
+## Overview
+
+<Canvas of={FormErrorStories.Overview} />
+
+<Controls of={FormErrorStories.Overview} />
+
+## Config
+
+#### Validation type
+
+<Canvas of={FormErrorStories.ConfigValidationType} />
+
+<Controls of={FormErrorStories.ConfigValidationType} />
+
+#### Debounce time
+
+<Canvas of={FormErrorStories.ConfigDebounceTime} />
+
+<Controls of={FormErrorStories.ConfigDebounceTime} />
+
+#### ViewContainerRef
+
+<Canvas of={FormErrorStories.ConfigViewContainerRef} />
+
+<Controls of={FormErrorStories.ConfigViewContainerRef} />
+
+---
+
+## Params
+
+### Messages
+
+Define params & messages
+
+```ts
+import { FormErrorMessages } from './form-error-message.interface';
+
+interface YourParams {
+	required: object;
+	minlength: { requiredLength: number; actualLength: number };
+	pattern: { requiredPattern: string; actualValue: string };
+}
+
+const formErrorMessages: FormErrorMessages<YourParams> = {
+	required: () => 'Field is required.',
+	minlength: ({ requiredLength, actualLength }) => `Minimum ${requiredLength} characters (current ${actualLength}).`,
+	pattern: {
+		filter: (_, control) => control.dirty || control.touched,
+		message: ({ requiredPattern }) => `Invalid format. Expected pattern: ${requiredPattern}`,
+	},
+};
+```
+
+Provide globally
+
+```ts
+{
+	providers: [{ provide: FORM_ERROR_MESSAGES, useValue: formErrorMessages }];
+}
+```
+
+Use in template
+
+```html
+<input formControlName="password" uiFormError [uiFormErrorMessages]="formErrorMessages" />
+```
