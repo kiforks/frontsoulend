@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 
+import { Prisma } from '~prisma/client';
 import { Response } from 'express';
 
 @Catch(Prisma.PrismaClientKnownRequestError)
@@ -17,14 +17,14 @@ export class PrismaExceptionFilter implements ExceptionFilter {
 	}
 
 	public static getMessage(exception: Prisma.PrismaClientKnownRequestError): string {
-		const target = exception.meta?.['target'];
+		const meta = exception.meta as { target?: string };
+		const { target } = meta;
 
 		if (!target) {
 			return 'Database error';
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-base-to-string
-		return `Unique constraint failed: ${String(target)}`;
+		return `Unique constraint failed: ${target}`;
 	}
 
 	public static getCode(exception: Prisma.PrismaClientKnownRequestError): number {
