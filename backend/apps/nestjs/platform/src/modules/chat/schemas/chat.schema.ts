@@ -4,15 +4,15 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class ChatSchema extends Document {
-	@Prop({ required: true })
+	@Prop({ type: String, required: true })
 	public senderId!: string;
 
-	@Prop({ required: true })
+	@Prop({ type: String, required: true })
 	public receiverId!: string;
 
-	@Prop({ required: true })
+	@Prop({ type: String, required: true })
 	public message!: string;
 
-	@Prop({ required: true, default: Date.now })
-	public createdAt!: string;
+	@Prop({ type: Date, required: true, default: Date.now })
+	public createdAt!: Date;
 }
