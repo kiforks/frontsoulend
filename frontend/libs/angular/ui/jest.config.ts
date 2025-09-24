@@ -22,7 +22,7 @@ export default {
 			},
 		],
 	},
-	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
+	transformIgnorePatterns: ['node_modules/(?!(@faker-js/faker|.*\\.mjs$))'],
 	moduleNameMapper: {
 		...pathsToModuleNameMapper(compilerOptions.paths, {
 			prefix: '<rootDir>/../../../../',
