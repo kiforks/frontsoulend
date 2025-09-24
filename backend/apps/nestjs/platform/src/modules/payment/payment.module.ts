@@ -23,7 +23,7 @@ import Stripe from 'stripe';
 				}
 
 				return new Stripe(key, {
-					apiVersion: '2025-06-30.basil',
+					apiVersion: '2025-08-27.basil',
 				});
 			},
 			inject: [ConfigService],
