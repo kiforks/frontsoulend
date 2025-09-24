@@ -7,13 +7,12 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { User } from '@prisma/client';
 
 import { AuthService } from '../../services';
 import { AuthGoogleGuard, AuthJwtGuard, AuthLocalGuard } from '../../guards';
 import { AuthGoogleRequest, AuthLogin } from '../../types';
 
-import { UserCreateDto, UserCurrent, UserEntity, UserService } from '../../../user';
+import { User, UserCreateDto, UserCurrent, UserEntity, UserService } from '../../../user';
 
 @ApiTags('auth')
 @Controller('auth')

@@ -1,11 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
 
 import { AuthLogin } from '../../types';
 
 import { PrismaService } from '../../../prisma';
-import { UserService } from '../../../user';
+import { User, UserService } from '../../../user';
 
 import { compare } from 'bcrypt';
 

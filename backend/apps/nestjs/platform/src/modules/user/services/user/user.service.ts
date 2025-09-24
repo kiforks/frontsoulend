@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 
 import { UserCreateDto, UserUpdateDto } from '../../dto';
 import { UserHelper } from '../../helpers';
@@ -10,6 +9,7 @@ import { RedisService } from '../../../redis';
 import { UserEntity } from '../../entities';
 import { UserSearchService } from '../user-search';
 
+import { Prisma } from '~prisma/client';
 import { hash } from 'bcrypt';
 import { PrismaError } from 'prisma-error-enum';
 
