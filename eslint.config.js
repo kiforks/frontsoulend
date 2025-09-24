@@ -34,12 +34,7 @@ export default [
 		languageOptions: {
 			...config.languageOptions,
 			parserOptions: {
-				project: [
-					'./tsconfig.base.json',
-					'frontend/libs/angular/ui/.storybook/tsconfig.json',
-					'frontend/storybook/.storybook/tsconfig.json',
-					'backend/apps/nestjs/platform/tsconfig.json',
-				],
+				projectService: true,
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},
