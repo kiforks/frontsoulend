@@ -1,9 +1,11 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"outDir": "../../../../dist/out-tsc",
 		"types": ["node"],
-		"module": "CommonJS"
+		"module": "ESNext",
+		"paths": {
+			"~prisma/*": ["backend/prisma/client/*"]
+		}
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
