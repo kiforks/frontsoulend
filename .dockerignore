@@ -1,0 +1,61 @@
+# IDE/Editor
+*.iml
+*.launch
+*.sublime-workspace
+*.swp
+.idea/
+.junie/
+.vscode/
+.c9/
+.classpath
+.project
+.settings/
+
+# TypeScript build artifacts
+*.tsbuildinfo
+out-tsc/
+
+# OS/FS noise
+.DS_Store
+Thumbs.db
+
+# Nx/Angular
+.angular/
+.nx/cache/
+.nx/workspace-data/
+
+# Caches
+.cache/
+.eslintcache
+.sass-cache/
+
+# Environment
+.env
+.env.*
+
+# Git
+.gitattributes
+.git/
+.gitignore
+
+# Node/Build artifacts
+node_modules/
+dist/
+.tmp/
+tmp/
+coverage/
+typings/
+backend/prisma/client
+libpeerconnection.log
+connect.lock
+testem.log
+
+# Logs/Locks
+npm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package managers lockfiles
+pnpm-lock.yaml
+yarn.lock
