@@ -74,6 +74,7 @@
 		"@nestjs/mapped-types": "*",
 		"@nestjs/platform-express": "^11.1.6",
 		"axios": "^1.12.2",
+		"envalid": "^8.1.0",
 		"rxjs": "~7.8.2"
 	},
 	"devDependencies": {
