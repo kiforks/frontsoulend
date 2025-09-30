@@ -1,5 +1,5 @@
+import { EnvironmentService } from '@libs/nestjs/environment/services';
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
@@ -15,14 +15,13 @@ import { AuthGoogleStrategy, AuthJwtStrategy, AuthLocalStrategy } from './strate
 		UserModule,
 		PassportModule,
 		JwtModule.registerAsync({
-			imports: [ConfigModule],
-			useFactory: (configService: ConfigService) => ({
-				secret: configService.get('JWT_SECRET'),
+			useFactory: (environmentService: EnvironmentService) => ({
+				secret: environmentService.get('JWT_SECRET'),
 				signOptions: {
-					expiresIn: configService.get('JWT_EXPIRATION_TIME'),
+					expiresIn: environmentService.get('JWT_EXPIRATION_TIME'),
 				},
 			}),
-			inject: [ConfigService],
+			inject: [EnvironmentService],
 		}),
 	],
 	providers: [AuthService, AuthLocalStrategy, AuthJwtStrategy, AuthGoogleStrategy],

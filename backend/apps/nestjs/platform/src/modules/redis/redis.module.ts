@@ -1,5 +1,5 @@
+import { EnvironmentService } from '@libs/nestjs/environment/services';
 import { Global, Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 
 import { RedisService } from './services';
 
@@ -13,12 +13,12 @@ import Redis from 'ioredis';
 		RedisService,
 		{
 			provide: REDIS_CLIENT,
-			useFactory: (configService: ConfigService) =>
+			useFactory: (environmentService: EnvironmentService) =>
 				new Redis({
-					host: configService.get('REDIS_HOST'),
-					port: configService.get('REDIS_PORT'),
+					host: environmentService.get('REDIS_HOST'),
+					port: environmentService.get('REDIS_PORT'),
 				}),
-			inject: [ConfigService],
+			inject: [EnvironmentService],
 		},
 	],
 	exports: [RedisService, REDIS_CLIENT],

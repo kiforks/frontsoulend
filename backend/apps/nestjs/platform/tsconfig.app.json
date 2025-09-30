@@ -4,7 +4,8 @@
 		"types": ["node"],
 		"module": "ESNext",
 		"paths": {
-			"~prisma/*": ["backend/prisma/client/*"]
+			"~prisma/*": ["backend/prisma/client/*"],
+			"@libs/nestjs/environment/*": ["backend/libs/nestjs/environment/*"]
 		}
 	},
 	"include": ["src/**/*.ts"],

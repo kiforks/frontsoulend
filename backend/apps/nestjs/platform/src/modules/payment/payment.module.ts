@@ -1,5 +1,5 @@
+import { EnvironmentService } from '@libs/nestjs/environment/services';
 import { Global, Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 
 import { PaymentService } from './services';
 
@@ -15,18 +15,11 @@ import Stripe from 'stripe';
 		PaymentService,
 		{
 			provide: PAYMENT_CLIENT,
-			useFactory: (configService: ConfigService) => {
-				const key = configService.get('STRIPE_API_VERSION');
-
-				if (!key) {
-					throw new Error('STRIPE_API_VERSION is not defined');
-				}
-
-				return new Stripe(key, {
+			useFactory: (environmentService: EnvironmentService) =>
+				new Stripe(environmentService.get('STRIPE_API_VERSION'), {
 					apiVersion: '2025-08-27.basil',
-				});
-			},
-			inject: [ConfigService],
+				}),
+			inject: [EnvironmentService],
 		},
 	],
 	exports: [PaymentService, PAYMENT_CLIENT],

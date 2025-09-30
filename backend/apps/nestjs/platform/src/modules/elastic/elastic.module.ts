@@ -1,17 +1,17 @@
+import { EnvironmentService } from '@libs/nestjs/environment/services';
 import { Global, Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 @Global()
 @Module({
 	imports: [
 		ElasticsearchModule.registerAsync({
-			useFactory: (configService: ConfigService) => ({
-				node: configService.get('ELASTICSEARCH_URL'),
+			useFactory: (environmentService: EnvironmentService) => ({
+				node: environmentService.get('ELASTICSEARCH_URL'),
 				requestTimeout: 600,
 				ssl: false,
 			}),
-			inject: [ConfigService],
+			inject: [EnvironmentService],
 		}),
 	],
 	exports: [ElasticsearchModule],
