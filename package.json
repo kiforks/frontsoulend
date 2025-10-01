@@ -4,8 +4,6 @@
 	"license": "MIT",
 	"scripts": {
 		"setup": "npm i && prisma generate && docker-compose up -d",
-		"setup:backend": "docker compose --profile backend up -d",
-		"setup:dev": "npm i && prisma generate && npm run setup:backend",
 		"migrate:nx": "nx migrate latest && nx migrate --run-migrations --if-exists",
 		"prepare": "husky",
 		"format": "nx format:check",
