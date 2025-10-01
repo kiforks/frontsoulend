@@ -119,6 +119,12 @@ export default [
 		},
 	},
 	{
+		files: ['**/eslint.config.{js,cjs,mjs,ts}', '**/*.eslintrc.{js,cjs,mjs,json}', '**/.eslintrc'],
+		rules: {
+			'@nx/enforce-module-boundaries': 'off',
+		},
+	},
+	{
 		ignores: [
 			// Compiled output
 			'dist/',
