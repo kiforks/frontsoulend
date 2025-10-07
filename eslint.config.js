@@ -172,6 +172,8 @@ export default [
 			'.nx/',
 			'.vscode/',
 			'.stylelintrc.js',
+			'**/vite.config.*.timestamp*',
+			'**/vitest.config.*.timestamp*',
 		],
 	},
 ];
