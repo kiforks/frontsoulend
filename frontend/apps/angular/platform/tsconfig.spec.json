@@ -1,16 +1,23 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"outDir": "./dist/out-tsc",
-		"module": "ESNext",
-		"target": "ESNext",
-		"types": ["jest", "node"],
-		"paths": {
-			"@core": ["frontend/libs/core/src"],
-			"@utilities": ["frontend/libs/utilities/src"],
-			"@ui": ["frontend/libs/angular/ui/src"]
-		}
+		"outDir": "../../../../dist/out-tsc",
+		"types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest"]
 	},
-	"files": ["setup-jest.ts"],
-	"include": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.d.ts"]
+	"include": [
+		"vite.config.ts",
+		"vite.config.mts",
+		"vitest.config.ts",
+		"vitest.config.mts",
+		"src/**/*.test.ts",
+		"src/**/*.spec.ts",
+		"src/**/*.test.tsx",
+		"src/**/*.spec.tsx",
+		"src/**/*.test.js",
+		"src/**/*.spec.js",
+		"src/**/*.test.jsx",
+		"src/**/*.spec.jsx",
+		"src/**/*.d.ts"
+	],
+	"files": ["src/test-setup.ts"]
 }
