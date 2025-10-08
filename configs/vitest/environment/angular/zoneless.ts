@@ -8,6 +8,6 @@ import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-
 @NgModule({
 	providers: [provideZonelessChangeDetection()],
 })
-export class ZonelessTestModule {}
+class ZonelessTestModule {}
 
 getTestBed().initTestEnvironment([BrowserTestingModule, ZonelessTestModule], platformBrowserTesting());
