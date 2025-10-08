@@ -4,8 +4,8 @@
 		"types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest"]
 	},
 	"include": [
-		"vite.config.ts",
-		"vite.config.ts",
+		"vitest.config.ts",
+		"vitest.config.ts",
 		"vitest.config.ts",
 		"vitest.config.mts",
 		"src/**/*.test.ts",
