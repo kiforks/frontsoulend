@@ -12,7 +12,7 @@
 		"src/**/*.test.ts",
 		"src/**/*.spec.ts",
 		"vite.config.ts",
-		"vite.config.mts",
+		"vite.config.ts",
 		"vitest.config.ts",
 		"vitest.config.mts",
 		"src/**/*.test.tsx",
@@ -21,6 +21,6 @@
 		"src/**/*.spec.js",
 		"src/**/*.test.jsx",
 		"src/**/*.spec.jsx",
-		"src/test-setup.ts"
+		"../../../../configs/vitest/environment.angular.ts"
 	]
 }

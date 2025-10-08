@@ -10,17 +10,13 @@ export default defineConfig(() => ({
 	root: __dirname,
 	cacheDir: '../../../../node_modules/.vite/frontend/apps/angular/platform',
 	plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
-	// Uncomment this if you are using workers.
-	// worker: {
-	//  plugins: [ nxViteTsPaths() ],
-	// },
 	test: {
 		name: 'frontend/apps/angular/platform',
 		watch: false,
 		globals: true,
 		environment: 'jsdom',
 		include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-		setupFiles: ['src/test-setup.ts'],
+		setupFiles: ['../../../../configs/vitest/environment.angular.ts'],
 		reporters: ['default'],
 		coverage: {
 			reportsDirectory: '../../../../coverage/frontend/apps/angular/platform',
