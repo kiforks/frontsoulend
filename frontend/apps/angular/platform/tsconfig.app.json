@@ -8,7 +8,6 @@
 	"files": ["src/app/main.ts", "src/app/polyfills.ts"],
 	"include": ["src/**/*.d.ts"],
 	"exclude": [
-		"jest.config.ts",
 		"src/**/*.test.ts",
 		"src/**/*.spec.ts",
 		"vite.config.ts",
