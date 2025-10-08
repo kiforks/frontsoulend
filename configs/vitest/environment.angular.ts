@@ -1,4 +1,5 @@
 import '@angular/compiler';
+import '@angular/localize/init';
 
 import { NgModule, provideZonelessChangeDetection } from '@angular/core';
 import { getTestBed } from '@angular/core/testing';
