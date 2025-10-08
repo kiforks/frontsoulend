@@ -119,7 +119,14 @@ export default [
 		},
 	},
 	{
-		files: ['**/eslint.config.{js,cjs,mjs,ts}', '**/*.eslintrc.{js,cjs,mjs,json}', '**/.eslintrc'],
+		files: [
+			'**/eslint.config.{js,cjs,mjs,ts}',
+			'**/*.eslintrc.{js,cjs,mjs,json}',
+			'**/.eslintrc',
+			'**/vite.config.{js,cjs,mjs,ts}',
+			'**/vitest.config.{js,cjs,mjs,ts}',
+			'**/vitest.environment.{js,cjs,mjs,ts}',
+		],
 		rules: {
 			'@nx/enforce-module-boundaries': 'off',
 		},
