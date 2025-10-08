@@ -60,6 +60,7 @@
 	"type": "module",
 	"dependencies": {
 		"@angular/animations": "20.3.2",
+		"@angular/build": "^20.3.5",
 		"@angular/common": "20.3.2",
 		"@angular/compiler": "20.3.2",
 		"@angular/core": "20.3.2",
@@ -95,6 +96,7 @@
 		"passport-local": "^1.0.0",
 		"pino-http": "^10.5.0",
 		"rxjs": "~7.8.2",
+		"save-dev": "^0.0.1-security",
 		"socket.io": "^4.8.1",
 		"stripe": "^19.0.0"
 	},
