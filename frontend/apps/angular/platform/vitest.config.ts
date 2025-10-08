@@ -15,7 +15,7 @@ export default defineConfig(() => ({
 		globals: true,
 		environment: 'jsdom',
 		include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-		setupFiles: ['../../../../configs/vitest/environment/angular/zoneless.config.ts'],
+		setupFiles: ['vitest.environment.ts'],
 		reporters: ['default'],
 		coverage: {
 			reportsDirectory: '../../../../coverage/frontend/apps/angular/platform',
