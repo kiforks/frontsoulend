@@ -19,7 +19,6 @@
 		"src/**/*.test.js",
 		"src/**/*.spec.js",
 		"src/**/*.test.jsx",
-		"src/**/*.spec.jsx",
-		"../../../../configs/vitest/environment.angular.ts"
+		"src/**/*.spec.jsx"
 	]
 }
