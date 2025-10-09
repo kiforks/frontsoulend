@@ -3,7 +3,6 @@ import nxPlugin from '@nx/eslint-plugin';
 import kiforDisableRecommend from '@kiforks/eslint-config/disable-recommend.js';
 import kiforFsd from '@kiforks/eslint-config/feature-sliced-design.js';
 import kiforJavascript from '@kiforks/eslint-config/javascript.js';
-import kiforJest from '@kiforks/eslint-config/jest.js';
 import kiforTests from '@kiforks/eslint-config/test.js';
 import kiforTypescript from '@kiforks/eslint-config/typescript.js';
 
@@ -15,15 +14,6 @@ export default [
 		plugins: { '@nx': nxPlugin },
 	},
 
-	...kiforJest.map(config => ({
-		...config,
-		languageOptions: {
-			...config.languageOptions,
-			globals: {
-				jest: true,
-			},
-		},
-	})),
 	...kiforJavascript,
 	...kiforTypescript.map(config => ({
 		...config,
@@ -63,7 +53,6 @@ export default [
 						'rxjs',
 						'subsink',
 						'@ngneat/spectator',
-						'jest-preset-angular',
 						'@faker-js/faker',
 						'ng-mocks',
 					],
