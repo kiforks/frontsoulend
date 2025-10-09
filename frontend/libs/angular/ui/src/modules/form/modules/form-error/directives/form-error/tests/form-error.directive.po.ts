@@ -1,6 +1,4 @@
-import { SpectatorDirective } from '@ngneat/spectator';
-
-import { Spectator, SpectatorHost } from '@ngneat/spectator/jest';
+import { Spectator, SpectatorDirective, SpectatorHost } from '@ngneat/spectator';
 
 import { FormErrorComponent } from '../../../components';
 import { FormErrorDirective } from '../form-error.directive';

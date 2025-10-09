@@ -1,6 +1,5 @@
+import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator';
 import { MockProvider } from 'ng-mocks';
-
-import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator/jest';
 
 import { MediaService } from '../../../services';
 import { MediaDesktopDirective } from '../media-desktop.directive';

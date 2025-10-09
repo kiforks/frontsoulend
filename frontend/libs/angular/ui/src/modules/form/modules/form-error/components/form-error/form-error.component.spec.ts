@@ -1,6 +1,6 @@
 import { FormControl, Validators } from '@angular/forms';
 
-import { createHostFactory, SpectatorHost } from '@ngneat/spectator/jest';
+import { createHostFactory, SpectatorHost } from '@ngneat/spectator';
 
 import { FormErrorComponent } from './form-error.component';
 

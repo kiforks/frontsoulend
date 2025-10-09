@@ -1,4 +1,4 @@
-import { SpectatorDirective } from '@ngneat/spectator/jest';
+import { SpectatorDirective } from '@ngneat/spectator';
 
 export class ConditionDirectivePo {
 	constructor(private readonly spectator: SpectatorDirective<unknown>) {}

@@ -1,12 +1,15 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 import { MockProvider } from 'ng-mocks';
-
-import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 
 import { firstValueFrom, Observable, of } from 'rxjs';
 
 import { MediaService } from './media.service';
+
+vi.mock('@utilities', () => ({
+	Bind: (_target: unknown, _propertyKey: string, descriptor?: TypedPropertyDescriptor<unknown>) => descriptor,
+}));
 
 describe('MediaService', () => {
 	let spectator: SpectatorService<MediaService>;
@@ -33,11 +36,11 @@ describe('MediaService', () => {
 
 			service = spectator.service;
 
-			const spyOnMediaMax = jest.spyOn(service, 'mediaMax');
+			const spyOnMediaMax = vi.spyOn(service, 'mediaMax');
 			const isMatched = await firstValueFrom(service.mediaMobile);
 
 			expect(isMatched).toBe(true);
-			expect(spyOnMediaMax).toHaveBeenNthCalledWith(1, 'md');
+			expect(spyOnMediaMax).toHaveBeenCalledExactlyOnceWith('md');
 		});
 	});
 
@@ -60,11 +63,11 @@ describe('MediaService', () => {
 
 			service = spectator.service;
 
-			const spyOnMediaMin = jest.spyOn(service, 'mediaMin');
+			const spyOnMediaMin = vi.spyOn(service, 'mediaMin');
 			const isMatched = await firstValueFrom(service.mediaDesktop);
 
 			expect(isMatched).toBe(true);
-			expect(spyOnMediaMin).toHaveBeenNthCalledWith(1, 'md');
+			expect(spyOnMediaMin).toHaveBeenCalledExactlyOnceWith('md');
 		});
 	});
 

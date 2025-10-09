@@ -1,6 +1,5 @@
+import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator';
 import { MockProvider } from 'ng-mocks';
-
-import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator/jest';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 

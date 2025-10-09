@@ -8,7 +8,7 @@ import {
 	Spectator,
 	SpectatorDirective,
 	SpectatorHost,
-} from '@ngneat/spectator/jest';
+} from '@ngneat/spectator';
 
 import { HTMLString } from '@core';
 
