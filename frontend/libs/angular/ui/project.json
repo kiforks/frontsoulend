@@ -68,8 +68,7 @@
 		"test-storybook": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "test-storybook -c frontend/libs/angular/ui/.storybook --url=http://localhost:4400",
-				"experimentalZoneless": true
+				"command": "test-storybook -c frontend/libs/angular/ui/.storybook --url=http://localhost:4001"
 			}
 		},
 		"static-storybook": {
