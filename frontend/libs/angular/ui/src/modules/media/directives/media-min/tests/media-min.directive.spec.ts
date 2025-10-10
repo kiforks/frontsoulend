@@ -7,7 +7,7 @@ import { MediaMinDirectivePO } from './media-min.directive.po';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaMinDirective', () => {
+describe(MediaMinDirective, () => {
 	let spectator: SpectatorDirective<MediaMinDirective>;
 	let directivePo: MediaMinDirectivePO;
 

@@ -2,7 +2,7 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { RootComponent } from './root.component';
 
-describe('RootComponent', () => {
+describe(RootComponent, () => {
 	let spectator: Spectator<RootComponent>;
 
 	const createComponent = createComponentFactory({
@@ -14,6 +14,6 @@ describe('RootComponent', () => {
 	});
 
 	it('should create', () => {
-		expect(spectator.component).toBeTruthy();
+		expect(spectator.component).toBe(true);
 	});
 });

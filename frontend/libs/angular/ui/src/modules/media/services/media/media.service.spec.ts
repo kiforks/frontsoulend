@@ -7,11 +7,11 @@ import { firstValueFrom, Observable, of } from 'rxjs';
 
 import { MediaService } from './media.service';
 
-vi.mock('@utilities', () => ({
+vi.mock(import('@utilities'), () => ({
 	Bind: (_target: unknown, _propertyKey: string, descriptor?: TypedPropertyDescriptor<unknown>) => descriptor,
 }));
 
-describe('MediaService', () => {
+describe(MediaService, () => {
 	let spectator: SpectatorService<MediaService>;
 	let service: MediaService;
 

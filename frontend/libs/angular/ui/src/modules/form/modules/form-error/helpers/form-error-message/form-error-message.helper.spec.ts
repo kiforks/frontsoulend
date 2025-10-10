@@ -4,7 +4,7 @@ import { FormErrorMessageHelper } from './form-error-message.helper';
 
 import { FormErrorMessageConfigMock, FormErrorMessagesMock, FormErrorMessagesMockParams } from '../../mocks';
 
-describe('FormErrorMessageHelper', () => {
+describe(FormErrorMessageHelper, () => {
 	describe('getFirstErrorKey', () => {
 		it('should return null if no errors', () => {
 			const control = new FormControl('');
@@ -114,7 +114,7 @@ describe('FormErrorMessageHelper', () => {
 		});
 	});
 
-	describe('getMessage', () => {
+	describe('getMessage (mock messages)', () => {
 		it('should return null if there is no error', () => {
 			const control = new FormControl('');
 			const messages = new FormErrorMessagesMock();

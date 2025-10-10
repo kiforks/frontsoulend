@@ -7,7 +7,7 @@ import { MediaDesktopDirectivePo } from './media-desktop.directive.po';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaDesktopDirective', () => {
+describe(MediaDesktopDirective, () => {
 	let spectator: SpectatorDirective<MediaDesktopDirective>;
 	let directivePo: MediaDesktopDirectivePo;
 

@@ -10,7 +10,7 @@ import { FormErrorComponentConfig } from '../../interfaces';
 
 import { FormErrorConfigMock } from '../../mocks';
 
-describe('FormErrorHelper', () => {
+describe(FormErrorHelper, () => {
 	describe('getComponentBindings', () => {
 		it('should return an array of input bindings', () => {
 			const message = 'Test error';
@@ -41,7 +41,7 @@ describe('FormErrorHelper', () => {
 			subscription.unsubscribe();
 			document.body.removeChild(hostElement);
 
-			expect(emitted.length).toBe(3);
+			expect(emitted).toHaveLength(3);
 		});
 	});
 
@@ -49,6 +49,7 @@ describe('FormErrorHelper', () => {
 		it('should create component with provided bindings', () => {
 			const message = faker.lorem.sentence();
 			const control = new FormControl('');
+			// eslint-disable-next-line vitest/require-mock-type-parameters
 			const createComponent = vi.fn() as ViewContainerRef['createComponent'];
 			const viewContainerRef = { createComponent } as ViewContainerRef;
 			const config = new FormErrorConfigMock({ viewContainerRef });

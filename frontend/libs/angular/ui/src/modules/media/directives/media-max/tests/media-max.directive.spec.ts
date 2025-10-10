@@ -7,7 +7,7 @@ import { MediaMaxDirectivePo } from './media-max.directive.po';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaMaxDirective', () => {
+describe(MediaMaxDirective, () => {
 	let spectator: SpectatorDirective<MediaMaxDirective>;
 	let directivePo: MediaMaxDirectivePo;
 

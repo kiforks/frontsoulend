@@ -6,7 +6,7 @@ import { MediaDataDirective } from '../media-data.directive';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaDataDirective', () => {
+describe(MediaDataDirective, () => {
 	let spectator: SpectatorDirective<MediaDataDirective>;
 
 	const createDirective = createDirectiveFactory(MediaDataDirective);

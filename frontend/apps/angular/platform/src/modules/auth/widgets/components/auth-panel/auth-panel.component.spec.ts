@@ -2,7 +2,7 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { AuthPanelComponent } from './auth-panel.component';
 
-describe('AuthHeaderComponent', () => {
+describe('authHeaderComponent', () => {
 	let spectator: Spectator<AuthPanelComponent>;
 
 	const createComponent = createComponentFactory(AuthPanelComponent);
@@ -10,6 +10,6 @@ describe('AuthHeaderComponent', () => {
 	it('should create', () => {
 		spectator = createComponent();
 
-		expect(spectator.component).toBeTruthy();
+		expect(spectator.component).toBe(true);
 	});
 });

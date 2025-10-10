@@ -5,7 +5,7 @@ import { MediaBaseDirective } from '../media-base.directive';
 import { MediaElementMock } from '../../../mocks';
 import { MEDIA_ELEMENT } from '../../../tokens';
 
-describe('MediaBaseDirective', () => {
+describe(MediaBaseDirective, () => {
 	const createDirective = createDirectiveFactory(MediaBaseDirective);
 
 	it('should dynamically render directive content', () => {
@@ -29,6 +29,7 @@ describe('MediaBaseDirective', () => {
 		mediaElementMock.setCheckMedia(true);
 
 		expect(mediaElementMock.condition()).toBe(true);
+		// eslint-disable-next-line vitest/max-expects
 		expect(spyOnCheckMedia).toHaveBeenCalledExactlyOnceWith(mediaElementMock.breakpoint());
 	});
 });

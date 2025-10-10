@@ -1,6 +1,6 @@
 import { MediaHelper } from './media.helper';
 
-describe('MediaHelper', () => {
+describe(MediaHelper, () => {
 	it('should returns a "media-max" query string for maximum width', () => {
 		const result = MediaHelper.getMaxWidth(100);
 

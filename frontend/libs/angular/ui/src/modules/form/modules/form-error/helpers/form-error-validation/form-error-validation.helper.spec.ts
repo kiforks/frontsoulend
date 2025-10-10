@@ -2,7 +2,7 @@ import { FormControl, NgForm } from '@angular/forms';
 
 import { FormErrorValidationHelper } from './form-error-validation.helper';
 
-describe('FormErrorValidationHelper', () => {
+describe(FormErrorValidationHelper, () => {
 	describe('isDirty', () => {
 		it('should return true if control is invalid and dirty', () => {
 			const control = new FormControl('', []);

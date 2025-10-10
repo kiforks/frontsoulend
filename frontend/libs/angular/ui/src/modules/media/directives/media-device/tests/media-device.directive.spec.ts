@@ -8,7 +8,7 @@ import { MediaDeviceDirectivePo } from './media-device.directive.po';
 
 import { MEDIA_DEVICE } from '../../../tokens';
 
-describe('MediaDeviceDirective', () => {
+describe(MediaDeviceDirective, () => {
 	let spectator: SpectatorDirective<MediaDeviceDirective>;
 	let directivePo: MediaDeviceDirectivePo;
 

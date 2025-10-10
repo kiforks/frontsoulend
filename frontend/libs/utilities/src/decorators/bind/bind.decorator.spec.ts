@@ -13,7 +13,7 @@ class TestClass {
 	}
 }
 
-describe('BindDecorator', () => {
+describe('bindDecorator', () => {
 	it('should bind the method to the instance', () => {
 		const instance = new TestClass('test');
 		// eslint-disable-next-line @typescript-eslint/unbound-method

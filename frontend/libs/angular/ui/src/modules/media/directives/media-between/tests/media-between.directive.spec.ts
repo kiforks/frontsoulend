@@ -7,7 +7,7 @@ import { MediaBetweenDirectivePo } from './media-between.directive.po';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaBetweenDirective', () => {
+describe(MediaBetweenDirective, () => {
 	let spectator: SpectatorDirective<MediaBetweenDirective>;
 	let directivePo: MediaBetweenDirectivePo;
 

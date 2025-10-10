@@ -14,7 +14,7 @@ interface HostContext {
 	or: boolean;
 }
 
-describe('ConditionDirective', () => {
+describe(ConditionDirective, () => {
 	let spectator: SpectatorDirective<ConditionDirective>;
 	let directivePo: ConditionDirectivePo;
 

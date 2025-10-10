@@ -5,6 +5,7 @@ import kiforFsd from '@kiforks/eslint-config/feature-sliced-design.js';
 import kiforJavascript from '@kiforks/eslint-config/javascript.js';
 import kiforTests from '@kiforks/eslint-config/test.js';
 import kiforTypescript from '@kiforks/eslint-config/typescript.js';
+import kiforVitest from '@kiforks/eslint-config/vitest.js';
 
 import * as JSONParser from 'jsonc-eslint-parser';
 
@@ -14,6 +15,7 @@ export default [
 		plugins: { '@nx': nxPlugin },
 	},
 
+	...kiforVitest,
 	...kiforJavascript,
 	...kiforTypescript.map(config => ({
 		...config,

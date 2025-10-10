@@ -6,7 +6,7 @@ import { FormErrorComponent } from './form-error.component';
 
 import { FormErrorComponentConfigMock } from '../../mocks';
 
-describe('FormErrorComponent', () => {
+describe(FormErrorComponent, () => {
 	let spectator: SpectatorHost<FormErrorComponent>;
 
 	const createHost = createHostFactory(FormErrorComponent);
@@ -25,7 +25,7 @@ describe('FormErrorComponent', () => {
 
 		expect(element).toHaveClass('is-valid');
 		expect(element).toHaveExactTrimmedText(message);
-		expect(spectator.component.control()).toEqual(control);
+		expect(spectator.component.control()).toStrictEqual(control);
 
 		spectator.setHostInput({
 			control: new FormControl('', { validators: [Validators.required] }),
@@ -44,6 +44,7 @@ describe('FormErrorComponent', () => {
 						control,
 					},
 				});
+				// eslint-disable-next-line vitest/require-to-throw-message
 			}).toThrow();
 		});
 
@@ -56,6 +57,7 @@ describe('FormErrorComponent', () => {
 						message,
 					},
 				});
+				// eslint-disable-next-line vitest/require-to-throw-message
 			}).toThrow();
 		});
 	});

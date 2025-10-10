@@ -7,7 +7,7 @@ import { MediaOnlyDirectivePo } from './media-only.directive.po';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaOnlyDirective', () => {
+describe(MediaOnlyDirective, () => {
 	let spectator: SpectatorDirective<MediaOnlyDirective>;
 	let directivePo: MediaOnlyDirectivePo;
 

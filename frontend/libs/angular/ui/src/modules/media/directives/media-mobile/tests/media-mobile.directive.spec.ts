@@ -7,7 +7,7 @@ import { MediaMobileDirectivePo } from './media-mobile.directive.po';
 
 import { MediaServiceMock } from '../../../mocks';
 
-describe('MediaMobileDirective', () => {
+describe(MediaMobileDirective, () => {
 	let spectator: SpectatorDirective<MediaMobileDirective>;
 	let directivePo: MediaMobileDirectivePo;
 

@@ -1,14 +1,14 @@
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-
 import { createInjectionContextFactory, SpectatorInjectionContext } from '@ngneat/spectator';
 import { MockProvider } from 'ng-mocks';
+
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
 import { MediaService } from '../../services';
 import { mediaMaxGuard } from './media-max.guard';
 
 import { MediaServiceMock } from '../../mocks';
 
-describe('MediaMaxGuard', () => {
+describe(mediaMaxGuard, () => {
 	let spectator: SpectatorInjectionContext;
 	let route: ActivatedRouteSnapshot;
 	let router: Router;

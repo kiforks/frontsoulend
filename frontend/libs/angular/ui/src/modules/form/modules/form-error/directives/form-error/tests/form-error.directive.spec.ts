@@ -21,10 +21,12 @@ import { FormErrorOptionsConfig } from '../../../configs';
 import { FormErrorMessagesMock } from '../../../mocks';
 import { FORM_ERROR_CONFIG, FORM_ERROR_MESSAGES } from '../../../tokens';
 
-describe('FormErrorDirective', () => {
+/* eslint-disable vitest/max-expects */
+describe(FormErrorDirective, () => {
 	describe('directive', () => {
 		let spectator!: SpectatorDirective<FormErrorDirective>;
 		let directivePO!: FormErrorDirectivePO;
+		// eslint-disable-next-line vitest/require-hook
 		let errors: { required: true } | null = { required: true };
 
 		const minlength = 3;
@@ -103,16 +105,16 @@ describe('FormErrorDirective', () => {
 				it('should display "minlength" and "required" error messages and hide error when value is valid', fakeAsync(() =>
 					checkPasswordErrors(
 						`
-					<input  
-						uiFormError
-						name="password" 
-						required
-						type="password" 
-						[minlength]="minlength"
-						[ngModel]="password"
-						data-po="ui-form-error-password"
-					/>
-				` as HTMLString,
+							<input  
+								uiFormError
+								name="password" 
+								required
+								type="password" 
+								[minlength]="minlength"
+								[ngModel]="password"
+								data-po="ui-form-error-password"
+							/>
+						` as HTMLString,
 						{
 							password: '',
 							minlength,
@@ -124,16 +126,16 @@ describe('FormErrorDirective', () => {
 
 					spectator = createDirective(
 						`
-					<input  
-						uiFormError
-						name="password" 
-						required
-						type="password" 
-						[maxlength]="maxlength"
-						[(ngModel)]="password"
-						data-po="ui-form-error-password"
-					/>
-				`,
+							<input  
+								uiFormError
+								name="password" 
+								required
+								type="password" 
+								[maxlength]="maxlength"
+								[(ngModel)]="password"
+								data-po="ui-form-error-password"
+							/>
+						`,
 						{
 							hostProps: {
 								password: '',
@@ -189,15 +191,15 @@ describe('FormErrorDirective', () => {
 				it('should display "minlength" and "required" error messages and hide error when value is valid', fakeAsync(() =>
 					checkPasswordErrors(
 						`
-					<form [formGroup]="form">
-						<input  
-							uiFormError
-							type="password" 
-							formControlName="password"
-							data-po="ui-form-error-password"
-						/>
-					</form>
-				` as HTMLString,
+							<form [formGroup]="form">
+								<input  
+									uiFormError
+									type="password" 
+									formControlName="password"
+									data-po="ui-form-error-password"
+								/>
+							</form>
+						` as HTMLString,
 						{
 							form: new FormGroup({
 								password: new FormControl('', validators),
@@ -264,20 +266,20 @@ describe('FormErrorDirective', () => {
 				it('should display "required" error message for the nested group and hide error when valid', fakeAsync(() =>
 					checkGroupErrors(
 						`
-						<form [formGroup]="form">
-							<input  
-								type="email" 
-								formControlName="email"
-							/>
-							<fieldset uiFormError formGroupName="group">
+							<form [formGroup]="form">
 								<input  
-									type="password" 
-									formControlName="password"
-									data-po="ui-form-error-password"
+									type="email" 
+									formControlName="email"
 								/>
-							</fieldset>
-						</form>
-					` as HTMLString,
+								<fieldset uiFormError formGroupName="group">
+									<input  
+										type="password" 
+										formControlName="password"
+										data-po="ui-form-error-password"
+									/>
+								</fieldset>
+							</form>
+						` as HTMLString,
 						{
 							form: new FormGroup({
 								email: new FormControl(''),
@@ -301,22 +303,22 @@ describe('FormErrorDirective', () => {
 					spectator = createDirective(
 						isConfig
 							? `
-							<input  
-								uiFormError
-								type="password" 
-								[uiFormErrorConfig]="config"
-								[formControl]="control"
-								data-po="ui-form-error-password"
-							/>
-						`
+								<input  
+									uiFormError
+									type="password" 
+									[uiFormErrorConfig]="config"
+									[formControl]="control"
+									data-po="ui-form-error-password"
+								/>
+							`
 							: `
-							<input  
-								uiFormError
-								type="password" 
-								[formControl]="control"
-								data-po="ui-form-error-password"
-							/>
-					`,
+								<input  
+									uiFormError
+									type="password" 
+									[formControl]="control"
+									data-po="ui-form-error-password"
+								/>
+						`,
 						isConfig
 							? {
 									hostProps: {
@@ -413,16 +415,18 @@ describe('FormErrorDirective', () => {
 
 					if (isShown) {
 						spectator.tick(debounceTime);
+
 						expect(directivePO.component).toExist();
 
 						return;
 					}
 
 					spectator.tick(debounceTime - 1);
+
 					expect(directivePO.component).not.toExist();
 				};
 
-				describe('DI', () => {
+				describe('dI', () => {
 					it('should not render error component if debounce time has not passed', fakeAsync(() =>
 						checkRender(false, false)));
 
