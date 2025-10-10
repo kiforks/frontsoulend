@@ -7,7 +7,7 @@
 			"@utilities": ["frontend/libs/utilities/src"]
 		}
 	},
-	"exclude": ["../**/*.spec.ts"],
+	"exclude": ["../**/*.spec.ts", "./main.ts", "./manager.ts"],
 	"include": [
 		"../src/**/*.stories.ts",
 		"../src/**/*.stories.js",
