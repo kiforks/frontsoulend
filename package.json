@@ -140,7 +140,6 @@
 		"@storybook/addon-docs": "9.1.10",
 		"@storybook/addon-links": "9.1.10",
 		"@storybook/angular": "9.1.10",
-		"@storybook/jest": "^0.2.3",
 		"@storybook/test-runner": "0.23.0",
 		"@storybook/testing-library": "^0.2.2",
 		"@swc-node/register": "~1.11.1",
