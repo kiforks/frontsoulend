@@ -1,7 +1,7 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 import { MockProvider } from 'ng-mocks';
+
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import { firstValueFrom, Observable, of } from 'rxjs';
 

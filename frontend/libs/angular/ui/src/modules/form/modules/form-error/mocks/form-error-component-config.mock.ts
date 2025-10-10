@@ -1,6 +1,6 @@
-import { FormControl } from '@angular/forms';
-
 import { faker } from '@faker-js/faker';
+
+import { FormControl } from '@angular/forms';
 
 import { FormErrorComponentConfig } from '../interfaces';
 

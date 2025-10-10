@@ -1,7 +1,7 @@
+import { faker } from '@faker-js/faker';
+
 import { ViewContainerRef } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-
-import { faker } from '@faker-js/faker';
 
 import { Subject } from 'rxjs';
 

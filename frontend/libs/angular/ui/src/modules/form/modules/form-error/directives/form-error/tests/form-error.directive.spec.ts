@@ -1,6 +1,3 @@
-import { fakeAsync } from '@angular/core/testing';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
 import {
 	createComponentFactory,
 	createDirectiveFactory,
@@ -9,6 +6,9 @@ import {
 	SpectatorDirective,
 	SpectatorHost,
 } from '@ngneat/spectator';
+
+import { fakeAsync } from '@angular/core/testing';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { HTMLString } from '@core';
 

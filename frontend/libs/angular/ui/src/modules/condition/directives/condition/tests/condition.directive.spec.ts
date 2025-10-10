@@ -1,7 +1,6 @@
 import { createDirectiveFactory, SpectatorDirective } from '@ngneat/spectator';
-import { MockProvider } from 'ng-mocks';
-
 import { faker } from '@faker-js/faker';
+import { MockProvider } from 'ng-mocks';
 
 import { ConditionDirective } from '../condition.directive';
 import { ConditionDirectivePo } from './condition.directive.po';

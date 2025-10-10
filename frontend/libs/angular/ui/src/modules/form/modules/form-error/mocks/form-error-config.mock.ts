@@ -1,6 +1,6 @@
-import { ViewContainerRef } from '@angular/core';
-
 import { faker } from '@faker-js/faker';
+
+import { ViewContainerRef } from '@angular/core';
 
 import { FormErrorComponent, FormErrorConfig, FormErrorValidationType } from '../interfaces';
 
