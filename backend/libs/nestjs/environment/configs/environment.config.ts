@@ -1,4 +1,4 @@
-import { cleanEnv, port, str, url } from 'envalid';
+import { cleanEnv, num, port, str, url } from 'envalid';
 
 export const environmentConfig = cleanEnv(process.env, {
 	DATABASE_URL: str(),
@@ -6,7 +6,7 @@ export const environmentConfig = cleanEnv(process.env, {
 	GOOGLE_CALLBACK_URL: url(),
 	GOOGLE_CLIENT_ID: str(),
 	GOOGLE_CLIENT_SECRET: str(),
-	JWT_EXPIRATION_TIME: str(),
+	JWT_EXPIRATION_TIME: num(),
 	JWT_SECRET: str(),
 	MONGO_URI: str(),
 	REDIS_HOST: str(),

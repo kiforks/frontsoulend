@@ -17,7 +17,7 @@ import Stripe from 'stripe';
 			provide: PAYMENT_CLIENT,
 			useFactory: (environmentService: EnvironmentService) =>
 				new Stripe(environmentService.get('STRIPE_API_VERSION'), {
-					apiVersion: '2025-08-27.basil',
+					apiVersion: '2025-09-30.clover',
 				}),
 			inject: [EnvironmentService],
 		},
