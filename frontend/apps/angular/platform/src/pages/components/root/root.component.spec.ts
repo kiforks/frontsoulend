@@ -14,6 +14,6 @@ describe(RootComponent, () => {
 	});
 
 	it('should create', () => {
-		expect(spectator.component).toBe(true);
+		expect(spectator.component).toExist();
 	});
 });

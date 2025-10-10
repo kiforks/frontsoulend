@@ -10,6 +10,6 @@ describe(AuthComponent, () => {
 	it('should create', () => {
 		spectator = createComponent();
 
-		expect(spectator.component).toBe(true);
+		expect(spectator.component).toExist();
 	});
 });
