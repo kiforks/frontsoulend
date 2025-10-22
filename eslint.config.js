@@ -165,7 +165,7 @@ export default [
 			'.DS_Store',
 			'Thumbs.db',
 
-			// Storybook і NX
+			// Storybook and NX
 			'*storybook.log',
 			'.nx/',
 			'.vscode/',

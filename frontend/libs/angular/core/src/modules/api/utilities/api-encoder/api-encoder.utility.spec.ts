@@ -4,7 +4,7 @@ describe(ApiEncoderUtility, () => {
 	const codec = new ApiEncoderUtility();
 
 	it('should encode keys exactly like encodeURIComponent', () => {
-		const rawKey = 'space + plus & and = equals ? query / slash : colon Привіт 🌍';
+		const rawKey = 'space + plus & and = equals ? query / slash : colon Hi 🌍';
 		const expected = encodeURIComponent(rawKey);
 		const actual = codec.encodeKey(rawKey);
 
@@ -12,7 +12,7 @@ describe(ApiEncoderUtility, () => {
 	});
 
 	it('should encode values exactly like encodeURIComponent', () => {
-		const rawValue = 'a b+c&d=e?f/g:Привіт🌍%';
+		const rawValue = 'a b+c&d=e?f/g:Hi🌍%';
 		const expected = encodeURIComponent(rawValue);
 		const actual = codec.encodeValue(rawValue);
 
@@ -36,7 +36,7 @@ describe(ApiEncoderUtility, () => {
 	});
 
 	it('should round-trip encode/decode for arbitrary text (key)', () => {
-		const original = 'Kлюч зі спецсимволами: !@#$%^&*()[]{}|;\'",.<>`~';
+		const original = 'Key: !@#$%^&*()[]{}|;\'",.<>`~';
 		const encoded = codec.encodeKey(original);
 		const decoded = codec.decodeKey(encoded);
 
@@ -44,7 +44,7 @@ describe(ApiEncoderUtility, () => {
 	});
 
 	it('should round-trip encode/decode for arbitrary text (value)', () => {
-		const original = 'Value 100% safe → тест 😊 / ? & = + %';
+		const original = 'Value 100% safe → test 😊 / ? & = + %';
 		const encoded = codec.encodeValue(original);
 		const decoded = codec.decodeValue(encoded);
 
