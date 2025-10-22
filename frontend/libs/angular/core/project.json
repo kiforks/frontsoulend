@@ -4,7 +4,7 @@
 	"sourceRoot": "frontend/libs/angular/core/src",
 	"projectType": "library",
 	"tags": ["frontend", "scope:lib", "scope:core"],
-	"implicitDependencies": ["frontend/libs/utilities", "frontend/libs/core"],
+	"implicitDependencies": ["libs/utilities", "libs/core"],
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:package",

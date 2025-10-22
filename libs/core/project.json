@@ -1,7 +1,7 @@
 {
-	"name": "frontend/libs/core",
-	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "frontend/libs/core/src",
+	"name": "libs/core",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/core/src",
 	"projectType": "library",
 	"release": {
 		"version": {
@@ -10,15 +10,15 @@
 			"manifestRootsToUpdate": ["dist/{projectRoot}"]
 		}
 	},
-	"tags": ["frontend", "scope:lib", "scope:core"],
+	"tags": ["scope:lib", "scope:core"],
 	"targets": {
 		"build": {
 			"executor": "@nx/esbuild:esbuild",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/frontend/libs/core",
-				"main": "frontend/libs/core/src/index.ts",
-				"tsConfig": "frontend/libs/core/tsconfig.lib.json",
+				"outputPath": "dist/libs/core",
+				"main": "libs/core/src/index.ts",
+				"tsConfig": "libs/core/tsconfig.lib.json",
 				"assets": [],
 				"generatePackageJson": true,
 				"format": ["esm"]

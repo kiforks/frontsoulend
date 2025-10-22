@@ -1,7 +1,7 @@
 {
-	"name": "frontend/libs/utilities",
-	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "frontend/libs/utilities/src",
+	"name": "libs/utilities",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/utilities/src",
 	"projectType": "library",
 	"release": {
 		"version": {
@@ -10,15 +10,15 @@
 			"manifestRootsToUpdate": ["dist/{projectRoot}"]
 		}
 	},
-	"tags": ["frontend", "scope:lib", "scope:utilities"],
+	"tags": ["scope:lib", "scope:utilities"],
 	"targets": {
 		"build": {
 			"executor": "@nx/esbuild:esbuild",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/frontend/libs/utilities",
-				"main": "frontend/libs/utilities/src/index.ts",
-				"tsConfig": "frontend/libs/utilities/tsconfig.lib.json",
+				"outputPath": "dist/libs/utilities",
+				"main": "libs/utilities/src/index.ts",
+				"tsConfig": "libs/utilities/tsconfig.lib.json",
 				"assets": [],
 				"generatePackageJson": true,
 				"format": ["esm"]

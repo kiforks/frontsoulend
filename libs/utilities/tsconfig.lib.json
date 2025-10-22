@@ -2,7 +2,7 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@core": ["dist/frontend/libs/core/src"]
+			"@core": ["dist/libs/core/src"]
 		}
 	},
 	"include": ["src/**/*.ts"],

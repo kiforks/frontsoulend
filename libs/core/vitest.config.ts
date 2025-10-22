@@ -7,10 +7,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
 	root: __dirname,
-	cacheDir: '../../../../node_modules/.vite/frontend/libs/core',
+	cacheDir: '../../../node_modules/.vite/libs/core',
 	plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
 	test: {
-		name: 'frontend/libs/core',
+		name: 'libs/core',
 		watch: false,
 		globals: true,
 		environment: 'jsdom',
@@ -18,7 +18,7 @@ export default defineConfig(() => ({
 		include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
 		reporters: ['default'],
 		coverage: {
-			reportsDirectory: '../../../../coverage/frontend/libs/core',
+			reportsDirectory: '../../../coverage/libs/core',
 			provider: 'v8' as const,
 		},
 		server: {

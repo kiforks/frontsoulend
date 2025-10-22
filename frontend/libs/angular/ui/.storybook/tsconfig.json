@@ -3,8 +3,8 @@
 	"compilerOptions": {
 		"emitDecoratorMetadata": true,
 		"paths": {
-			"@core": ["frontend/libs/core/src"],
-			"@utilities": ["frontend/libs/utilities/src"]
+			"@core": ["libs/core/src"],
+			"@utilities": ["libs/utilities/src"]
 		}
 	},
 	"exclude": ["../**/*.spec.ts"],

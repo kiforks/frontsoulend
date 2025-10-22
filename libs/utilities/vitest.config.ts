@@ -9,15 +9,15 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
 	root: __dirname,
-	cacheDir: '../../../../node_modules/.vite/frontend/libs/utilities',
+	cacheDir: '../../../node_modules/.vite/libs/utilities',
 	plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
 	resolve: {
 		alias: {
-			'@core': path.resolve(__dirname, '../../../../frontend/libs/core/src'),
+			'@core': path.resolve(__dirname, '../../../libs/core/src'),
 		},
 	},
 	test: {
-		name: 'frontend/libs/utilities',
+		name: 'libs/utilities',
 		watch: false,
 		globals: true,
 		environment: 'jsdom',
@@ -25,7 +25,7 @@ export default defineConfig(() => ({
 		include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
 		reporters: ['default'],
 		coverage: {
-			reportsDirectory: '../../../../coverage/frontend/libs/utilities',
+			reportsDirectory: '../../../coverage/libs/utilities',
 			provider: 'v8' as const,
 		},
 		server: {

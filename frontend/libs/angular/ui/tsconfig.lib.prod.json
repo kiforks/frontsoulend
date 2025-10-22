@@ -4,8 +4,8 @@
 		"declarationMap": false,
 		"moduleResolution": "bundler",
 		"paths": {
-			"@core": ["dist/frontend/libs/core/src"],
-			"@utilities": ["dist/frontend/libs/utilities/src"]
+			"@core": ["dist/libs/core/src"],
+			"@utilities": ["dist/libs/utilities/src"]
 		}
 	},
 	"angularCompilerOptions": {

@@ -13,8 +13,8 @@ export default defineConfig(() => ({
 	plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
 	resolve: {
 		alias: {
-			'@utilities': path.resolve(__dirname, '../../../../frontend/libs/utilities/src'),
-			'@core': path.resolve(__dirname, '../../../../frontend/libs/core/src'),
+			'@utilities': path.resolve(__dirname, '../../../../libs/utilities/src'),
+			'@core': path.resolve(__dirname, '../../../../libs/core/src'),
 		},
 	},
 	test: {
