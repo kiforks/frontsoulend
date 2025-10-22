@@ -115,6 +115,8 @@ export default [
 			'**/vite.config.{js,cjs,mjs,ts}',
 			'**/vitest.config.{js,cjs,mjs,ts}',
 			'**/vitest.environment.{js,cjs,mjs,ts}',
+			'**/.storybook/**/*.{js,cjs,mjs,ts}',
+			'**/storybook/**/*.{js,cjs,mjs,ts}',
 		],
 		rules: {
 			'@nx/enforce-module-boundaries': 'off',
