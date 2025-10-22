@@ -2,7 +2,11 @@
 	"extends": "./tsconfig.lib.json",
 	"compilerOptions": {
 		"declarationMap": false,
-		"moduleResolution": "bundler"
+		"moduleResolution": "bundler",
+		"paths": {
+			"@core": ["dist/frontend/libs/core/src"],
+			"@utilities": ["dist/frontend/libs/utilities/src"]
+		}
 	},
 	"angularCompilerOptions": {
 		"compilationMode": "partial"

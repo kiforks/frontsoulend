@@ -16,8 +16,7 @@
 			"configurations": {
 				"production": {
 					"tsConfig": "frontend/libs/angular/ui/tsconfig.lib.prod.json"
-				},
-				"development": {}
+				}
 			},
 			"defaultConfiguration": "production"
 		},

@@ -2,8 +2,8 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@core": ["dist/frontend/libs/core/src"],
-			"@utilities": ["dist/frontend/libs/utilities/src"]
+			"@core": ["frontend/libs/core/src"],
+			"@utilities": ["frontend/libs/utilities/src"]
 		},
 		"moduleResolution": "bundler"
 	},
