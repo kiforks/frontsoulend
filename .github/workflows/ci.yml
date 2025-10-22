@@ -163,7 +163,7 @@ jobs:
 
           FAILED=false
 
-          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json */libs/**/package.json)
+          CHANGED_FILES=$(git diff --name-only HEAD~1 -- package.json **/libs/**/package.json)
 
           echo "Checking versions for changed package.json files..."
           for file in $CHANGED_FILES; do
