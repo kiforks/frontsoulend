@@ -2,6 +2,12 @@
 	"extends": "../../../../tsconfig.angular.json",
 	"files": [],
 	"include": [],
+	"compilerOptions": {
+		"paths": {
+			"@core": ["frontend/libs/core/src"],
+			"@utilities": ["frontend/libs/utilities/src"]
+		}
+	},
 	"references": [
 		{
 			"path": "./tsconfig.lib.json"
