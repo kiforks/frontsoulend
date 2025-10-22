@@ -1,14 +1,12 @@
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
-import angular from '@analogjs/vite-plugin-angular';
-
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
 	root: __dirname,
 	cacheDir: '../../../../node_modules/.vite/backend/apps/nestjs/platform',
-	plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+	plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
 	test: {
 		coverage: {
 			reportsDirectory: '../../../../coverage/backend/apps/nestjs/platform',
