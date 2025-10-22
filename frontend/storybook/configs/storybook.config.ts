@@ -48,19 +48,10 @@ export abstract class StorybookConfig {
 	public static readonly Composition: PresetValue<StorybookConfigRaw['refs']> = (_config, { configType }) => {
 		const isDevelopment = configType === 'DEVELOPMENT';
 
-		if (isDevelopment) {
-			return {
-				'angular-ui': {
-					title: 'Angular UI',
-					url: StorybookHelper.getCompositionUrl('4001', isDevelopment),
-				},
-			};
-		}
-
 		return {
 			'angular-ui': {
 				title: 'Angular UI',
-				url: StorybookHelper.getCompositionUrl('angular/ui', isDevelopment),
+				url: StorybookHelper.getCompositionUrl(isDevelopment ? '7001' : 'angular/ui', isDevelopment),
 			},
 		};
 	};

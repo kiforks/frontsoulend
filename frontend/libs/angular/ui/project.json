@@ -37,7 +37,7 @@
 		"storybook": {
 			"executor": "@storybook/angular:start-storybook",
 			"options": {
-				"port": 4001,
+				"port": 7001,
 				"configDir": "frontend/libs/angular/ui/.storybook",
 				"browserTarget": "frontend/libs/angular/ui:build-storybook",
 				"compodoc": false,
@@ -68,7 +68,7 @@
 		"test-storybook": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "test-storybook -c frontend/libs/angular/ui/.storybook --url=http://localhost:4001"
+				"command": "test-storybook -c frontend/libs/angular/ui/.storybook --url=http://localhost:7001"
 			}
 		},
 		"static-storybook": {
