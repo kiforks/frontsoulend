@@ -28,10 +28,5 @@ export default defineConfig(() => ({
 			reportsDirectory: '../../../coverage/libs/utilities',
 			provider: 'v8' as const,
 		},
-		server: {
-			deps: {
-				inline: ['@ngneat/spectator'],
-			},
-		},
 	},
 }));
