@@ -24,14 +24,18 @@
 				"format": ["esm"]
 			}
 		},
-		"nx-release-publish": {
-			"options": {
-				"packageRoot": "dist/{projectRoot}"
-			}
-		},
 		"test": {
 			"executor": "@nx/vite:test",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		},
+		"stylelint": {
+			"executor": "nx-stylelint:lint",
+			"options": {
+				"lintFilePatterns": ["./libs/core/src/**/*.scss"]
+			}
 		}
 	}
 }
