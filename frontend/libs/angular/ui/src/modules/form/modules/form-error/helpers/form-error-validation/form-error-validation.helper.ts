@@ -71,6 +71,6 @@ export abstract class FormErrorValidationHelper {
 	 * Alternative to dirty+submit, allows errors after any field interaction or submit.
 	 */
 	public static isTouchedOrSubmit(control: Nullable<AbstractControl>, form: Nullable<NgForm>): boolean {
-		return Boolean(control?.invalid && (control?.touched || form?.submitted));
+		return Boolean(control?.invalid && (control.touched || form?.submitted));
 	}
 }

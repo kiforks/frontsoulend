@@ -23,7 +23,7 @@ export abstract class FormErrorMessageHelper {
 			return null;
 		}
 
-		return FormErrorMessageHelper.resolveErrorMessage<M>(errorKey as string, control, messages);
+		return FormErrorMessageHelper.resolveErrorMessage<M>(errorKey, control, messages);
 	}
 
 	/**
