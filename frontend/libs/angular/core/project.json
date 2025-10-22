@@ -1,0 +1,37 @@
+{
+	"name": "frontend/libs/angular/core",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "frontend/libs/angular/core/src",
+	"projectType": "library",
+	"tags": ["frontend", "scope:lib", "scope:core"],
+	"implicitDependencies": ["frontend/libs/utilities", "frontend/libs/core"],
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:package",
+			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+			"options": {
+				"project": "frontend/libs/angular/core/ng-package.json",
+				"tsConfig": "frontend/libs/angular/core/tsconfig.lib.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "frontend/libs/angular/core/tsconfig.lib.prod.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		},
+		"stylelint": {
+			"executor": "nx-stylelint:lint",
+			"options": {
+				"lintFilePatterns": ["./frontend/libs/angular/core/src/**/*.scss"]
+			}
+		}
+	}
+}
