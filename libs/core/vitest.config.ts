@@ -1,14 +1,12 @@
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
-import angular from '@analogjs/vite-plugin-angular';
-
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
 	root: __dirname,
 	cacheDir: '../../../node_modules/.vite/libs/core',
-	plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+	plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
 	test: {
 		name: 'libs/core',
 		watch: false,
