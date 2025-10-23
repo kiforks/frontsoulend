@@ -1,6 +1,5 @@
-import { environmentConfig } from '@libs/nestjs/environment/configs';
-import { EnvironmentModule } from '@libs/nestjs/environment/environment.module';
-import { EnvironmentService } from '@libs/nestjs/environment/services';
+import { environmentConfig } from '@libs/core';
+import { EnvironmentModule, EnvironmentService } from '@libs/nestjs/core';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';

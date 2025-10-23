@@ -1,4 +1,4 @@
-import { EnvironmentService } from '@libs/nestjs/environment/services';
+import { EnvironmentService } from '@libs/nestjs/core';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 

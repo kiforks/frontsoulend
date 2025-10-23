@@ -1,4 +1,4 @@
-import { EnvironmentService } from '@libs/nestjs/environment/services';
+import { EnvironmentService } from '@libs/nestjs/core';
 import { Global, Module } from '@nestjs/common';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 

@@ -5,7 +5,10 @@
 		"module": "ESNext",
 		"paths": {
 			"~prisma/*": ["backend/prisma/client/*"],
-			"@libs/nestjs/environment/*": ["backend/libs/nestjs/environment/*"]
+			"@core": ["libs/core/src"],
+			"@utilities": ["libs/utilities/src"],
+			"@libs/core": ["backend/libs/core/src"],
+			"@libs/nestjs/core": ["backend/libs/nestjs/core/src"]
 		}
 	},
 	"include": ["src/**/*.ts"],

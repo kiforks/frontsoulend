@@ -1,4 +1,4 @@
-import { EnvironmentService } from '@libs/nestjs/environment/services';
+import { EnvironmentService } from '@libs/nestjs/core';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
