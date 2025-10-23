@@ -1,0 +1,14 @@
+{
+	"extends": "./tsconfig.json",
+	"include": ["src/**/*.ts"],
+	"exclude": ["src/**/*.spec.ts", "src/**/*.tst.ts", "vitest.config.ts", "vitest.environment.ts"],
+	"compilerOptions": {
+		"declarationMap": false,
+		"moduleResolution": "bundler",
+		"paths": {
+			"@core": ["libs/core/src"],
+			"@utilities": ["libs/utilities/src"],
+			"@libs/core": ["backend/libs/core/src"]
+		}
+	}
+}

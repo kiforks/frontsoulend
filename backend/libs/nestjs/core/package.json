@@ -1,0 +1,11 @@
+{
+	"name": "@frontsoulend/backend-nestjs-core",
+	"version": "0.0.1",
+	"dependencies": {
+		"@nestjs/common": "^11.1.6",
+		"@nestjs/config": "^4.0.2"
+	},
+	"type": "module",
+	"types": "./src/index.d.ts",
+	"main": "./index.js"
+}

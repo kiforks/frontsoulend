@@ -1,7 +1,6 @@
+import { environmentConfig } from '@libs/core';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
-import { environmentConfig } from '../../configs';
 
 @Injectable()
 export class EnvironmentService extends ConfigService<typeof environmentConfig, true> {
