@@ -1,0 +1,35 @@
+{
+	"name": "backend/libs/core",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "backend/libs/core/src",
+	"projectType": "library",
+	"tags": ["backend", "scope:lib"],
+	"release": {
+		"version": {
+			"currentVersionResolver": "git-tag",
+			"preserveLocalDependencyProtocols": false,
+			"manifestRootsToUpdate": ["dist/{projectRoot}"]
+		}
+	},
+	"targets": {
+		"build": {
+			"executor": "@nx/esbuild:esbuild",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/backend/libs/core",
+				"main": "backend/libs/core/src/index.ts",
+				"tsConfig": "backend/libs/core/tsconfig.lib.json",
+				"assets": [],
+				"generatePackageJson": true,
+				"format": ["esm"]
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		}
+	}
+}

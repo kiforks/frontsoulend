@@ -1,0 +1,10 @@
+{
+	"name": "@frontsoulend/backend-core",
+	"version": "0.0.1",
+	"dependencies": {
+		"envalid": "^8.1.0"
+	},
+	"type": "module",
+	"types": "./src/index.d.ts",
+	"main": "./index.js"
+}

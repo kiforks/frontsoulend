@@ -1,0 +1,1 @@
+export { environmentConfig } from './environment';
