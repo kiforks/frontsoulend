@@ -1,4 +1,4 @@
-import { environmentConfig } from '@libs/core';
+import { environmentConfig } from '@libs/backend/core';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 

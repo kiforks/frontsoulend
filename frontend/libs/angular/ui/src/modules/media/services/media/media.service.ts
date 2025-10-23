@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
-import { Bind } from '@utilities';
+import { Bind } from '@libs/utilities/decorators';
 
 import { distinctUntilChanged, map, Observable } from 'rxjs';
 

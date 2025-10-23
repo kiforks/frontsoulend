@@ -1,10 +1,5 @@
 {
 	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"paths": {
-			"@core": ["libs/core/src"]
-		}
-	},
 	"include": [
 		"vitest.config.ts",
 		"vitest.config.ts",

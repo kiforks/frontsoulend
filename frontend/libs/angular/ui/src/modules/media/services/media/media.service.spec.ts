@@ -7,7 +7,8 @@ import { firstValueFrom, Observable, of } from 'rxjs';
 
 import { MediaService } from './media.service';
 
-vi.mock(import('@utilities'), () => ({
+// eslint-disable-next-line vitest/prefer-import-in-mock
+vi.mock('@libs/utilities/decorators', () => ({
 	Bind: (_target: unknown, _propertyKey: string, descriptor?: TypedPropertyDescriptor<unknown>) => descriptor,
 }));
 

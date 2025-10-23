@@ -4,10 +4,6 @@
 	"exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "vitest.config.ts", "vitest.environment.ts"],
 	"compilerOptions": {
 		"declarationMap": false,
-		"moduleResolution": "bundler",
-		"paths": {
-			"@core": ["dist/libs/core/src"],
-			"@utilities": ["dist/libs/utilities/src"]
-		}
+		"moduleResolution": "bundler"
 	}
 }

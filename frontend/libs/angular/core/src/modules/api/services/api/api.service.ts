@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { DataHelper } from '@core';
+import { DataHelper } from '@libs/core/modules/data/helpers';
 
 import { Observable } from 'rxjs';
 

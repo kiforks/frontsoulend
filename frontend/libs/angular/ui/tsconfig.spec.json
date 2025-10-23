@@ -1,11 +1,5 @@
 {
 	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"paths": {
-			"@core": ["libs/core/src"],
-			"@utilities": ["libs/utilities/src"]
-		}
-	},
 	"include": [
 		"vitest.config.ts",
 		"vitest.config.mts",

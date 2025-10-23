@@ -2,7 +2,7 @@ import { computed, DestroyRef, Directive, ElementRef, inject, input, OnInit, Vie
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, ControlContainer, NgControl, NgForm } from '@angular/forms';
 
-import { Nullable } from '@core';
+import { Nullable } from '@libs/core/interfaces';
 
 import { debounceTime, distinctUntilChanged, filter, map, skip, startWith, tap } from 'rxjs';
 import { isEqual } from 'lodash';
@@ -15,11 +15,11 @@ import { FORM_ERROR_CONFIG, FORM_ERROR_MESSAGES } from '../../tokens';
 
 @Directive({
 	selector: `
-		[uiFormError][formControl], 
-		[uiFormError][formControlName], 
-		[uiFormError][formGroup], 
+		[uiFormError][formControl],
+		[uiFormError][formControlName],
+		[uiFormError][formGroup],
 		[uiFormError][formGroupName],
-		[uiFormError][ngModel], 
+		[uiFormError][ngModel],
 	`,
 })
 export class FormErrorDirective<M extends { [K in keyof M]: object } = object> implements OnInit {

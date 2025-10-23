@@ -8,7 +8,9 @@
 		"rxjs": "~7.8.0",
 		"@angular/core": "20.3.2",
 		"@angular/forms": "20.3.2",
-		"@angular/cdk": "20.2.5"
+		"@angular/cdk": "20.2.5",
+		"@frontsoulend/core": "0.0.1",
+		"@frontsoulend/utilities": "0.0.1"
 	},
 	"sideEffects": false,
 	"type": "module"

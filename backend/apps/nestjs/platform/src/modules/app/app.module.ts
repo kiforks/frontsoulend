@@ -1,4 +1,4 @@
-import { environmentConfig } from '@libs/core';
+import { environmentConfig } from '@libs/backend/core';
 import { EnvironmentModule, EnvironmentService } from '@libs/nestjs/core';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';

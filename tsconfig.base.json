@@ -30,7 +30,11 @@
 		"declaration": true,
 		"declarationMap": true,
 		"inlineSources": true,
-		"types": ["vitest/globals", "@ngneat/spectator/vitest"]
+		"types": ["vitest/globals", "@ngneat/spectator/vitest"],
+		"paths": {
+			"@libs/core/*": ["libs/core/src/*"],
+			"@libs/utilities/*": ["libs/utilities/src/*"]
+		}
 	},
 	"exclude": ["node_modules", "tmp", "dist", ".angular", ".nx", "out-tsc"],
 	"ts-node": {

@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 
-import { Nullable } from '@core';
+import { Nullable } from '@libs/core/interfaces';
 
 import { FormErrorMessageConfig, FormErrorMessages } from '../../interfaces';
 

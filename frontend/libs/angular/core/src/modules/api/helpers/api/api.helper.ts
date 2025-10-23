@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 
-import { DataTypeHelper, Nullable } from '@core';
+import { Nullable } from '@libs/core/interfaces';
+import { DataTypeHelper } from '@libs/core/modules';
 
 import { toPairs } from 'lodash';
 

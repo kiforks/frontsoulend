@@ -10,7 +10,7 @@ import {
 import { fakeAsync } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { HTMLString } from '@core';
+import { HTMLString } from '@libs/core';
 
 import { FormErrorDirective } from '../form-error.directive';
 import { FormErrorConfigSpecComponent, FormErrorHostSpecComponent, FormErrorWrapperSpecComponent } from './components';
@@ -43,9 +43,9 @@ describe(FormErrorDirective, () => {
 
 			spectator = createDirective(
 				`
-					<input  
+					<input
 						uiFormError
-						type="password" 
+						type="password"
 						[formControl]="control"
 						data-po="ui-form-error-password"
 					/>
@@ -105,11 +105,11 @@ describe(FormErrorDirective, () => {
 				it('should display "minlength" and "required" error messages and hide error when value is valid', fakeAsync(() =>
 					checkPasswordErrors(
 						`
-							<input  
+							<input
 								uiFormError
-								name="password" 
+								name="password"
 								required
-								type="password" 
+								type="password"
 								[minlength]="minlength"
 								[ngModel]="password"
 								data-po="ui-form-error-password"
@@ -126,11 +126,11 @@ describe(FormErrorDirective, () => {
 
 					spectator = createDirective(
 						`
-							<input  
+							<input
 								uiFormError
-								name="password" 
+								name="password"
 								required
-								type="password" 
+								type="password"
 								[maxlength]="maxlength"
 								[(ngModel)]="password"
 								data-po="ui-form-error-password"
@@ -173,9 +173,9 @@ describe(FormErrorDirective, () => {
 				it('should display "minlength" and "required" error messages and hide error when value is valid', fakeAsync(() =>
 					checkPasswordErrors(
 						`
-					<input  
+					<input
 						uiFormError
-						type="password" 
+						type="password"
 						[formControl]="control"
 						data-po="ui-form-error-password"
 					/>
@@ -192,9 +192,9 @@ describe(FormErrorDirective, () => {
 					checkPasswordErrors(
 						`
 							<form [formGroup]="form">
-								<input  
+								<input
 									uiFormError
-									type="password" 
+									type="password"
 									formControlName="password"
 									data-po="ui-form-error-password"
 								/>
@@ -244,8 +244,8 @@ describe(FormErrorDirective, () => {
 					checkGroupErrors(
 						`
 					<form uiFormError [formGroup]="form">
-						<input  
-							type="password" 
+						<input
+							type="password"
 							formControlName="password"
 							data-po="ui-form-error-password"
 						/>
@@ -267,13 +267,13 @@ describe(FormErrorDirective, () => {
 					checkGroupErrors(
 						`
 							<form [formGroup]="form">
-								<input  
-									type="email" 
+								<input
+									type="email"
 									formControlName="email"
 								/>
 								<fieldset uiFormError formGroupName="group">
-									<input  
-										type="password" 
+									<input
+										type="password"
 										formControlName="password"
 										data-po="ui-form-error-password"
 									/>
@@ -303,18 +303,18 @@ describe(FormErrorDirective, () => {
 					spectator = createDirective(
 						isConfig
 							? `
-								<input  
+								<input
 									uiFormError
-									type="password" 
+									type="password"
 									[uiFormErrorConfig]="config"
 									[formControl]="control"
 									data-po="ui-form-error-password"
 								/>
 							`
 							: `
-								<input  
+								<input
 									uiFormError
-									type="password" 
+									type="password"
 									[formControl]="control"
 									data-po="ui-form-error-password"
 								/>
@@ -371,18 +371,18 @@ describe(FormErrorDirective, () => {
 					spectator = createDirective(
 						isConfig
 							? `
-					<input  
+					<input
 						uiFormError
-						type="password" 
+						type="password"
 						[uiFormErrorConfig]="config"
 						[formControl]="control"
 						data-po="ui-form-error-password"
 					/>
 					`
 							: `
-					<input  
+					<input
 						uiFormError
-						type="password" 
+						type="password"
 						[formControl]="control"
 						data-po="ui-form-error-password"
 					/>

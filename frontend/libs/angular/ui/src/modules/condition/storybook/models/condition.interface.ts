@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
 
-import { Nullable } from '@core';
+import { Nullable } from '@libs/core/interfaces';
 
 import { ConditionDirective } from '../../directives';
 

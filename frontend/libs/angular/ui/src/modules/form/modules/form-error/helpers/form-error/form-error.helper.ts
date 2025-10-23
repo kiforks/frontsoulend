@@ -1,7 +1,7 @@
 import { Binding, inputBinding } from '@angular/core';
 import { AbstractControl, NgForm } from '@angular/forms';
 
-import { Nullable } from '@core';
+import { Nullable } from '@libs/core/interfaces';
 
 import { EMPTY, fromEvent, merge, Observable } from 'rxjs';
 
